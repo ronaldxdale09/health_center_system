@@ -43,7 +43,7 @@
     <div class='logout-container'>
         <span class='nav-text'></span>
         <a class='nav-link logout' href='function/logout.php'>
-            <i class='fa fa-sign-out'></i> Logout
+            <i class='fa fa-sign-out'></i> Signout
         </a>
     </div>
 </nav>

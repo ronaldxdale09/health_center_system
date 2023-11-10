@@ -36,7 +36,7 @@ $fpConsultations = mysqli_fetch_array($fpConsultationsQuery);
                 <i class="fa fa-users"></i>
             </div>
             <div class="info-section">
-                <span class="stat-title">Total Patients</span>
+                <span class="stat-title">Total Patients asdas</span>
                 <span class="stat-value"><?php echo number_format($totalPatients['total_patients'], 0); ?></span>
             </div>
         </div>

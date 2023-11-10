@@ -48,7 +48,7 @@
     </div>
 </nav>
 <script src="js/navbar.js"></script>
-
++
 <script>
     // Function to toggle the dropdown
     function toggleDropdown(id) {

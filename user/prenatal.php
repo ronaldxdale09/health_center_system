@@ -119,7 +119,6 @@ include('include/navbar.php');
 
                         <?php
 
-
                         // SQL query to select relevant prenatal data
                         $sql = "SELECT * FROM prenatal_record 
                         LEFT JOIN patient_record on prenatal_record.patient_id = patient_record.patient_id";

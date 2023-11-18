@@ -13,7 +13,7 @@
             </div>
 
 
-            <form method='POST' action="function/patient_record.php">
+            <form method='POST' action="function/patient_record.php" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-4">

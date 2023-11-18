@@ -83,57 +83,39 @@ if (isset($_GET['id'])) {
 
 ?>
 <style>
-    table {
+    .vaccine-schedule {
         width: 100%;
-        border-collapse: collapse;
         margin-top: 20px;
     }
 
-    th,
-    td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: center;
+    .vaccine-schedule thead.thead-dark th {
+        background-color: #343a40;
+        /* Dark header */
+        color: white;
     }
 
-    th {
-        background-color: #EB9349;
-        color: black;
+    .vaccine-schedule td {
+        background-color: #f8f9fa;
+        /* Light gray for cells */
     }
 
-    td {
-        background-color: #F3F4F7;
-    }
-
-    input[type="date" class="date-input"],
-    input[type="text"] {
-        width: 90%;
-        padding: 4px;
-        border: 1px solid #ddd;
-        margin-top: 4px;
-        box-sizing: border-box;
+    .form-control date-input {
+        width: 100%;
+        padding: .375rem .75rem;
+        /* Bootstrap padding */
     }
 
     .date-group {
         display: flex;
-        /* Use flexbox to lay out the date inputs in a row */
         gap: 4px;
-        /* Optional: Adds a little space between the inputs */
     }
 
-    .date-group input[type="date" class="date-input"] {
-        flex: 1;
-        /* Each date input will take up equal space in the container */
-    }
-
-    /* Ensure the table cell containing the date group does not wrap its content */
     .date-cell {
         white-space: nowrap;
-        /* Prevent wrapping to a new line */
         overflow: hidden;
-        /* Hide overflow if the cell becomes too small */
     }
 </style>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <body>
@@ -154,7 +136,7 @@ if (isset($_GET['id'])) {
                         <div class="col-10">
 
 
-                        <a href="immunization_record.php" type="button" class="btn trans-btn btn-dark "><span
+                            <a href="immunization_record.php" type="button" class="btn trans-btn btn-dark "><span
                                     class="fas fa-arrow-left"></span> Return</a>
                             <button type="button" class="btn trans-btn btn-primary btnSaveForm" id="btnSaveForm"><span
                                     class="fas fa-check"></span> Save Record</button>
@@ -178,18 +160,16 @@ if (isset($_GET['id'])) {
                                 <div id='print_content'>
                                     <!-- Personal Information -->
                                     <section class="mb-4">
-                                        <h4>Personal Information</h4>
-                                        <img src="assets/img/banner.png" alt="Q-cart Logo" width="100%" height="200">
+                                        <img src="assets/img/banner.png" alt="Q-cart Logo" class="img-fluid mb-3">
 
-                                        <hr>
                                         <div class="row">
-                                            <div class="col-md-2">
-                                                <label for="age" class="form-label">Record ID</label>
-                                                <input type="text" class="form-control" name="record_id"
+                                            <div class="col-md-3 mb-3">
+                                                <label for="record_id" class="form-label">Record ID</label>
+                                                <input type="text" class="form-control" name="record_id" id="record_id"
                                                     value="<?php echo $id ?>" readonly>
                                             </div>
-                                            <div class="col mb-3">
-                                                <label for="fullName" class="form-label">Full Name</label>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="patient_name" class="form-label">Full Name</label>
                                                 <select class='form-control col-md-10 patient_name' name='patient_id'
                                                     id='patient_name'>
                                                     <option disabled="disabled" selected="selected">Select
@@ -226,53 +206,52 @@ if (isset($_GET['id'])) {
                                                     ?>
                                                 </select>
                                             </div>
-                                            <div class="col mb-3">
-                                                <label for="age" class="form-label">Birth Date
+                                            <div class="col-md-3 mb-3">
+                                                <label for="birth_date" class="form-label">Birth Date
                                                     (YYYY-MM-DD)</label>
                                                 <input type="text" class="form-control" name="birth_date"
                                                     id="birth_date" readonly>
                                             </div>
-
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col mb-3">
+                                            <div class="col-md-3 mb-3">
                                                 <label for="age" class="form-label">Age</label>
                                                 <input type="text" class="form-control" name="age" id="age" readonly>
                                             </div>
-                                            <div class="col mb-3">
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
                                                 <label for="placeOfBirth" class="form-label">Place of Birth</label>
                                                 <input type="text" class="form-control" name="placeOfBirth"
                                                     id="placeOfBirth">
                                             </div>
-                                            <div class="col mb-3">
+                                            <div class="col-md-4 mb-3">
                                                 <label for="address" class="form-label">Address</label>
                                                 <input type="text" class="form-control" name="address" id="address">
                                             </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col">
+                                            <div class="col-md-4 mb-3">
                                                 <label for="mothersName" class="form-label">Mother's Name</label>
                                                 <input type="text" class="form-control" name="mothersName"
                                                     id="mothersName">
                                             </div>
-                                            <div class="col">
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3">
                                                 <label for="fathersName" class="form-label">Father's Name</label>
                                                 <input type="text" class="form-control" name="fathersName"
                                                     id="fathersName">
                                             </div>
-                                            <div class="col">
+                                            <div class="col-md-3 mb-3">
                                                 <label for="birthHeight" class="form-label">Birth Height</label>
                                                 <input type="text" class="form-control" name="birthHeight"
                                                     id="birthHeight">
                                             </div>
-                                            <div class="col">
+                                            <div class="col-md-3 mb-3">
                                                 <label for="birthWeight" class="form-label">Birth Weight</label>
                                                 <input type="text" class="form-control" name="birthWeight"
                                                     id="birthWeight">
                                             </div>
-                                            <div class="col">
+                                            <div class="col-md-3 mb-3">
                                                 <label for="babyGender" class="form-label">Sex</label>
                                                 <select class="form-select" name="babyGender" id="babyGender" required>
                                                     <option value="" disabled selected>Select a gender</option>
@@ -281,24 +260,18 @@ if (isset($_GET['id'])) {
                                                 </select>
                                             </div>
                                         </div>
-
-
-
-                                        <br>
-
-
-
-
                                     </section>
+
                                 </div>
 
 
-                                <table class="vaccine-schedule">
-                                    <thead>
+                                <table class="table table-bordered vaccine-schedule">
+                                    <thead class="thead-dark">
                                         <tr>
                                             <th>Bakuna</th>
                                             <th>Doses</th>
                                             <th>Petsa ng Bakuna (MM/DD/YY)</th>
+                                            <th>Weight (kg)</th>
                                             <th>Remarks</th>
                                         </tr>
                                     </thead>
@@ -306,79 +279,110 @@ if (isset($_GET['id'])) {
                                         <tr>
                                             <td>BCG Vaccine</td>
                                             <td>At birth</td>
-                                            <td><input type="date" class="date-input" name="bcg_date_1"></td>
-                                            <td><input type="text" name="bcg_remarks_1"></td>
+                                            <td><input type="date" class="form-control date-input" name="bcg_date_1">
+                                            </td>
+                                            <td><input type="number" class="form-control" name="bcg_weight_1"
+                                                    step="0.01"></td>
+                                            <td><input type="text" class="form-control" name="bcg_remarks_1"></td>
                                         </tr>
                                         <tr>
                                             <td>BCG Vaccine</td>
                                             <td>At birth</td>
-                                            <td><input type="date" class="date-input" name="bcg_date_2"></td>
-                                            <td><input type="text" name="bcg_remarks_2"></td>
+                                            <td><input type="date" class="form-control date-input" name="bcg_date_2">
+                                            </td>
+                                            <td><input type="number" class="form-control" name="bcg_weight_2"
+                                                    step="0.01"></td>
+                                            <td><input type="text" class="form-control" name="bcg_remarks_2"></td>
                                         </tr>
                                         <tr>
                                             <td>Pentavalent Vaccine (DOT-Hep B-HIB)</td>
-                                            <td>1&nbsp;&frac12; 2&nbsp;&frac12; 3&nbsp;&frac12; months</td>
+                                            <td>1½, 2½, 3½ months</td>
                                             <td class="date-cell">
                                                 <div class="date-group">
-                                                    <input type="date" class="date-input" name="pentavalent_date_1">
-                                                    <input type="date" class="date-input" name="pentavalent_date_2">
-                                                    <input type="date" class="date-input" name="pentavalent_date_3">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="pentavalent_date_1">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="pentavalent_date_2">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="pentavalent_date_3">
                                                 </div>
                                             </td>
-                                            <td><input type="text" name="pentavalent_remarks"></td>
+                                            <td><input type="number" class="form-control" name="pentavalent_weight"
+                                                    step="0.01"></td>
+                                            <td><input type="text" class="form-control" name="pentavalent_remarks"></td>
                                         </tr>
                                         <tr>
                                             <td>Oral Polio Vaccine (OPV)</td>
-                                            <td>1&nbsp;&frac12; 2&nbsp;&frac12; 3&nbsp;&frac12; months</td>
+                                            <td>1½, 2½, 3½ months</td>
                                             <td class="date-cell">
                                                 <div class="date-group">
-                                                    <input type="date" class="date-input" name="opv_date_1">
-                                                    <input type="date" class="date-input" name="opv_date_2">
-                                                    <input type="date" class="date-input" name="opv_date_3">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="opv_date_1">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="opv_date_2">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="opv_date_3">
                                                 </div>
                                             </td>
-                                            <td><input type="text" name="opv_remarks"></td>
+                                            <td><input type="number" class="form-control" name="opv_weight" step="0.01">
+                                            </td>
+                                            <td><input type="text" class="form-control" name="opv_remarks"></td>
                                         </tr>
                                         <tr>
                                             <td>Inactivated Polio Vaccine (IPV)</td>
-                                            <td>3&nbsp;&frac12; & 9 months</td>
+                                            <td>3½ & 9 months</td>
                                             <td class="date-cell">
                                                 <div class="date-group">
-                                                    <input type="date" class="date-input" name="ipv_date_1">
-                                                    <input type="date" class="date-input" name="ipv_date_2">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="ipv_date_1">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="ipv_date_2">
                                                 </div>
                                             </td>
-                                            <td><input type="text" name="ipv_remarks"></td>
+                                            <td><input type="number" class="form-control" name="ipv_weight" step="0.01">
+                                            </td>
+                                            <td><input type="text" class="form-control" name="ipv_remarks"></td>
                                         </tr>
                                         <tr>
                                             <td>Pneumococcal Conjugate Vaccine</td>
-                                            <td>1&nbsp;&frac12; 2&nbsp;&frac12; 3&nbsp;&frac12; months</td>
+                                            <td>1½, 2½, 3½ months</td>
                                             <td class="date-cell">
                                                 <div class="date-group">
-                                                    <input type="date" class="date-input" name="pneumococcal_date_1">
-                                                    <input type="date" class="date-input" name="pneumococcal_date_2">
-                                                    <input type="date" class="date-input" name="pneumococcal_date_3">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="pneumococcal_date_1">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="pneumococcal_date_2">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="pneumococcal_date_3">
                                                 </div>
                                             </td>
-                                            <td><input type="text" name="pneumococcal_remarks"></td>
+                                            <td><input type="number" class="form-control" name="pneumococcal_weight"
+                                                    step="0.01"></td>
+                                            <td><input type="text" class="form-control" name="pneumococcal_remarks">
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Measles, Mumps, Rubella Vaccine</td>
                                             <td>9 months & 1 year</td>
                                             <td class="date-cell">
                                                 <div class="date-group">
-                                                    <input type="date" class="date-input" name="mmr_date_1">
-                                                    <input type="date" class="date-input" name="mmr_date_2">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="mmr_date_1">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="mmr_date_2">
                                                 </div>
                                             </td>
-                                            <td><input type="text" name="mmr_remarks"></td>
+                                            <td><input type="number" class="form-control" name="mmr_weight" step="0.01">
+                                            </td>
+                                            <td><input type="text" class="form-control" name="mmr_remarks"></td>
                                         </tr>
                                     </tbody>
                                 </table>
 
-                                <div class="alert alert-primary alert-dismissible">
+
+                                <div class="alert alert-success alert-dismissible">
                                     <a href="#" class="btn close" data-dismiss="alert" aria-label="close">&times;</a>
-                                    <strong>* sa mga piling rehiyon lamang:</strong>
+                                    <strong>Sa mga piling rehiyon lamang:</strong>
                                     Sa column ng Petsa ng Bakuna, isulat ang petsa ng pagbigay ng bakuna ayon sa kung
                                     pang-ilang dose ito. Sa column ng Remarks, isulat ang petsa ng pagbalik para sa
                                     susunod na dose, o anumang mahalagang impormasyon na maaring makaapekto sa
@@ -411,29 +415,36 @@ if (isset($_GET['id'])) {
 </html>
 
 <style>
-    .date-input {
+    .form-control date-input {
         border: 2px solid red;
         /* Default to red border */
     }
 
-    .date-input.date-selected {
+    .form-control date-input.date-selected {
         border: 2px solid green;
         /* Green border if a date is selected */
     }
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Select all date input elements
         var dateInputs = document.querySelectorAll('.date-input');
 
+        // Function to update the border color
+        function updateBorderColor() {
+            if (this.value) {
+                this.style.borderColor = 'green'; // Change to green if there is a value
+            } else {
+                this.style.borderColor = ''; // Reset to default if there is no value
+            }
+        }
+
+        // Add event listeners to each date input
         dateInputs.forEach(function (input) {
-            input.addEventListener('change', function () {
-                if (input.value !== '') {
-                    input.classList.add('date-selected');
-                } else {
-                    input.classList.remove('date-selected');
-                }
-            });
+            input.addEventListener('change', updateBorderColor);
+            input.addEventListener('input', updateBorderColor); // For real-time updates
         });
     });
 

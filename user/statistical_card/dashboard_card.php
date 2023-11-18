@@ -45,7 +45,14 @@ $fpConsultations = mysqli_fetch_array($fpConsultationsQuery);
     <!-- Number of Immunizations This Month Card -->
     <div class="col-sm-3">
         <div class="modern-stat-card">
-            <div class="icon-section active-cases-icon">
+            <div class="icon-section active-cas
+            0.
+            0.00.
+            .0e
+            
+            
+               
+            s-icon">
                 <i class="fa fa-book"></i>
             </div>
             <div class="info-section">

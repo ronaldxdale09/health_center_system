@@ -14,6 +14,12 @@ if (isset($_GET['id'])) {
     if ($result->num_rows > 0) {
         $record = $result->fetch_assoc();
 
+        $profileImagePath = "assets/img/avatar2.png"; // Default image path
+            if ($record['ProfilePicture'] != '') {
+                $profileImagePath = 'patient_img/' . $record['ProfilePicture']; // Adjust the path as needed
+            }
+
+
         echo "
             <script>
                 $(document).ready(function() {
@@ -66,11 +72,15 @@ if (isset($_GET['id'])) {
 
                             <div class="col-10">
 
-                                <a href="patient_list.php" type="button" class="btn trans-btn btn-secondary " ><span class="fas fa-arrow-left"></span> Return</a>
+                                <a href="patient_list.php" type="button" class="btn trans-btn btn-secondary "><span
+                                        class="fas fa-arrow-left"></span> Return</a>
 
-                                <button type="button" class="btn trans-btn btn-primary confirmSales" id="confirmSales"><span class="fas fa-check"></span> Save Record</button>
-                                <button type="button" class="btn btn-dark btnPrint"><span class="fas fa-print"></span> Print</button>
-                                <button type="button" class="btn btn-danger btnPrint"><span class="fas fa-trash"></span> Delete Record</button>
+                                <button type="button" class="btn trans-btn btn-primary confirmSales"
+                                    id="confirmSales"><span class="fas fa-check"></span> Save Record</button>
+                                <button type="button" class="btn btn-dark btnPrint"><span class="fas fa-print"></span>
+                                    Print</button>
+                                <button type="button" class="btn btn-danger btnPrint"><span class="fas fa-trash"></span>
+                                    Delete Record</button>
 
                             </div>
 
@@ -83,10 +93,13 @@ if (isset($_GET['id'])) {
 
                                             <div class="card-body text-center">
                                                 <!-- Avatar Image -->
-                                                <img src="assets/img/avatar2.png" alt="avatar" class="rounded-circle profile-avatar" id="preview_image" width="150" height="150"> <!-- Upload Button -->
+                                           <img src="<?php echo $profileImagePath; ?>" alt="avatar" class="rounded-circle profile-avatar" id="preview_image" width="150" height="150">
+
                                                 <div class="mt-3">
-                                                    <label for="profile_picture" class="form-label">Upload Profile Picture</label>
-                                                    <input type="file" class="btn btn-success form-control" id="profile_picture" name="profile_picture">
+                                                    <label for="profile_picture" class="form-label">Upload Profile
+                                                        Picture</label>
+                                                    <input type="file" class="btn btn-success form-control"
+                                                        id="profile_picture" name="profile_picture">
                                                 </div>
                                             </div>
                                         </div>
@@ -95,7 +108,8 @@ if (isset($_GET['id'])) {
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="col-form-label">Name:</label>
-                                                <input type="text" class="form-control" name="name" placeholder="Enter name">
+                                                <input type="text" class="form-control" name="name"
+                                                    placeholder="Enter name">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="col-form-label">Religion:</label>
@@ -109,11 +123,13 @@ if (isset($_GET['id'])) {
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="col-form-label">Contact #:</label>
-                                                <input type="text" class="form-control" name="contact_number" placeholder="Enter contact number">
+                                                <input type="text" class="form-control" name="contact_number"
+                                                    placeholder="Enter contact number">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="col-form-label">Occupation:</label>
-                                                <input type="text" class="form-control" name="occupation" placeholder="Enter occupation">
+                                                <input type="text" class="form-control" name="occupation"
+                                                    placeholder="Enter occupation">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -127,20 +143,23 @@ if (isset($_GET['id'])) {
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="col-form-label">Date of Birth:</label>
-                                                <input type="date" class="form-control" name="dob" placeholder="Select date of birth">
+                                                <input type="date" class="form-control" name="dob"
+                                                    placeholder="Select date of birth">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col">
                                                 <label class="col-form-label">Complete Address:</label>
-                                                <input type="text" class="form-control" name="address" placeholder="Enter complete address">
+                                                <input type="text" class="form-control" name="address"
+                                                    placeholder="Enter complete address">
                                             </div>
                                         </div>
                                     </div> <br>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label class="col-form-label">Spouse Name:</label>
-                                            <input type="text" class="form-control" name="spouse_name" placeholder="Spouse Name">
+                                            <input type="text" class="form-control" name="spouse_name"
+                                                placeholder="Spouse Name">
                                         </div>
                                         <div class="col">
                                             <label class="col-form-label">Birthdate:</label>
@@ -148,7 +167,8 @@ if (isset($_GET['id'])) {
                                         </div>
                                         <div class="col">
                                             <label class="col-form-label">Occupation:</label>
-                                            <input type="text" class="form-control" name="spouse_occupation" placeholder="Enter Occupation">
+                                            <input type="text" class="form-control" name="spouse_occupation"
+                                                placeholder="Enter Occupation">
                                         </div>
                                     </div>
                                 </div>
@@ -163,28 +183,33 @@ if (isset($_GET['id'])) {
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="col-form-label">Blood Type:</label>
-                                                <input type="text" class="form-control" name="blood_type" placeholder="Enter blood type">
+                                                <input type="text" class="form-control" name="blood_type"
+                                                    placeholder="Enter blood type">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="col-form-label">Emergency Contact:</label>
-                                                <input type="text" class="form-control" name="emergency_contact" placeholder="Enter emergency contact number">
+                                                <input type="text" class="form-control" name="emergency_contact"
+                                                    placeholder="Enter emergency contact number">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="col-form-label">Allergies:</label>
-                                                <input type="text" class="form-control" name="allergies" placeholder="Enter allergies">
+                                                <input type="text" class="form-control" name="allergies"
+                                                    placeholder="Enter allergies">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="col-form-label">Existing Conditions:</label>
-                                                <input type="text" class="form-control" name="existing_conditions" placeholder="Enter existing conditions">
+                                                <input type="text" class="form-control" name="existing_conditions"
+                                                    placeholder="Enter existing conditions">
                                             </div>
                                         </div>
                                         <div class="row">
 
                                             <div class="col">
                                                 <label class="col-form-label">Notes:</label>
-                                                <textarea class="form-control" name="notes" placeholder="Enter additional notes"></textarea>
+                                                <textarea class="form-control" name="notes"
+                                                    placeholder="Enter additional notes"></textarea>
                                             </div>
                                         </div>
 
@@ -211,7 +236,7 @@ include "modal/patient_modal.php";
 
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         var table = $('#customerTable').DataTable({
             dom: '<"top"<"left-col"B><"center-col"f>>rti<"bottom"p><"clear">',
@@ -219,23 +244,23 @@ include "modal/patient_modal.php";
                 [0, 'desc']
             ],
             buttons: [{
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                    }
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
                 }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                }
+            }
             ],
             lengthMenu: [
                 [-1],
@@ -243,13 +268,13 @@ include "modal/patient_modal.php";
             ],
             orderCellsTop: true,
             paging: false, // Disable pagination
-            infoCallback: function(settings, start, end, max, total, pre) {
+            infoCallback: function (settings, start, end, max, total, pre) {
                 return total + ' entries';
             }
         });
 
 
-        $('.btnUpdate').on('click', function() {
+        $('.btnUpdate').on('click', function () {
 
 
             var coffee = $(this).data('record');
@@ -271,7 +296,7 @@ include "modal/patient_modal.php";
                     data: {
                         prod_id: coffee.production_id,
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $('#prod_list_table').html(data);
 
                     }
@@ -286,7 +311,7 @@ include "modal/patient_modal.php";
 
 
 
-        $('.btnDelete').on('click', function() {
+        $('.btnDelete').on('click', function () {
             // $tr = $(this).closest('tr');
 
             // var data = $tr.children("td").map(function() {

@@ -134,51 +134,25 @@ if (isset($_GET['id'])) {
                                         <h4>Personal Information</h4>
                                         <hr>
                                         <div class="row">
-                                            <div class="col-md-2">
-                                                <label for="age" class="form-label">Record ID</label>
-                                                <input type="text" class="form-control" name="record_id"
+                                            <!-- Record ID -->
+                                            <div class="col-md-2 mb-3">
+                                                <label for="record_id" class="form-label">Record ID</label>
+                                                <input type="text" class="form-control" name="record_id" id="record_id"
                                                     value="<?php echo $id ?>" readonly>
                                             </div>
+
+                                            <!-- Full Name -->
                                             <div class="col-md-5 mb-3">
-                                                <label for="fullName" class="form-label">Full Name</label>
-                                                <select class='form-control col-md-10 patient_name' name='patient_id'
-                                                    id='patient_name'>
-                                                    <option disabled="disabled" selected="selected">Select
-                                                        Patient</option>
-                                                    <?php
-                                                    // Retrieve customer names from the coffee_customer table
-                                                    $sql = "SELECT * FROM patient_record";
-                                                    $result = mysqli_query($con, $sql);
-                                                    if ($result) {
-                                                        while ($row = mysqli_fetch_assoc($result)) {
-                                                            $patient_id = $row['patient_id'];
-                                                            $name = $row['Name'];
-                                                            $birthDate = $row['DateOfBirth'];
-                                                            $address = $row['Address'];
-                                                            $contact = $row['ContactNumber'];
-
-                                                            $spouse_name = $row['spouse_name'];
-                                                            $spouse_birthdate = $row['spouse_birthdate'];
-                                                            $spouse_occupation = $row['spouse_occupation'];
-
-                                                            echo "<option value='$patient_id' 
-                                                                    data-name='$name' 
-                                                                    data-birthdate='$birthDate' 
-                                                                    data-address='$address' 
-                                                                    data-contact='$contact'
-                                                                    data-spouse_name='$spouse_name' 
-                                                                    data-spouse_birthdate='$spouse_birthdate'
-                                                                    data-spouse_occupation='$spouse_occupation'
-                                                                    >
-                                                                    $name
-                                                                </option>";
-                                                        }
-                                                    }
-                                                    ?>
+                                                <label for="patient_name" class="form-label">Full Name</label>
+                                                <select class='form-control' name='patient_id' id='patient_name'>
+                                                    <option disabled selected>Select Patient</option>
+                                                    <?php // PHP code for options... ?>
                                                 </select>
                                             </div>
+
+                                            <!-- Birth Date and Age -->
                                             <div class="col-md-3 mb-3">
-                                                <label for="age" class="form-label">Birth Date
+                                                <label for="birth_date" class="form-label">Birth Date
                                                     (YYYY-MM-DD)</label>
                                                 <input type="text" class="form-control" name="birth_date"
                                                     id="birth_date" readonly>
@@ -187,73 +161,65 @@ if (isset($_GET['id'])) {
                                                 <label for="age" class="form-label">Age</label>
                                                 <input type="text" class="form-control" name="age" id="age" readonly>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <label for="address" class="form-label">Address</label>
-                                                    <input type="text" class="form-control" name="address" id="address"
-                                                        readonly>
-                                                </div>
-                                                <div class="col-4">
-                                                    <label for="contactNumber" class="form-label">Contact
-                                                        Number</label>
-                                                    <input type="tel" class="form-control" name="contactNumber"
-                                                        id="contactNumber" readonly>
-                                                </div>
-                                            </div>
-                                            <br>
-
                                         </div>
-                                        <br>
+
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <label class="col-form-label">Spouse Name:</label>
+                                            <!-- Address and Contact Number -->
+                                            <div class="col-md-8 mb-3">
+                                                <label for="address" class="form-label">Address</label>
+                                                <input type="text" class="form-control" name="address" id="address"
+                                                    readonly>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="contactNumber" class="form-label">Contact Number</label>
+                                                <input type="tel" class="form-control" name="contactNumber"
+                                                    id="contactNumber" readonly>
+                                            </div>
+                                        </div>
+
+                                        <!-- Spouse Information -->
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="spouse_name" class="form-label">Spouse Name</label>
                                                 <input type="text" class="form-control" id="spouse_name"
                                                     name="spouse_name" placeholder="Spouse Name">
                                             </div>
-                                            <div class="col">
-                                                <label class="col-form-label">Birthdate:</label>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="spouse_date" class="form-label">Birthdate</label>
                                                 <input type="date" class="form-control" id="spouse_date"
                                                     name="spouse_date">
                                             </div>
-                                            <div class="col">
-                                                <label class="col-form-label">Occupation:</label>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="spouse_occupation" class="form-label">Occupation</label>
                                                 <input type="text" class="form-control" id="spouse_occupation"
                                                     name="spouse_occupation" placeholder="Enter Occupation">
                                             </div>
                                         </div>
 
-
-                                        <br>
+                                        <!-- Additional Information -->
                                         <div class="row">
-                                            <div class="col-4">
-                                                <label for="address" class="form-label">Philhealth</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">ID</span>
-                                                    </div>
-                                                    <input type="text" class="form-control" name="philhealth"
-                                                        placeholder="Philhealth" aria-label="Username">
-                                                </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="philhealth" class="form-label">Philhealth ID</label>
+                                                <input type="text" class="form-control" name="philhealth"
+                                                    id="philhealth" placeholder="Philhealth ID">
                                             </div>
-                                            <div class="col-4">
-                                                <label for="contactNumber" class="form-label">Religion</label>
-                                                <select class="form-select" id='religion' name="religion" required>
-                                                    <option value="" disabled selected>Select an religion</option>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="religion" class="form-label">Religion</label>
+                                                <select class="form-select" name="religion" id="religion" required>
+                                                    <option value="" disabled selected>Select a religion</option>
                                                     <option value="Islam">Islam</option>
                                                     <option value="Roman Catholic">Roman Catholic</option>
-
+                                                    <!-- Add other religions here -->
                                                 </select>
                                             </div>
-                                            <div class="col-4">
-                                                <label for="contactNumber" class="form-label">Gravida</label>
-                                                <input type="text" class="form-control" name="gravida"
-                                                    placeholder="Gravida" aria-label="Username">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="gravida" class="form-label">Gravida</label>
+                                                <input type="text" class="form-control" name="gravida" id="gravida"
+                                                    placeholder="Gravida">
                                             </div>
                                         </div>
-
-
-
                                     </section>
+
                                 </div>
                             </div>
                         </div>

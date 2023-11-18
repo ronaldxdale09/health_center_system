@@ -60,11 +60,15 @@ if (isset($_GET['id'])) {
            
                     $('input[name=\"blood_pressure\"]').val('" . $record['blood_pressure'] . "');
                     $('input[name=\"weight\"]').val('" . $record['weight'] . "');
-                    $('input[name=\"height\"]').val('" . $record['height'] . "');
+
+                    $('input[name=\"philh_no\"]').val('" . $record['philh_no'] . "');
+                    $('input[name=\"ave_income\"]').val('" . $record['ave_income'] . "');
+
+
+
 
                     $('input[name=\"petal_tone\"]').val('" . $record['petal_tone'] . "');
                     $('input[name=\"fundic_height\"]').val('" . $record['fundic_height'] . "');
-                    $('input[name=\"philh_no\"]').val('" . $record['philh_no'] . "');
                     $('input[name=\"abortion\"]').val('" . $record['abortion'] . "');
                     $('input[name=\"para_no\"]').val('" . $record['para_no'] . "');
                     $('input[name=\"lmp\"]').val('" . $record['lmp'] . "');
@@ -115,13 +119,11 @@ if (isset($_GET['id'])) {
                             <a href="prenatal.php" type="button" class="btn trans-btn btn-secondary "><span
                                     class="fas fa-arrow-left"></span> Return</a>
 
-                            <button type="button" class="btn trans-btn btn-primary btnSaveForm" id="btnSaveForm"><span
+                            <button type="button" class="btn trans-btn btn-primary" id="confirmPrenatalButton"><span
                                     class="fas fa-check"></span> Save Record</button>
                             <button type="button" class="btn trans-btn btn-danger btnVoid" id="btnVoid"><span
                                     class="fas fa-trash"></span> Remove Record</button>
 
-                            <button type="button" class="btn trans-btn btn-secondary" id="confirmSales"><span
-                                    class="fas fa-eraser"></span> Clear Fields</button>
                         </div>
 
                         <div class="col">
@@ -131,24 +133,27 @@ if (isset($_GET['id'])) {
 
                         </div>
                     </div>
+                    <div id='print_content'>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="container">
 
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="container">
 
-                                <div id='print_content'>
                                     <!-- Personal Information -->
                                     <section class="mb-4">
                                         <h4>Personal Information</h4>
                                         <hr>
                                         <div class="row">
-                                            <div class="col-md-2">
-                                                <label for="age" class="form-label">Record ID</label>
-                                                <input type="text" class="form-control" name="record_id"
+                                            <!-- Record ID -->
+                                            <div class="col-md-3 mb-3">
+                                                <label for="record_id" class="form-label">Record ID</label>
+                                                <input type="text" class="form-control" name="record_id" id="record_id"
                                                     value="<?php echo $id ?>" readonly>
                                             </div>
+
+                                            <!-- Full Name -->
                                             <div class="col-md-5 mb-3">
-                                                <label for="fullName" class="form-label">Full Name</label>
+                                                <label for="patient_name" class="form-label">Full Name</label>
                                                 <select class='form-control col-md-10 patient_name' name='patient_name'
                                                     id='patient_name'>
                                                     <option disabled="disabled" selected="selected">Select
@@ -165,6 +170,10 @@ if (isset($_GET['id'])) {
                                                             $address = $row['Address'];
                                                             $contact = $row['ContactNumber'];
 
+                                                            $ave_monthIncome = $row['ave_monthIncome'];
+                                                            $philhealth = $row['philhealth'];
+
+
                                                             $spouse_name = $row['spouse_name'];
                                                             $spouse_birthdate = $row['spouse_birthdate'];
                                                             $spouse_occupation = $row['spouse_occupation'];
@@ -174,6 +183,8 @@ if (isset($_GET['id'])) {
                                                                     data-birthdate='$birthDate' 
                                                                     data-address='$address' 
                                                                     data-contact='$contact'
+                                                                    data-ave_monthIncome='$ave_monthIncome' 
+                                                                    data-philhealth='$philhealth'
                                                                     data-spouse_name='$spouse_name' 
                                                                     data-spouse_birthdate='$spouse_birthdate'
                                                                     data-spouse_occupation='$spouse_occupation'
@@ -185,8 +196,10 @@ if (isset($_GET['id'])) {
                                                     ?>
                                                 </select>
                                             </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label for="age" class="form-label">Birth Date
+
+                                            <!-- Birth Date and Age -->
+                                            <div class="col-md-2 mb-3">
+                                                <label for="birth_date" class="form-label">Birth Date
                                                     (YYYY-MM-DD)</label>
                                                 <input type="text" class="form-control" name="birth_date"
                                                     id="birth_date" readonly>
@@ -195,252 +208,233 @@ if (isset($_GET['id'])) {
                                                 <label for="age" class="form-label">Age</label>
                                                 <input type="text" class="form-control" name="age" id="age" readonly>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <label for="address" class="form-label">Address</label>
-                                                    <input type="text" class="form-control" name="address" id="address"
-                                                        readonly>
-                                                </div>
-                                                <div class="col-4">
-                                                    <label for="contactNumber" class="form-label">Contact
-                                                        Number</label>
-                                                    <input type="tel" class="form-control" name="contactNumber"
-                                                        id="contactNumber" readonly>
-                                                </div>
-                                            </div>
-                                            <br>
-
                                         </div>
-                                        <br>
+
+                                        <div class="row">
+                                            <!-- Address and Contact -->
+                                            <div class="col-md-8 mb-3">
+                                                <label for="address" class="form-label">Address</label>
+                                                <input type="text" class="form-control" name="address" id="address"
+                                                    readonly>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="contactNumber" class="form-label">Contact Number</label>
+                                                <input type="tel" class="form-control" name="contactNumber"
+                                                    id="contactNumber" readonly>
+                                            </div>
+                                        </div>
+
+                                        <!-- Spouse Information -->
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <label class="col-form-label">Spouse Name:</label>
+                                                <label for="spouse_name" class="col-form-label">Spouse Name:</label>
                                                 <input type="text" class="form-control" id="spouse_name"
                                                     name="spouse_name" placeholder="Spouse Name">
                                             </div>
-                                            <div class="col">
-                                                <label class="col-form-label">Birthdate:</label>
+                                            <div class="col-md-4">
+                                                <label for="spouse_date" class="col-form-label">Birthdate:</label>
                                                 <input type="date" class="form-control" id="spouse_date"
                                                     name="spouse_date">
                                             </div>
-                                            <div class="col">
-                                                <label class="col-form-label">Occupation:</label>
+                                            <div class="col-md-4">
+                                                <label for="spouse_occupation"
+                                                    class="col-form-label">Occupation:</label>
                                                 <input type="text" class="form-control" id="spouse_occupation"
                                                     name="spouse_occupation" placeholder="Enter Occupation">
                                             </div>
                                         </div>
 
-
-                                        <br>
-                                        <div class="row">
-                                            <div class="col">
-                                                <label for="address" class="form-label">Ave. Monthly Family
+                                        <!-- Additional Information -->
+                                        <div class="row mt-3">
+                                            <!-- Ave. Monthly Family Income -->
+                                            <div class="col-md-4">
+                                                <label for="ave_income" class="form-label">Ave. Monthly Family
                                                     Income</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">₱</span>
-                                                    </div>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">₱</span>
                                                     <input type="text" class="form-control" name="ave_income"
-                                                        placeholder="Ave. Income" aria-label="Username">
+                                                        id="ave_income" placeholder="Ave. Income">
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <label for="contactNumber" class="form-label">Birth Plan</label>
-                                                <select class="form-select" name="birth_plan" required>
+
+                                            <!-- Birth Plan -->
+                                            <div class="col-md-4">
+                                                <label for="birth_plan" class="form-label">Birth Plan</label>
+                                                <select class="form-select" name="birth_plan" id="birth_plan" required>
                                                     <option value="" disabled selected>Select an option</option>
-                                                    <option value="Hopital">Hopital</option>
+                                                    <option value="Hospital">Hospital</option>
                                                     <option value="RHU">RHU</option>
                                                     <option value="LIC">LIC</option>
                                                     <option value="Home">Home</option>
-
                                                 </select>
                                             </div>
-                                            <div class="col">
-                                                <label for="contactNumber" class="form-label">Birth Attendant if
-                                                    at home</label>
-                                                <select class="form-select" name="birth_attendant">
+
+                                            <!-- Birth Attendant if at home -->
+                                            <div class="col-md-4">
+                                                <label for="birth_attendant" class="form-label">Birth Attendant if at
+                                                    Home</label>
+                                                <select class="form-select" name="birth_attendant" id="birth_attendant">
                                                     <option value="" disabled selected>Select an option</option>
                                                     <option value="SBA">SBA</option>
                                                     <option value="Non-SBA">Non-SBA</option>
-
                                                 </select>
-                                            </div>
-
-                                            <div class="col">
-                                                <label for="address" class="form-label">PHILHEALTH NO.
-                                                </label>
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" name="philh_no"
-                                                        placeholder="Philhealth No." aria-label="Username">
-                                                </div>
                                             </div>
                                         </div>
 
-
-
-
+                                        <div class="row mt-3">
+                                            <!-- PHILHEALTH NO. -->
+                                            <div class="col-md-4">
+                                                <label for="philh_no" class="form-label">PHILHEALTH NO.</label>
+                                                <input type="text" class="form-control" name="philh_no" id="philh_no"
+                                                    placeholder="Philhealth No.">
+                                            </div>
+                                        </div>
                                     </section>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="container">
+                                    <!-- Pregnancy Information -->
+                                    <section class="mb-4">
+                                        <h4>Pregnancy Information</h4>
+                                        <div class="row">
+                                            <!-- Last Menstrual Period and Estimated Date of Confinement -->
+                                            <div class="col-md-6 mb-3">
+                                                <label for="lmp" class="form-label">Last Menstrual Period (LMP) <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="date" class="form-control" name="lmp" id="lmp" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="edc" class="form-label">Estimated Date of Confinement
+                                                    (EDC) <span class="text-danger">*</span></label>
+                                                <input type="date" class="form-control" name="edc" id="edc" required>
+                                            </div>
+
+                                            <!-- Number of Living Children, Gestational Age, and Gravida -->
+                                            <div class="col-md-4 mb-3">
+                                                <label for="children" class="form-label">No. Living Children <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="number" class="form-control" name="children" id="children"
+                                                    required>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="gestationalAge" class="form-label">Gestational Age<span
+                                                        class="text-danger">*</span>
+                                                    <i class="fas fa-info-circle" data-toggle="tooltip"
+                                                        title="Term used during pregnancy to describe how far along the pregnancy is"></i>
+                                                </label>
+                                                <input type="text" class="form-control" name="gestationalAge"
+                                                    id="gestationalAge" required>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="gravida" class="form-label">Gravida<span
+                                                        class="text-danger">*</span>
+                                                    <i class="fas fa-info-circle" data-toggle="tooltip"
+                                                        title="Number to indicate the number of pregnancies a woman has had"></i>
+                                                </label>
+                                                <input type="number" class="form-control" name="gravida" id="gravida"
+                                                    required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Additional Pregnancy Details -->
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3">
+                                                <label for="petal_tone" class="form-label">Petal Heart Tone <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="petal_tone"
+                                                    id="petal_tone" required>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="fundic_height" class="form-label">Fundic Height <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="fundic_height"
+                                                    id="fundic_height" required>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="abortion" class="form-label">Abortion <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="abortion" id="abortion"
+                                                    placeholder="No. of Abortion" required>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="para_no" class="form-label">PARA (No. of Pregnancy) <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="para_no" id="para_no"
+                                                    required>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <!-- Current Health Status -->
+                                    <section class="mb-4">
+                                        <h4>Current Health Status</h4>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="weight" class="form-label">Weight (kg) <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="number" step="0.1" class="form-control" name="weight"
+                                                    id="weight" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="blood_pressure" class="form-label">Blood Pressure <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="blood_pressure"
+                                                    id="blood_pressure" required>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <!-- Lifestyle and Well-being -->
+                                    <section class="mb-4">
+                                        <h4>Lifestyle and Well-being</h4>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="smoking" class="form-label">Do you smoke?</label>
+                                                <select class="form-select" id="smoking" name="smoking" required>
+                                                    <option value="" disabled selected>Select an option</option>
+                                                    <option value="yes">Yes</option>
+                                                    <option value="no">No</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="alcohol" class="form-label">Do you consume alcohol?</label>
+                                                <select class="form-select" id="alcohol" name="alcohol" required>
+                                                    <option value="" disabled selected>Select an option</option>
+                                                    <option value="yes">Yes</option>
+                                                    <option value="no">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="notes" class="col-form-label">Notes:</label>
+                                                <textarea class="form-control" name="notes" id="notes"
+                                                    placeholder="Enter additional notes"></textarea>
+                                            </div>
+                                        </div>
+                                    </section>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                     <br>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="container">
-                                <section class="mb-4">
-                                    <h4>Pregnancy Information</h4>
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="lmp" class="form-label">Last Menstrual Period
-                                                (LMP)</label>
-                                            <input type="date" class="form-control" name="lmp" id="lmp" required>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="edc" class="form-label">Estimated Date of Confinement
-                                                (EDC)</label>
-                                            <input type="date" class="form-control" name="edc" id="edc" required>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="parity" class="form-label">No. Living Children</label>
-                                            <input type="number" class="form-control" id="children" required>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="gestationalAge" class="form-label">Gestational
-                                                Age</label>
-                                            <span data-toggle="tooltip" data-placement="left"
-                                                title="Term used during pregnancy to describe how far along the pregnancy is"
-                                                style="cursor: pointer; font-size: 15px;">
-                                                <i class="fas fa-info-circle"></i>
-                                            </span>
-                                            <input type="text" class="form-control" name="gestationalAge"
-                                                id="gestationalAge" required>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="gravida" class="form-label">Gravida</label>
-                                            <span data-toggle="tooltip" data-placement="left"
-                                                title="Number to indicate the number of pregnancies a woman has had"
-                                                style="cursor: pointer; font-size: 15px;">
-                                                <i class="fas fa-info-circle"></i>
-                                            </span>
 
-                                            <input type="number" class="form-control" name="gravida" id="gravida"
-                                                required>
-
-                                        </div>
-
-                                        <div class="row">
-
-                                            <div class="col-md-12 mb-3">
-                                                <div class="box p-2">
-
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <label for="address" class="form-label">Petal Heart
-                                                                Tone</label>
-                                                            <input type="text" class="form-control" name="petal_tone"
-                                                                aria-label="Username">
-                                                        </div>
-                                                        <div class="col">
-                                                            <label for="contactNumber" class="form-label">Fundic
-                                                                Height</label>
-                                                            <input type="text" class="form-control" name="fundic_height"
-                                                                aria-label="Username">
-                                                        </div>
-                                                        <div class="col">
-                                                            <label for="address" class="form-label">Abortion
-                                                            </label>
-                                                            <div class="input-group mb-3">
-                                                                <input type="text" class="form-control" name="abortion"
-                                                                    placeholder="No. of Abortion" aria-label="Username">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <label for="contactNumber" class="form-label">PARA
-                                                                (No. of Pregnancy)</label>
-                                                            <input type="text" class="form-control" name="para_no"
-                                                                placeholder="" aria-label="Username">
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-
-                                    </div>
-                                </section>
-
-                                <!-- Current Health Status -->
-                                <section class="mb-4">
-                                    <h4>Current Health Status</h4>
-                                    <div class="row">
-                                        <div class="col-md-4 mb-3">
-                                            <label for="weight" class="form-label">Weight (kg)</label>
-                                            <input type="number" step="0.1" class="form-control" name="weight"
-                                                id="weight" required>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="height" class="form-label">Height (cm)</label>
-                                            <input type="number" step="0.1" class="form-control" name="height"
-                                                id="height" required>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="bloodPressure" class="form-label">Blood Pressure</label>
-                                            <input type="text" class="form-control" name="blood_pressure"
-                                                id="blood_pressure" required>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <!-- Lifestyle and Well-being -->
-                                <section class="mb-4">
-                                    <h4>Lifestyle and Well-being</h4>
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="smoking" class="form-label">Do you smoke?</label>
-                                            <select class="form-select" id="smoking" name="smoking" required>
-                                                <option value="" disabled selected>Select an option</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="alcohol" class="form-label">Do you consume
-                                                alcohol?</label>
-                                            <select class="form-select" id="alcohol" name="alcohol" required>
-                                                <option value="" disabled selected>Select an option</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-
-                                        <div class="col">
-                                            <label class="col-form-label">Notes:</label>
-                                            <textarea class="form-control" name="notes" id="notes"
-                                                placeholder="Enter additional notes"></textarea>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-
-                    <div class="card">
+                    <!-- <div class="card">
                         <div class="card-body" style="background-color: #F5F8FB;">
                             <h4 class="header-design">Medicine </h4>
                             <div id="medicine_list_table"></div>
 
 
                         </div>
-                    </div>
-                    <br><br><br>
+                    </div> -->
+                    <br><br>
                 </div>
             </div>
         </div>
@@ -457,25 +451,38 @@ if (isset($_GET['id'])) {
     $(document).ready(function () {
 
 
-        prenatal_id = <?php echo $id ?>;
+        // prenatal_id = <?php echo $id ?>;
 
-        function fetch_med() {
+        // function fetch_med() {
 
-            $.ajax({
-                url: "table/prenatal_medicine.php",
-                method: "POST",
-                data: {
-                    prenatal_id: prenatal_id,
+        //     $.ajax({
+        //         url: "table/prenatal_medicine.php",
+        //         method: "POST",
+        //         data: {
+        //             prenatal_id: prenatal_id,
 
-                },
-                success: function (data) {
-                    $('#medicine_list_table').html(data);
-                }
-            });
-        }
-        fetch_med();
+        //         },
+        //         success: function (data) {
+        //             $('#medicine_list_table').html(data);
+        //         }
+        //     });
+        // }
+        // fetch_med();
 
+        $(document).on('change', '#lmp', function () {
+            var lastMenstruation = new Date($(this).val());
+            if (lastMenstruation) {
+                var estimatedDelivery = new Date(lastMenstruation);
+                estimatedDelivery.setDate(lastMenstruation.getDate() + 280);
 
+                var year = estimatedDelivery.getFullYear();
+                var month = ('0' + (estimatedDelivery.getMonth() + 1)).slice(-2);
+                var day = ('0' + estimatedDelivery.getDate()).slice(-2);
+                var formattedDate = year + '-' + month + '-' + day;
+
+                $('#edc').val(formattedDate);
+            }
+        });
 
         $(document).on('click', '.btnSaveForm, .btnVoid', function (e) {
             // Check if 'sale_buyer' input is readonly
@@ -492,7 +499,7 @@ if (isset($_GET['id'])) {
 
 
             if ($(this).hasClass('btnSaveForm')) {
-                $('#confirmPrenatalModal').modal('show');
+
             } else if ($(this).hasClass('btnDraft')) {
                 $('#draftModal').modal('show');
             }
@@ -522,6 +529,9 @@ if (isset($_GET['id'])) {
                         });
 
                         // Set all inputs to readonly
+                        var selectElement = document.getElementById('patient_name');
+                        $(selectElement).chosen('destroy');
+
                         $('#prenatalForm input').prop('readonly', true);
                         $('#prenatalForm textarea').prop('readonly', true);
                         $('#prenatalForm select').prop('disabled', true); //use 'disabled' for select elements
@@ -558,6 +568,8 @@ if (isset($_GET['id'])) {
             var selectedSpouse = $(this).find('option:selected').data('spouse_name');
             var selectedSpouseBirth = $(this).find('option:selected').data('spouse_birthdate');
             var selectedSpouseOccu = $(this).find('option:selected').data('spouse_occupation');
+            var selectedAve_monthIncome = $(this).find('option:selected').data('ave_monthIncome');
+            var selectedPhilhealth = $(this).find('option:selected').data('philhealth');
 
 
 
@@ -576,6 +588,10 @@ if (isset($_GET['id'])) {
             $('#spouse_name').val(selectedSpouse);
             $('#spouse_date').val(selectedSpouseBirth);
             $('#spouse_occupation').val(selectedSpouseOccu);
+
+            $('#ave_income').val(selectedAve_monthIncome);
+            $('#philh_no').val(selectedPhilhealth);
+
         });
         $(function () {
             $(".patient_name").chosen({

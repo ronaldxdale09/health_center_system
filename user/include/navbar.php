@@ -25,7 +25,7 @@
         </a>
         <div class="dropdown-content">
             <a href="prenatal.php"> <span class="icon-wrapper"><i class="fas fa-baby-carriage"></i></span> Prenatal</a>
-            <a href="family_planning.php"> <span class="icon-wrapper"><i class="fas fa-users"></i></span> Family
+            <a href="fp_record.php"> <span class="icon-wrapper"><i class="fas fa-users"></i></span> Family
                 Planning</a>
             <a href="immunization_record.php"> <span class="icon-wrapper"><i class="fas fa-book"></i></span>
                 Immunization</a>

@@ -48,61 +48,28 @@ include('include/navbar.php');
                                     <section class="mb-4">
                                         <h4>Family Planning Client Assessment Record</h4>
                                         <hr>
-                                        <div class="alert alert-secondary alert-dismissible">
-                                            <a href="#" class="btn close" data-dismiss="alert"
-                                                aria-label="close">&times;</a>
-                                            <strong>Important Notice:</strong>
-                                            Instruction for Physicians, Nurse and Midwives: Make sure that the clientt
-                                            is not pregnent by using the questions listed in SIDE B. Completely fill out
-                                            or check the required information. Refer accordingly for any abnormal
-                                            history/findings for further medical evaluation
+                                        <div class="alert alert-secondary alert-dismissible fade show">
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                            <strong>Important Notice:</strong> Instruction for Physicians, Nurse and
+                                            Midwives: Make sure that the client is not pregnant by using the questions
+                                            listed in SIDE B. Completely fill out or check the required information.
+                                            Refer accordingly for any abnormal history/findings for further medical
+                                            evaluation.
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-2 mb-3">
                                                 <label for="age" class="form-label">Record ID</label>
                                                 <input type="text" class="form-control" name="record_id"
                                                     value="<?php echo $id ?>" readonly>
                                             </div>
                                             <div class="col-md-5 mb-3">
                                                 <label for="fullName" class="form-label">Full Name</label>
-                                                <select class='form-control col-md-10 patient_name' name='patient_name'
-                                                    id='patient_name'>
-                                                    <option disabled="disabled" selected="selected">Select
-                                                        Patient</option>
-                                                    <?php
-                                                    // Retrieve customer names from the coffee_customer table
-                                                    $sql = "SELECT * FROM patient_record";
-                                                    $result = mysqli_query($con, $sql);
-                                                    if ($result) {
-                                                        while ($row = mysqli_fetch_assoc($result)) {
-                                                            $patient_id = $row['patient_id'];
-                                                            $name = $row['Name'];
-                                                            $birthDate = $row['DateOfBirth'];
-                                                            $address = $row['Address'];
-                                                            $contact = $row['ContactNumber'];
-
-                                                            $spouse_name = $row['spouse_name'];
-                                                            $spouse_birthdate = $row['spouse_birthdate'];
-                                                            $spouse_occupation = $row['spouse_occupation'];
-
-                                                            echo "<option value='$patient_id' 
-                                                                    data-name='$name' 
-                                                                    data-birthdate='$birthDate' 
-                                                                    data-address='$address' 
-                                                                    data-contact='$contact'
-                                                                    data-spouse_name='$spouse_name' 
-                                                                    data-spouse_birthdate='$spouse_birthdate'
-                                                                    data-spouse_occupation='$spouse_occupation'
-                                                                    >
-                                                                    $name
-                                                                </option>";
-                                                        }
-                                                    }
-                                                    ?>
-                                                </select>
+                                                <!-- Select dropdown code here -->
                                             </div>
                                             <div class="col-md-3 mb-3">
-                                                <label for="age" class="form-label">Birth Date
+                                                <label for="birth_date" class="form-label">Birth Date
                                                     (YYYY-MM-DD)</label>
                                                 <input type="text" class="form-control" name="birth_date"
                                                     id="birth_date" readonly>
@@ -111,41 +78,40 @@ include('include/navbar.php');
                                                 <label for="age" class="form-label">Age</label>
                                                 <input type="text" class="form-control" name="age" id="age" readonly>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <label for="address" class="form-label">Address</label>
-                                                    <input type="text" class="form-control" name="address" id="address"
-                                                        readonly>
-                                                </div>
-                                                <div class="col-4">
-                                                    <label for="contactNumber" class="form-label">Contact
-                                                        Number</label>
-                                                    <input type="tel" class="form-control" name="contactNumber"
-                                                        id="contactNumber" readonly>
-                                                </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-8 mb-3">
+                                                <label for="address" class="form-label">Address</label>
+                                                <input type="text" class="form-control" name="address" id="address"
+                                                    readonly>
                                             </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label class="col-form-label">Spouse Name:</label>
-                                                    <input type="text" class="form-control" id="spouse_name"
-                                                        name="spouse_name" placeholder="Spouse Name">
-                                                </div>
-                                                <div class="col">
-                                                    <label class="col-form-label">Birthdate:</label>
-                                                    <input type="date" class="form-control" id="spouse_date"
-                                                        name="spouse_date">
-                                                </div>
-                                                <div class="col">
-                                                    <label class="col-form-label">Occupation:</label>
-                                                    <input type="text" class="form-control" id="spouse_occupation"
-                                                        name="spouse_occupation" placeholder="Enter Occupation">
-                                                </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="contactNumber" class="form-label">Contact Number</label>
+                                                <input type="tel" class="form-control" name="contactNumber"
+                                                    id="contactNumber" readonly>
                                             </div>
                                         </div>
-                                        <br>
 
+                                        <div class="row mb-3">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="spouse_name" class="form-label">Spouse Name:</label>
+                                                <input type="text" class="form-control" id="spouse_name"
+                                                    name="spouse_name" placeholder="Spouse Name">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="spouse_date" class="form-label">Birthdate:</label>
+                                                <input type="date" class="form-control" id="spouse_date"
+                                                    name="spouse_date">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="spouse_occupation" class="form-label">Occupation:</label>
+                                                <input type="text" class="form-control" id="spouse_occupation"
+                                                    name="spouse_occupation" placeholder="Enter Occupation">
+                                            </div>
+                                        </div>
                                     </section>
+
 
 
                                     <?php include('form/fp.form.php') ?>

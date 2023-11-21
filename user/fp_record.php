@@ -71,7 +71,7 @@ include('include/navbar.php');
                             <div class="row mb-3">
                                 <div class="col-12">
                                     <button type="button" class="btn btn-sm btn-dark text-white" data-toggle="modal"
-                                        data-target="#newDeliveryRecord">
+                                        data-target="#newFamilyPlanningRecord">
                                         <i class="fa fa-add" aria-hidden="true"></i> NEW RECORD
                                     </button>
 
@@ -248,7 +248,7 @@ include('include/navbar.php');
     </script>
 
     <?php
-    include "modal/delivery_modal.php";
+    include "modal/fp_modal.php";
     ?>
 
 

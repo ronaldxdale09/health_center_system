@@ -2,8 +2,70 @@
 include('include/header.php');
 include('include/navbar.php');
 
-?>
+if (isset($_GET['id'])) {
 
+    $id = $_GET['id'];
+    $id = preg_replace('~\D~', '', $id);
+
+    $sql = "SELECT * FROM delivery_record WHERE delivery_id = $id";
+    $result = $con->query($sql);
+
+    if ($result->num_rows > 0) {
+        $record = $result->fetch_assoc();
+
+        // Get patient details from patient_record using the patient_id from the retrieved record
+
+        if (($record['patient_id'] != NULL) || ($record['patient_id'] != 0)) {
+            $patient_id = $record['patient_id'];
+
+
+            $sql_patient = "SELECT * FROM patient_record WHERE patient_id = '$patient_id'";
+            $result_patient = $con->query($sql_patient);
+
+            $patient_record = $result_patient->fetch_assoc();
+            echo "
+            <script>
+                $(document).ready(function() {
+
+       
+                    $('#patient_name').val('" . $patient_record['patient_id'] . "').trigger('chosen:updated');
+                    $('#birth_date').val('" . $patient_record['DateOfBirth'] . "');
+                    $('#address').val('" . $patient_record['Address'] . "');
+                    $('#contactNumber').val('" . $patient_record['ContactNumber'] . "');
+                    $('#spouse_name').val('" . $patient_record['spouse_name'] . "');
+                    $('#spouse_date').val('" . $patient_record['spouse_birthdate'] . "');
+                    $('#spouse_occupation').val('" . $patient_record['spouse_occupation'] . "');
+
+                    // Calculate the patient's age based on the DateOfBirth
+                    let today = new Date();
+                    let birthDate = new Date('" . $patient_record['DateOfBirth'] . "');
+                    let age = today.getFullYear() - birthDate.getFullYear();
+                    if (today.getMonth() < birthDate.getMonth() || (today.getMonth() == birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
+                        age--;
+                    }
+                    $('#age').val(age);
+
+                });
+            </script>
+        ";
+        }
+
+        echo "
+            <script>
+                $(document).ready(function() {
+
+
+
+                    $('input[name=\"patient_id\"]').val('" . $record['patient_id'] . "');
+            
+
+                });
+            </script>
+        ";
+    }
+}
+
+?>
 
 <body>
     <div class='main-content' style='position:relative; height:100%;'>
@@ -66,7 +128,41 @@ include('include/navbar.php');
                                             </div>
                                             <div class="col-md-5 mb-3">
                                                 <label for="fullName" class="form-label">Full Name</label>
-                                                <!-- Select dropdown code here -->
+                                                <select class='form-control col-md-10 patient_name' name='patient_name'
+                                                    id='patient_name'>
+                                                    <option disabled="disabled" selected="selected">Select
+                                                        Patient</option>
+                                                    <?php
+                                                    // Retrieve customer names from the coffee_customer table
+                                                    $sql = "SELECT * FROM patient_record";
+                                                    $result = mysqli_query($con, $sql);
+                                                    if ($result) {
+                                                        while ($row = mysqli_fetch_assoc($result)) {
+                                                            $patient_id = $row['patient_id'];
+                                                            $name = $row['Name'];
+                                                            $birthDate = $row['DateOfBirth'];
+                                                            $address = $row['Address'];
+                                                            $contact = $row['ContactNumber'];
+
+                                                            $spouse_name = $row['spouse_name'];
+                                                            $spouse_birthdate = $row['spouse_birthdate'];
+                                                            $spouse_occupation = $row['spouse_occupation'];
+
+                                                            echo "<option value='$patient_id' 
+                                                                    data-name='$name' 
+                                                                    data-birthdate='$birthDate' 
+                                                                    data-address='$address' 
+                                                                    data-contact='$contact'
+                                                                    data-spouse_name='$spouse_name' 
+                                                                    data-spouse_birthdate='$spouse_birthdate'
+                                                                    data-spouse_occupation='$spouse_occupation'
+                                                                    >
+                                                                    $name
+                                                                </option>";
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
                                             </div>
                                             <div class="col-md-3 mb-3">
                                                 <label for="birth_date" class="form-label">Birth Date
@@ -139,22 +235,33 @@ include('include/navbar.php');
             var selectedContact = $(this).find('option:selected').data('contact');
             var selectedBirthDate = $(this).find('option:selected').data('birthdate');
 
+            var selectedSpouse = $(this).find('option:selected').data('spouse_name');
+            var selectedSpouseBirth = $(this).find('option:selected').data('spouse_birthdate');
+            var selectedSpouseOccu = $(this).find('option:selected').data('spouse_occupation');
+
+
+
             let today = new Date();
             let birthDate = new Date(selectedBirthDate);
             let age = today.getFullYear() - birthDate.getFullYear();
 
             // Adjust age if the birthdate has not been reached in the current year
-            if (today.getMonth() < birthDate.getMonth() ||
-                (today.getMonth() == birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
+            if (today.getMonth() < birthDate.getMonth() || (today.getMonth() == birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
                 age--;
             }
-
             $('#age').val(age);
             $('#address').val(selectedAddress);
             $('#birth_date').val(selectedBirthDate);
             $('#contactNumber').val(selectedContact);
+            $('#spouse_name').val(selectedSpouse);
+            $('#spouse_date').val(selectedSpouseBirth);
+            $('#spouse_occupation').val(selectedSpouseOccu);
         });
-
+        $(function () {
+            $(".patient_name").chosen({
+                search_threshold: 10
+            });
+        });
 
         var table = $('#check_trans_table').DataTable({
             dom: '<"top"<"left-col"B><"center-col"f>>lrtip',

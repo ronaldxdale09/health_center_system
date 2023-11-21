@@ -40,37 +40,15 @@
     <a class="nav-link" href="medicine_list.php">
         <i class="fas fa-book"></i></i> <span class="nav-text">Medication List</span>
     </a>
-    <!-- <div class='logout-container'>
+    <div class='logout-container'>
         <span class='nav-text'></span>
         <a class='nav-link logout' href='function/logout.php'>
             <i class='fa fa-sign-out'></i> Signout
         </a>
-
-        <button class="logout-btn flex">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-        </button>
-
-
-    </div> -->
-    <div class=" sidebar_profile flex">
-        <span class="nav_image">
-            <img src="assets/img/avatar2.png" alt="profile_img" />
-        </span>
-        <div class="data_text">
-            <span class="name">David Oliva</span>
-            <span class="email">david@gmail.com</span>
-        </div>
-        <button class="logout-btn flex">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-        </button>
-
     </div>
-
 </nav>
 <script src="js/navbar.js"></script>
-
++
 <script>
     // Function to toggle the dropdown
     function toggleDropdown(id) {

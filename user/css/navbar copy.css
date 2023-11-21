@@ -1,27 +1,22 @@
 #navbar {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 0px;
+    left: 0px;
     height: 100%;
     width: 225px;
+    /* 240px */
     background-color: #1b325f;
-    display: flex;
-    /* Changed to flex */
-    flex-direction: column;
-    /* Arrange children vertically */
+    display: block;
+    align-items: center;
     padding: 5px;
     z-index: 5;
     overflow-x: hidden;
     overflow-y: auto;
+    -ms-overflow-style: none;
+    /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
     transition: width 0.5s ease-in-out;
-}
-
-#navbar-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
 }
 
 #toggle-nav-btn {
@@ -150,102 +145,4 @@
 .icon-wrapper {
     margin-right: 6px;
     display: inline-block;
-}
-
-
-/* Logout Button */
-
-
-/* Sidebar Profile Styles */
-
-.sidebar_profile {
-    position: absolute;
-    /* Positioned absolutely */
-    bottom: 0;
-    /* Align to bottom */
-    left: 0;
-    /* Align to left */
-    width: 100%;
-    /* Full width of the navbar */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Center the content */
-    background-color: #243156;
-    padding: 10px;
-    border-radius: 8px;
-    color: white;
-    margin-bottom: 10px;
-    /* Space from bottom */
-}
-
-.sidebar_profile .nav_image {
-    align-self: center;
-    /* Center the image */
-    margin-bottom: 10px;
-    /* Space between image and text */
-}
-
-.sidebar_profile .nav_image img {
-    width: 50px;
-    /* Adjust as needed */
-    height: 50px;
-    /* Adjust as needed */
-    border-radius: 50%;
-    /* Makes the image circular */
-    border: 2px solid #fff;
-    /* Optional border */
-}
-
-.sidebar_profile .data_text {
-    align-self: stretch;
-    /* Stretch to full width */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Center text items */
-}
-
-.sidebar_profile .name {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 5px;
-    /* Space between name and email */
-}
-
-.sidebar_profile .email {
-    font-size: 14px;
-    color: #adb5bd;
-    /* Lighter color for email */
-    margin-bottom: 10px;
-    /* Space between email and button */
-}
-
-
-/* Adjust button styling as per your design */
-
-.sidebar_profile .logout-btn {
-    align-self: stretch;
-    /* Stretch to full width */
-    background-color: #f44336;
-    /* Logout button color */
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.sidebar_profile .logout-btn:hover {
-    background-color: #d32f2f;
-    /* Darker shade on hover */
-}
-
-.sidebar_profile .logout-btn i {
-    margin-right: 5px;
-    /* Spacing between icon and text */
 }

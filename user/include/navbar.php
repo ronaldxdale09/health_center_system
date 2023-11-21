@@ -58,10 +58,10 @@
             <img src="assets/img/avatar2.png" alt="profile_img" />
         </span>
         <div class="data_text">
-            <span class="name">David Oliva</span>
-            <span class="email">david@gmail.com</span>
+            <span class="name">Mar Jan</span>
+            <span class="email">HC Staff</span>
         </div>
-        <button class="logout-btn flex">
+        <button class="logout-btn flex" id="logout-btn">
             <i class="fas fa-sign-out-alt"></i>
             <span>Logout</span>
         </button>
@@ -92,4 +92,8 @@
             toggleDropdown(expandedDropdown);
         }
     };
+
+    document.getElementById('logout-btn').addEventListener('click', function () {
+        window.location.href = 'function/logout.php'; // Redirect to the logout script
+    });
 </script>

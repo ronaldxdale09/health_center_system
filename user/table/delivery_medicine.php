@@ -25,7 +25,6 @@ while ($medRow = mysqli_fetch_assoc($medResult)) {
 
 
 $output = '
-
 <table class="table table-hover table-bordered table-striped "  id="delivery_medicine_list" >
     <thead class="table-primary">
         <tr>

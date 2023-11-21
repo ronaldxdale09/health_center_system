@@ -15,9 +15,9 @@ if (isset($_GET['id'])) {
         $record = $result->fetch_assoc();
 
         $profileImagePath = "assets/img/avatar2.png"; // Default image path
-            if ($record['ProfilePicture'] != '') {
-                $profileImagePath = 'patient_img/' . $record['ProfilePicture']; // Adjust the path as needed
-            }
+        if ($record['ProfilePicture'] != '') {
+            $profileImagePath = 'patient_img/' . $record['ProfilePicture']; // Adjust the path as needed
+        }
 
 
         echo "
@@ -93,7 +93,9 @@ if (isset($_GET['id'])) {
 
                                             <div class="card-body text-center">
                                                 <!-- Avatar Image -->
-                                           <img src="<?php echo $profileImagePath; ?>" alt="avatar" class="rounded-circle profile-avatar" id="preview_image" width="150" height="150">
+                                                <img src="<?php echo $profileImagePath; ?>" alt="avatar"
+                                                    class="rounded-circle profile-avatar" id="preview_image" width="150"
+                                                    height="150">
 
                                                 <div class="mt-3">
                                                     <label for="profile_picture" class="form-label">Upload Profile
@@ -155,7 +157,7 @@ if (isset($_GET['id'])) {
                                             </div>
                                         </div>
                                     </div> <br>
-                                    <div class="row">
+                                    <div class="row  mb-3">
                                         <div class="col-md-4">
                                             <label class="col-form-label">Spouse Name:</label>
                                             <input type="text" class="form-control" name="spouse_name"
@@ -171,6 +173,57 @@ if (isset($_GET['id'])) {
                                                 placeholder="Enter Occupation">
                                         </div>
                                     </div>
+
+
+
+                                    <div class="row  mb-3">
+                                        <div class="col">
+                                            <label class="col-form-label">Blood Pressure:</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="blood_pressure" readonly>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">mmHg</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-form-label">Weight:</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="weight" readonly>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">kg</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-form-label">Height:</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="weight" readonly>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">ft</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-form-label">Temperature:</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="temperature" readonly>
+                                                <div class="input-group-prepend" >
+                                                    <span class="input-group-text">°C</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-form-label">Resperation:</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="temperature" readonly>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">bpm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                             </div>

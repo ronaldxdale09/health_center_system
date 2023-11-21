@@ -45,14 +45,17 @@ if (isset($_POST['add'])) {
     $query = "INSERT INTO patient_record 
               (Name, Religion, ContactNumber, Occupation, Gender, DateOfBirth, Address, 
               BloodType, EmergencyContact, Allergies, ExistingConditions, Notes, ProfilePicture,
-              spouse_name,spouse_birthdate,spouse_occupation) 
+              spouse_name,spouse_birthdate,spouse_occupation,date_created) 
               VALUES 
               ('$name', '$religion', '$contact_number', '$occupation', '$gender', '$dob', 
               '$address', '$blood_type', '$emergency_contact', '$allergies', '$existing_conditions', '$notes', 
-              '$profile_picture_name','$spouse_name','$spouse_birth','$spouse_occupation')";
+              '$profile_picture_name','$spouse_name','$spouse_birth','$spouse_occupation',NOW())";
 
     $results = mysqli_query($con, $query);
     $last_id = $con->insert_id;
+
+
+    
     if ($results) {
         header("Location: ../patient_record.php?id=$last_id");
         $_SESSION['add_patient'] = "successful";

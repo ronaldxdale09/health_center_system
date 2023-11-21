@@ -145,7 +145,7 @@ if (isset($_GET['id'])) {
                                         <hr>
                                         <div class="row">
                                             <!-- Record ID -->
-                                            <div class="col">
+                                            <div class="col-md-3 mb-3">
                                                 <label for="record_id" class="form-label">Record ID</label>
                                                 <input type="text" class="form-control" name="record_id" id="record_id"
                                                     value="<?php echo $id ?>" readonly>
@@ -316,14 +316,22 @@ if (isset($_GET['id'])) {
                                             </div>
 
                                             <!-- Number of Living Children, Gestational Age, and Gravida -->
-                                            <div class="col">
+                                            <div class="col-md-4 mb-3">
                                                 <label for="children" class="form-label">No. Living Children <span
                                                         class="text-danger">*</span></label>
                                                 <input type="number" class="form-control" name="children" id="children"
                                                     required>
                                             </div>
-
-                                            <div class="col">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="gestationalAge" class="form-label">Gestational Age<span
+                                                        class="text-danger">*</span>
+                                                    <i class="fas fa-info-circle" data-toggle="tooltip"
+                                                        title="Term used during pregnancy to describe how far along the pregnancy is"></i>
+                                                </label>
+                                                <input type="text" class="form-control" name="gestationalAge"
+                                                    id="gestationalAge" required>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
                                                 <label for="gravida" class="form-label">Gravida<span
                                                         class="text-danger">*</span>
                                                     <i class="fas fa-info-circle" data-toggle="tooltip"
@@ -332,24 +340,57 @@ if (isset($_GET['id'])) {
                                                 <input type="number" class="form-control" name="gravida" id="gravida"
                                                     required>
                                             </div>
+                                        </div>
 
-                                            <div class="col">
+                                        <!-- Additional Pregnancy Details -->
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3">
+                                                <label for="petal_tone" class="form-label">Petal Heart Tone <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="petal_tone"
+                                                    id="petal_tone" required>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="fundic_height" class="form-label">Fundic Height <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="fundic_height"
+                                                    id="fundic_height" required>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
                                                 <label for="abortion" class="form-label">Abortion <span
                                                         class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" name="abortion" id="abortion"
                                                     placeholder="No. of Abortion" required>
                                             </div>
-                                            <div class="col">
+                                            <div class="col-md-3 mb-3">
                                                 <label for="para_no" class="form-label">PARA (No. of Pregnancy) <span
                                                         class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" name="para_no" id="para_no"
                                                     required>
                                             </div>
                                         </div>
-
                                     </section>
 
+                                    <!-- Current Health Status -->
+                                    <section class="mb-4">
+                                        <h4>Current Health Status</h4>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="weight" class="form-label">Weight (kg) <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="number" step="0.1" class="form-control" name="weight"
+                                                    id="weight" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="blood_pressure" class="form-label">Blood Pressure <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="blood_pressure"
+                                                    id="blood_pressure" required>
+                                            </div>
+                                        </div>
+                                    </section>
 
+                                    <!-- Lifestyle and Well-being -->
                                     <section class="mb-4">
                                         <h4>Lifestyle and Well-being</h4>
                                         <div class="row">
@@ -378,15 +419,6 @@ if (isset($_GET['id'])) {
                                             </div>
                                         </div>
                                     </section>
-
-                                    <!-- Current Health Status -->
-                                    <section class="mb-4">
-                                        <h4>Current Health Status</h4>
-                                        <div id="prenatal_health_status"></div>
-
-                                    </section>
-
-                                    <!-- Lifestyle and Well-being -->
 
                                 </div>
                             </div>
@@ -436,29 +468,6 @@ if (isset($_GET['id'])) {
         //     });
         // }
         // fetch_med();
-
-
-
-        prenatal_id = <?php echo $id ?>;
-
-        function fetch_med() {
-
-            $.ajax({
-                url: "table/prenatal.health.php",
-                method: "POST",
-                data: {
-                    prenatal_id: prenatal_id,
-
-                },
-                success: function (data) {
-                    $('#prenatal_health_status').html(data);
-                }
-            });
-        }
-        fetch_med();
-
-
-
 
         $(document).on('change', '#lmp', function () {
             var lastMenstruation = new Date($(this).val());

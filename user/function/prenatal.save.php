@@ -146,3 +146,72 @@ exit();
 //         die('Error fetching medicine inventory: ' . mysqli_error($con));
 //     }
 // }
+
+
+
+
+function processHealthStatus($con, $record_id)
+{
+    // Fetch existing health status
+    $fetchSql = "SELECT idNo, medicine_id, qty FROM prenatal_health_status WHERE phs_id = '$record_id'";
+    $fetchResult = mysqli_query($con, $fetchSql);
+    if (!$fetchResult) {
+        die('Error fetching existing medicine lines: ' . mysqli_error($con));
+    }
+
+    $existingMedicineData = [];
+    while ($row = mysqli_fetch_assoc($fetchResult)) {
+        $existingMedicineData[$row['medicine_id']] = $row;
+    }
+
+    // Arrays from a form
+    $medicine_ids = $_POST['med'];
+    $quantities = $_POST['qty'];
+
+    foreach ($medicine_ids as $index => $medicine_id) {
+        $quantity = $quantities[$index];
+
+        // Check if this medicine already exists in prenatal_medicine
+        if (array_key_exists($medicine_id, $existingMedicineData)) {
+            // Fetch the current qty and calculate the difference
+            $currentQty = $existingMedicineData[$medicine_id]['qty'];
+            $difference = $quantity - $currentQty;
+
+            // Update prenatal_medicine with the new qty
+            $sql = "UPDATE prenatal_medicine SET qty = '$quantity' WHERE prenatal_id = '$record_id' AND medicine_id = '$medicine_id'";
+            $result = mysqli_query($con, $sql);
+            if (!$result) {
+                die('Error updating prenatal medicine data: ' . mysqli_error($con));
+            }
+
+            // Update the inventory with the difference
+            updateMedicineInventory($con, $medicine_id, -$difference);
+        } else {
+            // Insert new record into prenatal_medicine
+            $sql = "INSERT INTO prenatal_medicine (prenatal_id, medicine_id, qty) VALUES ('$record_id', '$medicine_id', '$quantity')";
+            $result = mysqli_query($con, $sql);
+            if (!$result) {
+                die('Error inserting prenatal medicine data: ' . mysqli_error($con));
+            }
+
+            // Decrease the inventory
+            updateMedicineInventory($con, $medicine_id, -$quantity);
+        }
+
+        // Remove the processed medicine_id from the existingMedicineData array
+        unset($existingMedicineData[$medicine_id]);
+    }
+
+    // Remove any old prenatal medicine records that weren't in the current submission
+    foreach ($existingMedicineData as $medicine_id => $medData) {
+        $idNo = $medData['idNo'];
+        $deleteSql = "DELETE FROM prenatal_medicine WHERE idNo = '$idNo'";
+        if (!mysqli_query($con, $deleteSql)) {
+            die('Error deleting old prenatal medicine data: ' . mysqli_error($con));
+        }
+
+        // Return the old qty back to the inventory
+        updateMedicineInventory($con, $medicine_id, $medData['qty']);
+    }
+}
+

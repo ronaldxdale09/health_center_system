@@ -1,8 +1,6 @@
 <?php
 include('../../function/db.php');
 
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepare an update statement
     $updateQuery = "UPDATE patient_medical_history SET
         severe_headaches = ?,
@@ -70,23 +68,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt = mysqli_prepare($con, $updateQuery)) {
         // Bind variables to the prepared statement as parameters
-        // Assuming all inputs are sent as strings from form, which will be converted to their respective types in the SQL statement
-        // 'i' corresponds to an integer
-        // 'd' corresponds to a double
-        // 's' corresponds to a string
-        // 'b' corresponds to a boolean
         mysqli_stmt_bind_param($stmt, "iiiiiiiiisiissssddsisiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
-            $_POST['severe_headaches'] === 'on' ? 1 : 0, // Convert checkboxes to boolean
-            // ... Repeat for all other checkbox fields
+            isset($_POST['severe_headaches']) ? 1 : 0, // Convert checkboxes to boolean
+            isset($_POST['history_stroke_heart_attack_hypertension']) ? 1 : 0,
+            isset($_POST['non_traumatic_hematoma']) ? 1 : 0,
+            isset($_POST['breast_cancer_history']) ? 1 : 0,
+            isset($_POST['severe_chest_pain']) ? 1 : 0,
+            isset($_POST['prolonged_cough']) ? 1 : 0,
+            isset($_POST['jaundice']) ? 1 : 0,
+            isset($_POST['unexplained_vaginal_bleeding']) ? 1 : 0,
+            isset($_POST['abnormal_vaginal_discharge']) ? 1 : 0,
+            isset($_POST['is_smoker']) ? 1 : 0,
             $_POST['number_of_pregnancies'],
             $_POST['date_of_last_delivery'],
-            // ... Repeat for all other text and date inputs
+            $_POST['last_delivery_type'],
+            $_POST['last_menstrual_period'],
+            $_POST['previous_menstrual_period'],
+            $_POST['height'],
+            $_POST['weight'],
+            $_POST['blood_pressure'],
+            $_POST['pulse_rate'],
+            isset($_POST['abnormal_discharge']) ? 1 : 0,
+            $_POST['discharge_from'],
+            isset($_POST['sores_ulcers']) ? 1 : 0,
+            isset($_POST['pain_burning']) ? 1 : 0,
+            isset($_POST['history_sti_treatment']) ? 1 : 0,
+            isset($_POST['hiv_aids']) ? 1 : 0,
+            isset($_POST['unpleasant_relationship']) ? 1 : 0,
+            isset($_POST['partner_disapproval']) ? 1 : 0,
+            isset($_POST['domestic_violence_history']) ? 1 : 0,
+            isset($_POST['referred_to_dswd']) ? 1 : 0,
+            isset($_POST['referred_to_wcpu']) ? 1 : 0,
+            isset($_POST['referred_to_ngo']) ? 1 : 0,
+            $_POST['referred_to_others_specify'],
+            isset($_POST['skin_normal']) ? 1 : 0,
+            isset($_POST['skin_pale']) ? 1 : 0,
+            isset($_POST['skin_yellowish']) ? 1 : 0,
+            isset($_POST['skin_hematoma']) ? 1 : 0,
+            isset($_POST['conjunctiva_normal']) ? 1 : 0,
+            isset($_POST['conjunctiva_pale']) ? 1 : 0,
+            isset($_POST['conjunctiva_yellowish']) ? 1 : 0,
+            isset($_POST['neck_normal']) ? 1 : 0,
+            isset($_POST['neck_mass']) ? 1 : 0,
+            isset($_POST['neck_lymph_nodes']) ? 1 : 0,
+            isset($_POST['breast_normal']) ? 1 : 0,
+            isset($_POST['breast_mass']) ? 1 : 0,
+            isset($_POST['breast_nipple_discharge']) ? 1 : 0,
+            isset($_POST['abdomen_normal']) ? 1 : 0,
+            isset($_POST['abdomen_mass']) ? 1 : 0,
+            isset($_POST['abdomen_varicosities']) ? 1 : 0,
+            isset($_POST['extremities_normal']) ? 1 : 0,
+            isset($_POST['extremities_edema']) ? 1 : 0,
+            isset($_POST['extremities_varicosities']) ? 1 : 0,
+            isset($_POST['pelvic_normal']) ? 1 : 0,
+            isset($_POST['pelvic_mass']) ? 1 : 0,
+            isset($_POST['pelvic_abnormal']) ? 1 : 0,
+            isset($_POST['cervical_none']) ? 1 : 0,
+            isset($_POST['cervical_warts']) ? 1 : 0,
+            isset($_POST['cervical_polyp']) ? 1 : 0,
+            isset($_POST['cervical_inflammation']) ? 1 : 0,
+            isset($_POST['cervical_bloddy']) ? 1 : 0,
+            isset($_POST['cervical_firm']) ? 1 : 0,
+            isset($_POST['cervical_soft']) ? 1 : 0,
             $_POST['patient_id'] // This should be an existing patient_id to update the correct record
         );
 
         // Execute the prepared statement
         if (mysqli_stmt_execute($stmt)) {
-            echo "Record updated successfully.";
+            echo 'success';
         } else {
             echo "ERROR: Could not execute query: $updateQuery. " . mysqli_error($con);
         }
@@ -96,7 +145,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "ERROR: Could not prepare query: $updateQuery. " . mysqli_error($con);
     }
-}
 
 // Close connection
 mysqli_close($con);

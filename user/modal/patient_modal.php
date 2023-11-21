@@ -49,8 +49,10 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="col-form-label">Contact #:</label>
-                                    <input type="text" class="form-control" name="contact_number"
-                                        placeholder="Enter contact number">
+
+                                    <input type="number" class="form-control" id="xxx" name="contact_number"
+                                        oninput="maxLengthCheck(this)" maxlength="11">
+
                                 </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label">Occupation:</label>
@@ -159,4 +161,9 @@
         };
         reader.readAsDataURL(event.target.files[0]);
     }, false);
+
+    function maxLengthCheck(object) {
+        if (object.value.length > object.maxLength)
+            object.value = object.value.slice(0, object.maxLength)
+    }
 </script>

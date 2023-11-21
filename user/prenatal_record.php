@@ -57,24 +57,17 @@ if (isset($_GET['id'])) {
 
 
                     $('input[name=\"patient_id\"]').val('" . $record['patient_id'] . "');
-           
-                    $('input[name=\"blood_pressure\"]').val('" . $record['blood_pressure'] . "');
-                    $('input[name=\"weight\"]').val('" . $record['weight'] . "');
-
                     $('input[name=\"philh_no\"]').val('" . $record['philh_no'] . "');
                     $('input[name=\"ave_income\"]').val('" . $record['ave_income'] . "');
 
 
 
 
-                    $('input[name=\"petal_tone\"]').val('" . $record['petal_tone'] . "');
-                    $('input[name=\"fundic_height\"]').val('" . $record['fundic_height'] . "');
                     $('input[name=\"abortion\"]').val('" . $record['abortion'] . "');
                     $('input[name=\"para_no\"]').val('" . $record['para_no'] . "');
                     $('input[name=\"lmp\"]').val('" . $record['lmp'] . "');
                     $('input[name=\"edc\"]').val('" . $record['edc'] . "');
                     $('input[name=\"children\"]').val('" . $record['children'] . "');
-                    $('input[name=\"gestationalAge\"]').val('" . $record['gestationalAge'] . "');
                     $('input[name=\"gravida\"]').val('" . $record['gravida'] . "');
                     $('input[name=\"height\"]').val('" . $record['height'] . "');
                     $('select[name=\"smoking\"]').val('" . $record['smoking'] . "');

@@ -9,11 +9,6 @@ $patient_id = $_POST['patient_name'];
 
 
 
-$blood_pressure = isset($_POST['blood_pressure']) ? $_POST['blood_pressure'] : '';
-$weight = isset($_POST['weight']) ? $_POST['weight'] : '';
-
-$petal_tone = isset($_POST['petal_tone']) ? $_POST['petal_tone'] : '';
-$fundic_height = isset($_POST['fundic_height']) ? $_POST['fundic_height'] : '';
 $philh_no = isset($_POST['philh_no']) ? $_POST['philh_no'] : '';
 
 $ave_income = isset($_POST['ave_income']) ? $_POST['ave_income'] : '';
@@ -23,7 +18,6 @@ $para_no = isset($_POST['para_no']) ? $_POST['para_no'] : '';
 $lmp = isset($_POST['lmp']) ? $_POST['lmp'] : '';
 $edc = isset($_POST['edc']) ? $_POST['edc'] : '';
 $children = isset($_POST['children']) ? $_POST['children'] : '';
-$gestationalAge = isset($_POST['gestationalAge']) ? $_POST['gestationalAge'] : '';
 $gravida = isset($_POST['gravida']) ? $_POST['gravida'] : '';
 
 $smoking = isset($_POST['smoking']) ? $_POST['smoking'] : '';
@@ -32,10 +26,9 @@ $notes = isset($_POST['notes']) ? $_POST['notes'] : '';
 
 
 
-$query = "UPDATE prenatal_record SET patient_id='$patient_id',
-  blood_pressure='$blood_pressure', weight='/$weight',ave_income='$ave_income',
-    petal_tone='$petal_tone', fundic_height='$fundic_height', philh_no='$philh_no', abortion='$abortion', 
-    para_no='$para_no', lmp='$lmp', edc='$edc', children='$children', gestationalAge='$gestationalAge', 
+$query = "UPDATE prenatal_record SET patient_id='$patient_id',ave_income='$ave_income',
+     philh_no='$philh_no', abortion='$abortion', 
+    para_no='$para_no', lmp='$lmp', edc='$edc', children='$children', 
     gravida='$gravida',  smoking='$smoking', alcohol='$alcohol', notes='$notes'
     WHERE prenatal_id ='$record_id'";
 
@@ -46,13 +39,12 @@ if (!$results) {
     exit();
 } else {
 
-    $query = "UPDATE patient_record SET ave_monthIncome='$ave_income',philhealth='$philh_no',
-    blood_pressure='$blood_pressure',weight='$weight'
+    $query = "UPDATE patient_record SET ave_monthIncome='$ave_income',philhealth='$philh_no'
     WHERE patient_id ='$patient_id'";
     $results = mysqli_query($con, $query);
 
 
-
+    processHealthStatus($con, $record_id);
     // processMedicine($con, $record_id);
     echo 'success';
 }
@@ -149,69 +141,69 @@ exit();
 
 
 
-
 function processHealthStatus($con, $record_id)
 {
     // Fetch existing health status
-    $fetchSql = "SELECT idNo, medicine_id, qty FROM prenatal_health_status WHERE phs_id = '$record_id'";
+    $fetchSql = "SELECT phs_id FROM prenatal_health_status WHERE prenatal_id = '$record_id'";
     $fetchResult = mysqli_query($con, $fetchSql);
     if (!$fetchResult) {
-        die('Error fetching existing medicine lines: ' . mysqli_error($con));
+        die('Error fetching existing health status: ' . mysqli_error($con));
     }
 
-    $existingMedicineData = [];
+    $existingStatusData = [];
     while ($row = mysqli_fetch_assoc($fetchResult)) {
-        $existingMedicineData[$row['medicine_id']] = $row;
+        $existingStatusData[$row['phs_id']] = $row;
     }
 
-    // Arrays from a form
-    $medicine_ids = $_POST['med'];
-    $quantities = $_POST['qty'];
+    // Arrays from the form
+    $blood_pressures = $_POST['blood_pressure'];
+    $weights = $_POST['weight'];
+    $fundic_heights = $_POST['fundic_height'];
+    $gestation_ages = $_POST['gestational_age'];
+    $petal_heart_tones = $_POST['petal_heart_tone'];
+    $healthCheck_date = $_POST['healthCheck_date'];
 
-    foreach ($medicine_ids as $index => $medicine_id) {
-        $quantity = $quantities[$index];
 
-        // Check if this medicine already exists in prenatal_medicine
-        if (array_key_exists($medicine_id, $existingMedicineData)) {
-            // Fetch the current qty and calculate the difference
-            $currentQty = $existingMedicineData[$medicine_id]['qty'];
-            $difference = $quantity - $currentQty;
+    foreach ($blood_pressures as $index => $blood_pressure) {
+        $weight = $weights[$index];
+        $fundic_height = $fundic_heights[$index];
+        $gestation_age = $gestation_ages[$index];
+        $petal_heart_tone = $petal_heart_tones[$index];
+        $healthCheck_date = $healthCheck_date[$index];
 
-            // Update prenatal_medicine with the new qty
-            $sql = "UPDATE prenatal_medicine SET qty = '$quantity' WHERE prenatal_id = '$record_id' AND medicine_id = '$medicine_id'";
+        // Check if this status already exists
+        if (array_key_exists($index, $existingStatusData)) {
+            // Update existing record
+            $sql = "UPDATE prenatal_health_status SET 
+                healthCheck_date = '$healthCheck_date',
+                blood_pressure = '$blood_pressure',
+                weight = '$weight',
+                fundic_height = '$fundic_height',
+                gestational_age = '$gestation_age',
+                petalHeartTone = '$petal_heart_tone'
+                WHERE phs_id = '{$existingStatusData[$index]['phs_id']}'";
             $result = mysqli_query($con, $sql);
             if (!$result) {
-                die('Error updating prenatal medicine data: ' . mysqli_error($con));
+                die('Error updating health status: ' . mysqli_error($con));
             }
-
-            // Update the inventory with the difference
-            updateMedicineInventory($con, $medicine_id, -$difference);
         } else {
-            // Insert new record into prenatal_medicine
-            $sql = "INSERT INTO prenatal_medicine (prenatal_id, medicine_id, qty) VALUES ('$record_id', '$medicine_id', '$quantity')";
+            // Insert new record
+            $sql = "INSERT INTO prenatal_health_status (prenatal_id,healthCheck_date, blood_pressure, weight, fundic_height, gestational_age, petalHeartTone) 
+                    VALUES ('$record_id','$healthCheck_date', '$blood_pressure', '$weight', '$fundic_height', '$gestation_age', '$petal_heart_tone')";
             $result = mysqli_query($con, $sql);
             if (!$result) {
-                die('Error inserting prenatal medicine data: ' . mysqli_error($con));
+                die('Error inserting new health status: ' . mysqli_error($con));
             }
-
-            // Decrease the inventory
-            updateMedicineInventory($con, $medicine_id, -$quantity);
         }
-
-        // Remove the processed medicine_id from the existingMedicineData array
-        unset($existingMedicineData[$medicine_id]);
     }
 
-    // Remove any old prenatal medicine records that weren't in the current submission
-    foreach ($existingMedicineData as $medicine_id => $medData) {
-        $idNo = $medData['idNo'];
-        $deleteSql = "DELETE FROM prenatal_medicine WHERE idNo = '$idNo'";
-        if (!mysqli_query($con, $deleteSql)) {
-            die('Error deleting old prenatal medicine data: ' . mysqli_error($con));
+    // Remove any old records that weren't in the current submission
+    foreach ($existingStatusData as $phs_id => $statusData) {
+        if (!in_array($phs_id, array_keys($_POST['blood_pressure']))) {
+            $deleteSql = "DELETE FROM prenatal_health_status WHERE phs_id = '$phs_id'";
+            if (!mysqli_query($con, $deleteSql)) {
+                die('Error deleting old health status data: ' . mysqli_error($con));
+            }
         }
-
-        // Return the old qty back to the inventory
-        updateMedicineInventory($con, $medicine_id, $medData['qty']);
     }
 }
-

@@ -37,12 +37,12 @@
         });
 
         <?php
-        $gender_sql = "SELECT babyGender, COUNT(*) as count FROM delivery_record GROUP BY babyGender";
+        $gender_sql = "SELECT baby_gender, COUNT(*) as count FROM delivery_record GROUP BY baby_gender";
         $gender_query = mysqli_query($con, $gender_sql);
 
         $genderData = [];
         while ($row = mysqli_fetch_assoc($gender_query)) {
-            $genderData[$row['babyGender']] = $row['count'];
+            $genderData[$row['baby_gender']] = $row['count'];
         }
         ?>
 

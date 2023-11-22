@@ -51,16 +51,73 @@ if (isset($_GET['id'])) {
         }
 
         echo "
-            <script>
-                $(document).ready(function() {
-
-
-
-                    $('input[name=\"patient_id\"]').val('" . $record['patient_id'] . "');
+        <script>
+        $(document).ready(function() {
+            // Basic fields
+            $('input[name=\"number_of_pregnancies\"]').val('" . $record['number_of_pregnancies'] . "');
+            $('input[name=\"date_of_last_delivery\"]').val('" . $record['date_of_last_delivery'] . "');
+            $('input[name=\"last_delivery_type\"]').val('" . $record['last_delivery_type'] . "');
+            $('input[name=\"last_menstrual_period\"]').val('" . $record['last_menstrual_period'] . "');
+            $('input[name=\"previous_menstrual_period\"]').val('" . $record['previous_menstrual_period'] . "');
+            $('input[name=\"height\"]').val('" . $record['height'] . "');
+            $('input[name=\"weight\"]').val('" . $record['weight'] . "');
+            $('input[name=\"blood_pressure\"]').val('" . $record['blood_pressure'] . "');
+            $('input[name=\"pulse_rate\"]').val('" . $record['pulse_rate'] . "');
             
-
-                });
-            </script>
+            // Checkbox fields
+            $('input[name=\"severe_headaches\"]').prop('checked', " . $record['severe_headaches'] . ");
+            $('input[name=\"history_stroke_heart_attack_hypertension\"]').prop('checked', " . $record['history_stroke_heart_attack_hypertension'] . ");
+            $('input[name=\"non_traumatic_hematoma\"]').prop('checked', " . $record['non_traumatic_hematoma'] . ");
+            $('input[name=\"breast_cancer_history\"]').prop('checked', " . $record['breast_cancer_history'] . ");
+            $('input[name=\"severe_chest_pain\"]').prop('checked', " . $record['severe_chest_pain'] . ");
+            $('input[name=\"prolonged_cough\"]').prop('checked', " . $record['prolonged_cough'] . ");
+            $('input[name=\"jaundice\"]').prop('checked', " . $record['jaundice'] . ");
+            $('input[name=\"unexplained_vaginal_bleeding\"]').prop('checked', " . $record['unexplained_vaginal_bleeding'] . ");
+            $('input[name=\"abnormal_vaginal_discharge\"]').prop('checked', " . $record['abnormal_vaginal_discharge'] . ");
+            $('input[name=\"is_smoker\"]').prop('checked', " . $record['is_smoker'] . ");
+            $('input[name=\"abnormal_discharge\"]').prop('checked', " . $record['abnormal_discharge'] . ");
+            $('input[name=\"sores_ulcers\"]').prop('checked', " . $record['sores_ulcers'] . ");
+            $('input[name=\"pain_burning\"]').prop('checked', " . $record['pain_burning'] . ");
+            $('input[name=\"history_sti_treatment\"]').prop('checked', " . $record['history_sti_treatment'] . ");
+            $('input[name=\"hiv_aids\"]').prop('checked', " . $record['hiv_aids'] . ");
+            $('input[name=\"unpleasant_relationship\"]').prop('checked', " . $record['unpleasant_relationship'] . ");
+            $('input[name=\"partner_disapproval\"]').prop('checked', " . $record['partner_disapproval'] . ");
+            $('input[name=\"domestic_violence_history\"]').prop('checked', " . $record['domestic_violence_history'] . ");
+            $('input[name=\"referred_to_dswd\"]').prop('checked', " . $record['referred_to_dswd'] . ");
+            $('input[name=\"referred_to_wcpu\"]').prop('checked', " . $record['referred_to_wcpu'] . ");
+            $('input[name=\"referred_to_ngo\"]').prop('checked', " . $record['referred_to_ngo'] . ");
+            $('textarea[name=\"referred_to_others_specify\"]').val('" . $record['referred_to_others_specify'] . "');
+            $('input[name=\"skin_normal\"]').prop('checked', " . $record['skin_normal'] . ");
+            $('input[name=\"skin_pale\"]').prop('checked', " . $record['skin_pale'] . ");
+            $('input[name=\"skin_yellowish\"]').prop('checked', " . $record['skin_yellowish'] . ");
+            $('input[name=\"skin_hematoma\"]').prop('checked', " . $record['skin_hematoma'] . ");
+            $('input[name=\"conjunctiva_normal\"]').prop('checked', " . $record['conjunctiva_normal'] . ");
+            $('input[name=\"conjunctiva_pale\"]').prop('checked', " . $record['conjunctiva_pale'] . ");
+            $('input[name=\"conjunctiva_yellowish\"]').prop('checked', " . $record['conjunctiva_yellowish'] . ");
+            $('input[name=\"neck_normal\"]').prop('checked', " . $record['neck_normal'] . ");
+            $('input[name=\"neck_mass\"]').prop('checked', " . $record['neck_mass'] . ");
+            $('input[name=\"neck_lymph_nodes\"]').prop('checked', " . $record['neck_lymph_nodes'] . ");
+            $('input[name=\"breast_normal\"]').prop('checked', " . $record['breast_normal'] . ");
+            $('input[name=\"breast_mass\"]').prop('checked', " . $record['breast_mass'] . ");
+            $('input[name=\"breast_nipple_discharge\"]').prop('checked', " . $record['breast_nipple_discharge'] . ");
+            $('input[name=\"abdomen_normal\"]').prop('checked', " . $record['abdomen_normal'] . ");
+            $('input[name=\"abdomen_mass\"]').prop('checked', " . $record['abdomen_mass'] . ");
+            $('input[name=\"abdomen_varicosities\"]').prop('checked', " . $record['abdomen_varicosities'] . ");
+            $('input[name=\"extremities_normal\"]').prop('checked', " . $record['extremities_normal'] . ");
+            $('input[name=\"extremities_edema\"]').prop('checked', " . $record['extremities_edema'] . ");
+            $('input[name=\"extremities_varicosities\"]').prop('checked', " . $record['extremities_varicosities'] . ");
+            $('input[name=\"pelvic_normal\"]').prop('checked', " . $record['pelvic_normal'] . ");
+            $('input[name=\"pelvic_mass\"]').prop('checked', " . $record['pelvic_mass'] . ");
+            $('input[name=\"pelvic_abnormal\"]').prop('checked', " . $record['pelvic_abnormal'] . ");
+            $('input[name=\"cervical_none\"]').prop('checked', " . $record['cervical_none'] . ");
+            $('input[name=\"cervical_warts\"]').prop('checked', " . $record['cervical_warts'] . ");
+            $('input[name=\"cervical_polyp\"]').prop('checked', " . $record['cervical_polyp'] . ");
+            $('input[name=\"cervical_inflammation\"]').prop('checked', " . $record['cervical_inflammation'] . ");
+            $('input[name=\"cervical_bloddy\"]').prop('checked', " . $record['cervical_bloddy'] . ");
+            $('input[name=\"cervical_firm\"]').prop('checked', " . $record['cervical_firm'] . ");
+            $('input[name=\"cervical_soft\"]').prop('checked', " . $record['cervical_soft'] . ");
+        });
+    </script>
         ";
     }
 }

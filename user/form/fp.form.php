@@ -183,13 +183,7 @@
                     <label>abnormal discharge from the genital area</label>
                     <label class="inline-label"><input type="radio" name="abnormal_discharge" value="yes"> Yes</label>
                     <label class="inline-label"><input type="radio" name="abnormal_discharge" value="no"> No</label>
-                    <div class="conditional">
-                        <span>If "YES" please indicate if from:</span>
-                        <label class="inline-label"><input type="radio" name="discharge_from" value="vagina">
-                            Vagina</label>
-                        <label class="inline-label"><input type="radio" name="discharge_from" value="penis">
-                            Penis</label>
-                    </div>
+               
                 </div>
                 <div class="col">
                     <label>sores or ulcers in the genital area</label>
@@ -398,6 +392,4 @@
     <fieldset>
         
     </fieldset> -->
-
-    <input type="submit" value="Submit">
 </form>

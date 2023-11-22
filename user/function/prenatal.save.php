@@ -138,11 +138,9 @@ exit();
 //         die('Error fetching medicine inventory: ' . mysqli_error($con));
 //     }
 // }
-
-
 function processHealthStatus($con, $record_id) {
     // Fetch existing health status
-    $fetchSql = "SELECT phs_id FROM prenatal_health_status WHERE prenatal_id = '$record_id'";
+    $fetchSql = "SELECT phs_id, prenatal_id FROM prenatal_health_status WHERE prenatal_id = '$record_id'";
     $fetchResult = mysqli_query($con, $fetchSql);
     if (!$fetchResult) {
         die('Error fetching existing health status: ' . mysqli_error($con));
@@ -161,6 +159,10 @@ function processHealthStatus($con, $record_id) {
     $fundic_heights = $_POST['fundic_height'] ?? []; // Example for additional field
     $gestational_ages = $_POST['gestational_age'] ?? []; // Example for additional field
     $petal_heart_tones = $_POST['petal_heart_tone'] ?? []; // Example for additional field
+
+    $latestBloodPressure = '';
+    $latestWeight = '';
+    $latestUpdateDate = '0000-00-00';
 
     foreach ($healthCheck_dates as $index => $healthCheck_date) {
         $phs_id = $phs_ids[$index] ?? null;
@@ -190,6 +192,24 @@ function processHealthStatus($con, $record_id) {
             if (!mysqli_query($con, $insertSql)) {
                 die('Error inserting new health status: ' . mysqli_error($con));
             }
+        }
+
+        // Check if this healthCheck_date is the latest
+        if ($healthCheck_date > $latestUpdateDate) {
+            $latestUpdateDate = $healthCheck_date;
+            $latestBloodPressure = $blood_pressure;
+            $latestWeight = $weight;
+        }
+    }
+
+    // Update patient_record with the latest blood pressure and weight
+    if ($latestUpdateDate !== '0000-00-00') {
+        $patientUpdateSql = "UPDATE patient_record SET 
+                             blood_pressure = '$latestBloodPressure', 
+                             weight = '$latestWeight' 
+                             WHERE patient_id = (SELECT patient_id FROM prenatal_record WHERE prenatal_id = '$record_id')";
+        if (!mysqli_query($con, $patientUpdateSql)) {
+            die('Error updating patient record: ' . mysqli_error($con));
         }
     }
 

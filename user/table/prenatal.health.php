@@ -95,9 +95,8 @@ echo $output;
         $("#addStatus").click(function () {
             var newRow = `
         <tr>
-        <td hidden><input type="text" class="form-control phs_id " name="phs_id[]"></td>
-        <td><input type="date" class="form-control healthCheck_date " name="healthCheck_date[]"></td>
-
+        <td hidden><input type="text" class="form-control phs_id" name="phs_id[]"></td>
+        <td><input type="date" class="form-control healthCheck_date" name="healthCheck_date[]"></td>
             <td>
                 <div class="input-group">
                     <input type="text" class="form-control" name="blood_pressure[]">

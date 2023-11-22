@@ -140,9 +140,7 @@ exit();
 // }
 
 
-
-function processHealthStatus($con, $record_id)
-{
+function processHealthStatus($con, $record_id) {
     // Fetch existing health status
     $fetchSql = "SELECT phs_id FROM prenatal_health_status WHERE prenatal_id = '$record_id'";
     $fetchResult = mysqli_query($con, $fetchSql);
@@ -156,51 +154,49 @@ function processHealthStatus($con, $record_id)
     }
 
     // Arrays from the form
-    $blood_pressures = $_POST['blood_pressure'];
-    $weights = $_POST['weight'];
-    $fundic_heights = $_POST['fundic_height'];
-    $gestation_ages = $_POST['gestational_age'];
-    $petal_heart_tones = $_POST['petal_heart_tone'];
-    $healthCheck_date = $_POST['healthCheck_date'];
+    $phs_ids = $_POST['phs_id'] ?? [];
+    $healthCheck_dates = $_POST['healthCheck_date'] ?? [];
+    $blood_pressures = $_POST['blood_pressure'] ?? [];
+    $weights = $_POST['weight'] ?? [];
+    $fundic_heights = $_POST['fundic_height'] ?? []; // Example for additional field
+    $gestational_ages = $_POST['gestational_age'] ?? []; // Example for additional field
+    $petal_heart_tones = $_POST['petal_heart_tone'] ?? []; // Example for additional field
 
+    foreach ($healthCheck_dates as $index => $healthCheck_date) {
+        $phs_id = $phs_ids[$index] ?? null;
+        $blood_pressure = $blood_pressures[$index] ?? '-';
+        $weight = $weights[$index] ?? '-';
+        $fundic_height = $fundic_heights[$index] ?? null; // Example for additional field
+        $gestational_age = $gestational_ages[$index] ?? null; // Example for additional field
+        $petal_heart_tone = $petal_heart_tones[$index] ?? null; // Example for additional field
 
-    foreach ($blood_pressures as $index => $blood_pressure) {
-        $weight = $weights[$index];
-        $fundic_height = $fundic_heights[$index];
-        $gestation_age = $gestation_ages[$index];
-        $petal_heart_tone = $petal_heart_tones[$index];
-        $healthCheck_date = $healthCheck_date[$index];
-
-        // Check if this status already exists
-        if (array_key_exists($index, $existingStatusData)) {
+        if ($phs_id && isset($existingStatusData[$phs_id])) {
             // Update existing record
-            $sql = "UPDATE prenatal_health_status SET 
+            $updateSql = "UPDATE prenatal_health_status SET 
                 healthCheck_date = '$healthCheck_date',
                 blood_pressure = '$blood_pressure',
                 weight = '$weight',
                 fundic_height = '$fundic_height',
-                gestational_age = '$gestation_age',
+                gestational_age = '$gestational_age',
                 petalHeartTone = '$petal_heart_tone'
-                WHERE phs_id = '{$existingStatusData[$index]['phs_id']}'";
-            $result = mysqli_query($con, $sql);
-            if (!$result) {
+                WHERE phs_id = '$phs_id'";
+            if (!mysqli_query($con, $updateSql)) {
                 die('Error updating health status: ' . mysqli_error($con));
             }
         } else {
             // Insert new record
-            $sql = "INSERT INTO prenatal_health_status (prenatal_id,healthCheck_date, blood_pressure, weight, fundic_height, gestational_age, petalHeartTone) 
-                    VALUES ('$record_id','$healthCheck_date', '$blood_pressure', '$weight', '$fundic_height', '$gestation_age', '$petal_heart_tone')";
-            $result = mysqli_query($con, $sql);
-            if (!$result) {
+            $insertSql = "INSERT INTO prenatal_health_status (prenatal_id, healthCheck_date, blood_pressure, weight, fundic_height, gestational_age, petalHeartTone) 
+                    VALUES ('$record_id', '$healthCheck_date', '$blood_pressure', '$weight', '$fundic_height', '$gestational_age', '$petal_heart_tone')";
+            if (!mysqli_query($con, $insertSql)) {
                 die('Error inserting new health status: ' . mysqli_error($con));
             }
         }
     }
 
     // Remove any old records that weren't in the current submission
-    foreach ($existingStatusData as $phs_id => $statusData) {
-        if (!in_array($phs_id, array_keys($_POST['blood_pressure']))) {
-            $deleteSql = "DELETE FROM prenatal_health_status WHERE phs_id = '$phs_id'";
+    foreach ($existingStatusData as $existingPhsId => $statusData) {
+        if (!in_array($existingPhsId, $phs_ids)) {
+            $deleteSql = "DELETE FROM prenatal_health_status WHERE phs_id = '$existingPhsId'";
             if (!mysqli_query($con, $deleteSql)) {
                 die('Error deleting old health status data: ' . mysqli_error($con));
             }

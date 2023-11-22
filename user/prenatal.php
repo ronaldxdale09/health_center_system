@@ -71,7 +71,8 @@ include('include/navbar.php');
                             <!-- Button for New Cheque -->
                             <div class="row mb-3">
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-sm btn-dark text-white" data-toggle="modal" data-target="#newPrenatalRecord">
+                                    <button type="button" class="btn btn-sm btn-dark text-white" data-toggle="modal"
+                                        data-target="#newPrenatalRecord">
                                         <i class="fa fa-add" aria-hidden="true"></i> NEW RECORD
                                     </button>
 
@@ -99,6 +100,17 @@ include('include/navbar.php');
 
                                 <!-- Date Range Filter - Start Date -->
                                 <div class="col-md-3 mb-3">
+                                    <label for="startDate">Estimated Date of Confinement:</label>
+                                    <select id="edcFilter" class="form-control">
+                                        <option value="">All</option>
+                                        <?php
+                                        for ($i = 1; $i <= 12; $i++) {
+                                            echo '<option value="' . $i . '">' . date("F", mktime(0, 0, 0, $i, 10)) . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-3">
                                     <label for="startDate">Start Date:</label>
                                     <input type="date" id="startDate" class="form-control">
                                 </div>
@@ -119,9 +131,20 @@ include('include/navbar.php');
 
                         <?php
 
-                        // SQL query to select relevant prenatal data
-                        $sql = "SELECT * FROM prenatal_record 
-                        LEFT JOIN patient_record on prenatal_record.patient_id = patient_record.patient_id";
+                        // SQL query to select the latest prenatal health status data
+                        $sql = "SELECT pr2.Name,pr.*, phs.blood_pressure, phs.weight, phs.gestational_age
+                            FROM prenatal_record pr
+                            LEFT JOIN patient_record pr2 on pr.patient_id = pr2.patient_id
+                            LEFT JOIN (
+                                SELECT phs.*
+                                FROM prenatal_health_status phs
+                                INNER JOIN (
+                                    SELECT prenatal_id, MAX(healthCheck_date) as latestDate
+                                    FROM prenatal_health_status
+                                    GROUP BY prenatal_id
+                                ) latestPHS ON phs.prenatal_id = latestPHS.prenatal_id AND phs.healthCheck_date = latestPHS.latestDate
+                            ) phs ON pr.prenatal_id = phs.prenatal_id";
+
                         $results = mysqli_query($con, $sql);
 
                         // Check for SQL errors
@@ -129,13 +152,13 @@ include('include/navbar.php');
                             die("SQL error: " . mysqli_error($con));
                         }
                         ?>
+
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover table-striped" id='prenatal_record'>
                                 <thead class="table-dark text-center">
                                     <tr>
                                         <th scope="col">Prenatal ID</th>
                                         <th scope="col">Date Checkup</th>
-
                                         <th scope="col">Patient ID</th>
                                         <th scope="col">LMP</th>
                                         <th scope="col">EDC</th>
@@ -148,18 +171,33 @@ include('include/navbar.php');
                                 <tbody>
                                     <?php while ($row = mysqli_fetch_array($results)) { ?>
                                         <tr>
-                                            <td><span class="badge bg-warning text-dark"><?php echo $row['prenatal_id'] ?></span></td>
-                                            <td><?php echo date('M j, Y', strtotime($row['date_checkup'])); ?></td>
-
-                                            <td><?php echo $row['Name'] ?></td>
-                                            <td><?php echo date('M j, Y', strtotime($row['lmp'])); ?></td>
-                                            <td><?php echo date('M j, Y', strtotime($row['edc'])); ?></td>
-
-                                            <td><?php echo $row['blood_pressure'] ?></td>
-                                            <td><?php echo $row['weight'] ?></td>
-                                            <td><?php echo $row['gestationalAge'] ?></td>
                                             <td>
-                                                <a href="prenatal_record.php?id=<?php echo $row['prenatal_id'] ?>" class='btn btn-dark btn-sm'> Record</a>
+                                                <?php echo !empty($row['prenatal_id']) ? $row['prenatal_id'] : '-'; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo !empty($row['date_checkup']) ? date('M j, Y', strtotime($row['date_checkup'])) : '-'; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo !empty($row['Name']) ? $row['Name'] : '-'; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo !empty($row['lmp']) ? date('M j, Y', strtotime($row['lmp'])) : '-'; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo !empty($row['edc']) ? date('M j, Y', strtotime($row['edc'])) : '-'; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo !empty($row['blood_pressure']) ? $row['blood_pressure'] : '-'; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo !empty($row['weight']) ? $row['weight'] : '-'; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo !empty($row['gestational_age']) ? $row['gestational_age'] : '-'; ?>
+                                            </td>
+                                            <td>
+                                                <a href="prenatal_record.php?id=<?php echo $row['prenatal_id'] ?>"
+                                                    class='btn btn-dark btn-sm'>Record</a>
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -174,16 +212,16 @@ include('include/navbar.php');
     </div>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var table = $('#prenatal_record').DataTable({
                 dom: 'Bfrtip',
                 buttons: ['excelHtml5', 'pdfHtml5', 'print']
             });
 
-            $('#filterMonth').on('change', function() {
+            $('#filterMonth').on('change', function () {
                 var month = parseInt(this.value, 10);
                 $.fn.dataTable.ext.search.push(
-                    function(settings, data, dataIndex) {
+                    function (settings, data, dataIndex) {
                         var dateIssued = new Date(data[1]); // Assuming Date Issued is the 3rd column
                         return isNaN(month) || month === dateIssued.getMonth() + 1;
                     }
@@ -192,13 +230,24 @@ include('include/navbar.php');
                 $.fn.dataTable.ext.search.pop(); // Clear this specific filter
             });
 
+            $('#edcFilter').on('change', function () {
+                var month = parseInt(this.value, 10);
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var dateIssued = new Date(data[4]); // Assuming Date Issued is the 3rd column
+                        return isNaN(month) || month === dateIssued.getMonth() + 1;
+                    }
+                );
+                table.draw();
+                $.fn.dataTable.ext.search.pop(); // Clear this specific filter
+            });
 
-            $('#startDate, #endDate').on('change', function() {
+            $('#startDate, #endDate').on('change', function () {
                 var startDate = $('#startDate').val() ? new Date($('#startDate').val()) : null;
                 var endDate = $('#endDate').val() ? new Date($('#endDate').val()) : null;
 
                 $.fn.dataTable.ext.search.push(
-                    function(settings, data, dataIndex) {
+                    function (settings, data, dataIndex) {
                         var dateIssued = new Date(data[1]); // Assuming Date Issued is the 3rd column
                         if (startDate && dateIssued < startDate) {
                             return false;

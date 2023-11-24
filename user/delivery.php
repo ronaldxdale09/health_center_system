@@ -1,7 +1,7 @@
 <?php
 include('include/header.php');
 include('include/navbar.php');
-
+ini_set('display_errors', 0);
 if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
 
         // Get patient details from patient_record using the patient_id from the retrieved record
 
-        if (($record['patient_id'] != NULL) || ($record['patient_id'] != 0)) {
+        if (($record['patient_id'] != NULL)) {
             $patient_id = $record['patient_id'];
 
 
@@ -27,7 +27,6 @@ if (isset($_GET['id'])) {
             <script>
                 $(document).ready(function() {
 
-       
                     $('#patient_name').val('" . $patient_record['patient_id'] . "').trigger('chosen:updated');
                     $('#birth_date').val('" . $patient_record['DateOfBirth'] . "');
                     $('#address').val('" . $patient_record['Address'] . "');

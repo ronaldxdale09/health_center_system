@@ -75,8 +75,8 @@ if (isset($_GET['id'])) {
                                 <a href="patient_list.php" type="button" class="btn trans-btn btn-secondary "><span
                                         class="fas fa-arrow-left"></span> Return</a>
 
-                                <button type="button" class="btn trans-btn btn-primary confirmSales"
-                                    id="confirmSales"><span class="fas fa-check"></span> Save Record</button>
+                                <button type="button" class="btn trans-btn btn-primary saveRecord"
+                                    id="saveRecord"><span class="fas fa-check"></span> Save Record</button>
                                 <button type="button" class="btn btn-dark btnPrint"><span class="fas fa-print"></span>
                                     Print</button>
                                 <button type="button" class="btn btn-danger btnPrint"><span class="fas fa-trash"></span>
@@ -208,7 +208,7 @@ if (isset($_GET['id'])) {
                                             <label class="col-form-label">Temperature:</label>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" name="temperature" readonly>
-                                                <div class="input-group-prepend" >
+                                                <div class="input-group-prepend">
                                                     <span class="input-group-text">°C</span>
                                                 </div>
                                             </div>
@@ -327,65 +327,57 @@ include "modal/patient_modal.php";
         });
 
 
-        $('.btnUpdate').on('click', function () {
 
+        $(document).on('click', '#saveRecord', function (e) {
+            // Prevent the default form submission
+            e.preventDefault();
 
-            var coffee = $(this).data('record');
+            // Set the form action to the desired URL
+            $('#prenatalForm').attr('action', 'function/patient.save.php');
 
-            $('#production_id').val(coffee.production_id);
-            $('#prod_date').val(coffee.prod_date);
-            $('#production_code').val(coffee.production_code);
-            $('#recorded_by').val(coffee.recorded_by);
-            $('#no_sack').val(coffee.no_sack);
-            $('#u_entry_weight').val(coffee.entry_weight);
-            $('#u_global_total_weight').val(coffee.total_weight);
-            $('#u_recovery_weight').val(coffee.recovery_weight);
-            $('#recorded_by').val(coffee.recorded_by);
+            // Submit the form asynchronously using AJAX
+            $.ajax({
+                type: "POST",
+                url: $('#prenatalForm').attr('action'),
+                data: $('#prenatalForm').serialize(),
+                success: function (response) {
+                    if (response.trim() === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Sale transaction completed!',
+                        });
 
-            function fetch_prods() {
-                $.ajax({
-                    url: "table/coffee_production.php",
-                    method: "POST",
-                    data: {
-                        prod_id: coffee.production_id,
-                    },
-                    success: function (data) {
-                        $('#prod_list_table').html(data);
+                        // Set all inputs to readonly
+                        var selectElement = document.getElementById('patient_name');
+                        $(selectElement).chosen('destroy');
 
+                        $('#prenatalForm input').prop('readonly', true);
+                        $('#prenatalForm textarea').prop('readonly', true);
+                        $('#prenatalForm select').prop('disabled', true); //use 'disabled' for select elements
+                        // Disable all buttons inside the form
+                        // Temporarily hide the buttons
+                        $("#print_content button").hide();
+                        $('#confirmPrenatalModal').modal('hide');
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response,
+                        });
                     }
-                });
-            }
-            fetch_prods();
-
-
-            $('#updateProd').modal('show');
-        });
-
-
-
-
-        $('.btnDelete').on('click', function () {
-            // $tr = $(this).closest('tr');
-
-            // var data = $tr.children("td").map(function() {
-            //     return $(this).text();
-            // }).get();
-
-            // $('#d_coffee_id').val(data[0]);
-
-            // $('#deleteProductModal').modal('show'); // Close the modal
-
-            Swal.fire({
-                title: "Under Development",
-                text: "Delete function is currently under development.",
-                type: "info",
-                confirmButtonText: "Okay"
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response
+                    // Display SweetAlert error popup
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Form submission failed!',
+                    });
+                }
             });
-
-
         });
-
-
 
     });
 </script>

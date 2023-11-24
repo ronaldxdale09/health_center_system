@@ -119,7 +119,8 @@ include('include/navbar.php');
                         <?php
                         // SQL query to select relevant family planning data
                         $sql = "SELECT family_planning_rec.*, patient_record.Name FROM family_planning_rec
-                        LEFT JOIN patient_record ON family_planning_rec.patient_id = patient_record.patient_id";
+                        LEFT JOIN patient_record ON family_planning_rec.patient_id = patient_record.patient_id
+                        WHERE family_planning_rec.patient_id !='' || family_planning_rec.patient_id=NULL";
                         $results = mysqli_query($con, $sql);
 
                         // Check for SQL errors

@@ -21,8 +21,13 @@ if (isset($_GET['id'])) {
 
             $sql_patient = "SELECT * FROM patient_record WHERE patient_id = '$patient_id'";
             $result_patient = $con->query($sql_patient);
-
             $patient_record = $result_patient->fetch_assoc();
+
+            $sql_prenatal = "SELECT * FROM prenatal_record WHERE prenatal_id = $patient_id";
+            $result_prenatal = $con->query($sql_prenatal);
+            $prenatal = $result_prenatal->fetch_assoc();
+
+
             echo "
             <script>
                 $(document).ready(function() {
@@ -43,6 +48,20 @@ if (isset($_GET['id'])) {
                         age--;
                     }
                     $('#age').val(age);
+
+
+
+
+                    $('input[name=\"abortion\"]').val('" . $prenatal['abortion'] . "');
+                    $('input[name=\"para_no\"]').val('" . $prenatal['para_no'] . "');
+                    $('input[name=\"lmp\"]').val('" . $prenatal['lmp'] . "');
+                    $('input[name=\"edc\"]').val('" . $prenatal['edc'] . "');
+                    $('input[name=\"children\"]').val('" . $prenatal['children'] . "');
+                    $('input[name=\"gravida\"]').val('" . $prenatal['gravida'] . "');
+
+
+
+
 
                 });
             </script>
@@ -240,7 +259,49 @@ if (isset($_GET['id'])) {
                                             </div>
                                         </div>
                                     </section>
+                                    <section class="mb-4">
+                                        <h4>Prenatal Information</h4>
+                                        <div class="row">
+                                            <!-- Last Menstrual Period and Estimated Date of Confinement -->
+                                            <div class="col-md-6 mb-3">
+                                                <label for="lmp" class="form-label">Last Menstrual Period (LMP)</label>
+                                                <input type="date" class="form-control" name="lmp" id="lmp" readonly>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="edc" class="form-label">Estimated Date of
+                                                    Confinement</label>
+                                                <input type="date" class="form-control" name="edc" id="edc" readonly>
+                                            </div>
 
+                                            <!-- Number of Living Children, Gestational Age, and Gravida -->
+                                            <div class="col">
+                                                <label for="children" class="form-label">No. Living Children</label>
+                                                <input type="number" class="form-control" name="children" id="children"
+                                                    readonly required>
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="gravida" class="form-label">Gravida
+                                                    <i class="fas fa-info-circle" data-toggle="tooltip"
+                                                        title="Number to indicate the number of pregnancies a woman has had"></i>
+                                                </label>
+                                                <input type="number" class="form-control" name="gravida" id="gravida"
+                                                    readonly required>
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="abortion" class="form-label">Abortion </label>
+                                                <input type="text" class="form-control" name="abortion" id="abortion"
+                                                    readonly placeholder="No. of Abortion" required>
+                                            </div>
+                                            <div class="col">
+                                                <label for="para_no" class="form-label">PARA (No. of Pregnancy) </label>
+                                                <input type="text" class="form-control" name="para_no" id="para_no"
+                                                    readonly required>
+                                            </div>
+                                        </div>
+
+                                    </section>
                                 </div>
                             </div>
                         </div>

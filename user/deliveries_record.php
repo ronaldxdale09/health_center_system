@@ -119,7 +119,9 @@ include('include/navbar.php');
                         <?php
                         // SQL query to select relevant delivery data
                         $sql = "SELECT delivery_record.*, patient_record.Name FROM delivery_record 
-            LEFT JOIN patient_record ON delivery_record.patient_id = patient_record.patient_id";
+            LEFT JOIN patient_record ON delivery_record.patient_id = patient_record.patient_id
+            
+            WHERE delivery_record.patient_id !='' || delivery_record.patient_id=NULL";
                         $results = mysqli_query($con, $sql);
 
                         // Check for SQL errors

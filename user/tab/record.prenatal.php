@@ -22,7 +22,6 @@ if (!$results) {
                 <th scope="col">EDC</th>
                 <th scope="col">Blood Pressure</th>
                 <th scope="col">Weight</th>
-                <th scope="col">Gestational Age</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -46,9 +45,6 @@ if (!$results) {
                     </td>
                     <td>
                         <?php echo $row['weight'] ?>
-                    </td>
-                    <td>
-                        <?php echo $row['gestationalAge'] ?>
                     </td>
                     <td>
                         <a href="prenatal_record.php?id=<?php echo $row['prenatal_id'] ?>" class='btn btn-dark btn-sm'><i

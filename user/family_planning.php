@@ -1,6 +1,7 @@
 <?php
 include('include/header.php');
 include('include/navbar.php');
+ini_set('display_errors', 0);
 
 if (isset($_GET['id'])) {
 

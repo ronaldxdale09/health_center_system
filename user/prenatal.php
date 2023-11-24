@@ -143,7 +143,9 @@ include('include/navbar.php');
                                     FROM prenatal_health_status
                                     GROUP BY prenatal_id
                                 ) latestPHS ON phs.prenatal_id = latestPHS.prenatal_id AND phs.healthCheck_date = latestPHS.latestDate
-                            ) phs ON pr.prenatal_id = phs.prenatal_id";
+                            ) phs ON pr.prenatal_id = phs.prenatal_id
+                            
+                            WHERE pr.patient_id !='' || pr.patient_id=NULL";
 
                         $results = mysqli_query($con, $sql);
 

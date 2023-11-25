@@ -75,7 +75,6 @@ if (isset($_GET['id'])) {
 
 
                     $('input[name=\"patient_id\"]').val('" . $record['patient_id'] . "');
-                    $('input[name=\"gravida\"]').val('" . $record['gravida'] . "');
                     $('input[name=\"blood_pressure\"]').val('" . $record['blood_pressure'] . "');
                     $('input[name=\"dateComing\"]').val('" . $record['dateTimeComing'] . "').trigger('change');
                     $('input[name=\"dateDelivery\"]').val('" . $record['dateTimeDelivery'] . "').trigger('change');

@@ -39,6 +39,7 @@ if (isset($_GET['id'])) {
                     $('#spouse_name').val('" . $patient_record['spouse_name'] . "');
                     $('#spouse_date').val('" . $patient_record['spouse_birthdate'] . "');
                     $('#spouse_occupation').val('" . $patient_record['spouse_occupation'] . "');
+                    $('#philh_no').val('" . $patient_record['philhealth'] . "');
 
                     // Calculate the patient's age based on the DateOfBirth
                     let today = new Date();
@@ -172,7 +173,6 @@ if (isset($_GET['id'])) {
                                                             $address = $row['Address'];
                                                             $contact = $row['ContactNumber'];
 
-                                                            $ave_monthIncome = $row['ave_monthIncome'];
                                                             $philhealth = $row['philhealth'];
 
 
@@ -252,11 +252,7 @@ if (isset($_GET['id'])) {
                                                 <input type="text" class="form-control" name="philhealth" id="philh_no"
                                                     placeholder="Philhealth ID">
                                             </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="gravida" class="form-label">Gravida</label>
-                                                <input type="text" class="form-control" name="gravida" id="gravida"
-                                                    placeholder="Gravida">
-                                            </div>
+                              
                                         </div>
                                     </section>
                                     <section class="mb-4">

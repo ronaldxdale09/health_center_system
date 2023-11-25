@@ -46,6 +46,8 @@ if (isset($_GET['id'])) {
                     $('input[name=\"blood_pressure\"]').val('" . $record['blood_pressure'] . "');
                     $('input[name=\"weight\"]').val('" . $record['weight'] . "');
 
+                    $('input[name=\"respiration\"]').val('" . $record['respiration'] . "');
+                    $('input[name=\"temperature\"]').val('" . $record['temperature'] . "');
 
                     $('textarea[name=\"notes\"]').val('" . $record['Notes'] . "');
                 });
@@ -205,15 +207,7 @@ if (isset($_GET['id'])) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <label class="col-form-label">Height:</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" name="height" readonly>
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">ft</span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                           
                                             <div class="col">
                                                 <label class="col-form-label">Temperature:</label>
                                                 <div class="input-group mb-3">
@@ -224,9 +218,9 @@ if (isset($_GET['id'])) {
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <label class="col-form-label">Resperation:</label>
+                                                <label class="col-form-label">Respiration:</label>
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" name="temperature" readonly>
+                                                    <input type="text" class="form-control" name="respiration" readonly>
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">bpm</span>
                                                     </div>

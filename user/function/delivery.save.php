@@ -44,6 +44,15 @@ if (!$results) {
 } else {
     echo 'success';
     processMedicine($con, $record_id);
+
+    $patientUpdateSql = "UPDATE patient_record SET 
+    blood_pressure = '$blood_pressure',  temperature = '$temperature',
+    respiration = '$respiration'
+    WHERE patient_id = '$patient_id' ";
+    if (!mysqli_query($con, $patientUpdateSql)) {
+        die('Error updating patient record: ' . mysqli_error($con));
+    }
+
 }
 
 exit();
@@ -53,8 +62,8 @@ exit();
 
 function processMedicine($con, $record_id)
 {
-     // Check if medicine data is provided
-     if (!isset($_POST['med']) || empty($_POST['med']) || !isset($_POST['qty']) || empty($_POST['qty'])) {
+    // Check if medicine data is provided
+    if (!isset($_POST['med']) || empty($_POST['med']) || !isset($_POST['qty']) || empty($_POST['qty'])) {
         // No medicine data to process, return early
         return;
     }
@@ -116,7 +125,7 @@ function processMedicine($con, $record_id)
         if (!mysqli_query($con, $deleteSql)) {
             die('Error deleting old delivery medicine data: ' . mysqli_error($con));
         }
-        
+
         // Return the old qty back to the inventory
         updateMedicineInventory($con, $medicine_id, $medData['qty']);
     }

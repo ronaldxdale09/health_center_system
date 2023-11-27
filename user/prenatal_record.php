@@ -9,24 +9,32 @@ if (isset($_GET['id'])) {
 
     $sql = "SELECT * FROM prenatal_record WHERE prenatal_id = $id";
     $result = $con->query($sql);
-
     if ($result->num_rows > 0) {
         $record = $result->fetch_assoc();
 
         // Get patient details from patient_record using the patient_id from the retrieved record
-
+        $profileImagePath = "assets/img/avatar2.png"; // Default image path
         if (($record['patient_id'] != NULL)) {
             $patient_id = $record['patient_id'];
 
 
+
             $sql_patient = "SELECT * FROM patient_record WHERE patient_id = '$patient_id'";
             $result_patient = $con->query($sql_patient);
-
             $patient_record = $result_patient->fetch_assoc();
+
+
+            $profileImagePath = "assets/img/avatar2.png"; // Default image path
+            if ($patient_record['ProfilePicture'] != '') {
+                $profileImagePath = 'patient_img/' . $patient_record['ProfilePicture']; // Adjust the path as needed
+            } else {
+                $profileImagePath = "assets/img/avatar2.png"; // Default image path
+            }
+
+
             echo "
             <script>
                 $(document).ready(function() {
-
                     $('#patient_name').val('" . $patient_record['patient_id'] . "').trigger('chosen:updated');
                     $('#birth_date').val('" . $patient_record['DateOfBirth'] . "');
                     $('#address').val('" . $patient_record['Address'] . "');
@@ -137,41 +145,55 @@ if (isset($_GET['id'])) {
                                         <h4>Personal Information</h4>
                                         <hr>
                                         <div class="row">
-                                            <!-- Record ID -->
-                                            <div class="col">
-                                                <label for="record_id" class="form-label">Record ID</label>
-                                                <input type="text" class="form-control" name="record_id" id="record_id"
-                                                    value="<?php echo $id ?>" readonly>
+
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <div class="card-body text-center">
+                                                        <!-- Avatar Image -->
+                                                        <img src="<?php echo $profileImagePath; ?>" alt="avatar"
+                                                            class="rounded-circle profile-avatar" name="profile_picture"
+                                                            id="profile_picture" width="150" height="150">
+                                                        <!-- Upload Button -->
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <div class="col">
+                                                <div class="row">
+                                                    <!-- Record ID -->
+                                                    <div class="col-2">
+                                                        <label for="record_id" class="form-label">Record ID</label>
+                                                        <input type="text" class="form-control" name="record_id"
+                                                            id="record_id" value="<?php echo $id ?>" readonly>
+                                                    </div>
 
-                                            <!-- Full Name -->
-                                            <div class="col-md-5 mb-3">
-                                                <label for="patient_name" class="form-label">Full Name</label>
-                                                <select class='form-control col-md-10 patient_name' name='patient_name'
-                                                    id='patient_name'>
-                                                    <option disabled="disabled" selected="selected">Select
-                                                        Patient</option>
-                                                    <?php
-                                                    // Retrieve customer names from the coffee_customer table
-                                                    $sql = "SELECT * FROM patient_record";
-                                                    $result = mysqli_query($con, $sql);
-                                                    if ($result) {
-                                                        while ($row = mysqli_fetch_assoc($result)) {
-                                                            $patient_id = $row['patient_id'];
-                                                            $name = $row['Name'];
-                                                            $birthDate = $row['DateOfBirth'];
-                                                            $address = $row['Address'];
-                                                            $contact = $row['ContactNumber'];
+                                                    <!-- Full Name -->
+                                                    <div class="col-md-5 mb-3">
+                                                        <label for="patient_name" class="form-label">Full Name</label>
+                                                        <select class='form-control col-md-10 patient_name'
+                                                            name='patient_name' id='patient_name'>
+                                                            <option disabled="disabled" selected="selected">Select
+                                                                Patient</option>
+                                                            <?php
+                                                            // Retrieve customer names from the coffee_customer table
+                                                            $sql = "SELECT * FROM patient_record";
+                                                            $result = mysqli_query($con, $sql);
+                                                            if ($result) {
+                                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                                    $patient_id = $row['patient_id'];
+                                                                    $name = $row['Name'];
+                                                                    $birthDate = $row['DateOfBirth'];
+                                                                    $address = $row['Address'];
+                                                                    $contact = $row['ContactNumber'];
 
-                                                            $ave_monthIncome = $row['ave_monthIncome'];
-                                                            $philhealth = $row['philhealth'];
+                                                                    $ave_monthIncome = $row['ave_monthIncome'];
+                                                                    $philhealth = $row['philhealth'];
 
 
-                                                            $spouse_name = $row['spouse_name'];
-                                                            $spouse_birthdate = $row['spouse_birthdate'];
-                                                            $spouse_occupation = $row['spouse_occupation'];
+                                                                    $spouse_name = $row['spouse_name'];
+                                                                    $spouse_birthdate = $row['spouse_birthdate'];
+                                                                    $spouse_occupation = $row['spouse_occupation'];
 
-                                                            echo "<option value='$patient_id' 
+                                                                    echo "<option value='$patient_id' 
                                                                     data-name='$name' 
                                                                     data-birthdate='$birthDate' 
                                                                     data-address='$address' 
@@ -184,74 +206,79 @@ if (isset($_GET['id'])) {
                                                                     >
                                                                     $name
                                                                 </option>";
-                                                        }
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
 
-                                            <!-- Birth Date and Age -->
-                                            <div class="col-md-2 mb-3">
-                                                <label for="birth_date" class="form-label">Birth Date
-                                                    (YYYY-MM-DD)</label>
-                                                <input type="text" class="form-control" name="birth_date"
-                                                    id="birth_date" readonly>
-                                            </div>
-                                            <div class="col-md-2 mb-3">
-                                                <label for="age" class="form-label">Age</label>
-                                                <input type="text" class="form-control" name="age" id="age" readonly>
+                                                    <!-- Birth Date and Age -->
+                                                    <div class="col-md-2 mb-3">
+                                                        <label for="birth_date" class="form-label">Birth Date</label>
+                                                        <input type="text" class="form-control" name="birth_date"
+                                                            id="birth_date" readonly>
+                                                    </div>
+                                                    <div class="col-md-2 mb-3">
+                                                        <label for="age" class="form-label">Age</label>
+                                                        <input type="text" class="form-control" name="age" id="age"
+                                                            readonly>
+                                                    </div>
+                                                    <div class="col-md-8 mb-3">
+                                                        <label for="address" class="form-label">Address</label>
+                                                        <input type="text" class="form-control" name="address"
+                                                            id="address" readonly>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="contactNumber" class="form-label">Contact
+                                                            Number</label>
+                                                        <input type="tel" class="form-control" name="contactNumber"
+                                                            id="contactNumber" readonly>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <!-- Address and Contact -->
-                                            <div class="col-md-8 mb-3">
-                                                <label for="address" class="form-label">Address</label>
-                                                <input type="text" class="form-control" name="address" id="address"
-                                                    readonly>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="contactNumber" class="form-label">Contact Number</label>
-                                                <input type="tel" class="form-control" name="contactNumber"
-                                                    id="contactNumber" readonly>
-                                            </div>
-                                        </div>
-
-                                        <!-- Spouse Information -->
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <label for="spouse_name" class="col-form-label">Spouse Name:</label>
-                                                <input type="text" class="form-control" id="spouse_name"
-                                                    name="spouse_name" placeholder="Spouse Name">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label for="spouse_date" class="col-form-label">Birthdate:</label>
-                                                <input type="date" class="form-control" id="spouse_date"
-                                                    name="spouse_date">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label for="spouse_occupation"
-                                                    class="col-form-label">Occupation:</label>
-                                                <input type="text" class="form-control" id="spouse_occupation"
-                                                    name="spouse_occupation" placeholder="Enter Occupation">
-                                            </div>
-                                        </div>
-
-                                        <!-- Additional Information -->
-                                        <div class="row mt-3">
-                                            <!-- Ave. Monthly Family Income -->
-                                            <div class="col-md-4">
-                                                <label for="ave_income" class="form-label">Ave. Monthly Family
-                                                    Income</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">₱</span>
-                                                    <input type="text" class="form-control" name="ave_income"
-                                                        id="ave_income" placeholder="Ave. Income">
+                                        <div id='input_form'>
+                                            <!-- Spouse Information -->
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="spouse_name" class="col-form-label">Spouse Name:</label>
+                                                    <input type="text" class="form-control" id="spouse_name"
+                                                        name="spouse_name" placeholder="Spouse Name">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="spouse_date" class="col-form-label">Birthdate:</label>
+                                                    <input type="date" class="form-control" id="spouse_date"
+                                                        name="spouse_date">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="spouse_occupation"
+                                                        class="col-form-label">Occupation:</label>
+                                                    <input type="text" class="form-control" id="spouse_occupation"
+                                                        name="spouse_occupation" placeholder="Enter Occupation">
                                                 </div>
                                             </div>
 
-                                            <!-- Birth Plan -->
-                                            <div class="col-md-4">
+                                            <!-- Additional Information -->
+                                            <div class="row mt-3">
+                                                <!-- Ave. Monthly Family Income -->
+                                                <div class="col-md-4">
+                                                    <label for="ave_income" class="form-label">Ave. Monthly Family
+                                                        Income</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">₱</span>
+                                                        <input type="text" class="form-control" name="ave_income"
+                                                            id="ave_income" placeholder="Ave. Income">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label for="philh_no" class="form-label">PHILHEALTH NO.</label>
+                                                    <input type="text" class="form-control" name="philh_no"
+                                                        id="philh_no" placeholder="Philhealth No.">
+                                                </div>
+
+                                                <!-- <div class="col-md-4">
                                                 <label for="birth_plan" class="form-label">Birth Plan</label>
                                                 <select class="form-select" name="birth_plan" id="birth_plan" required>
                                                     <option value="" disabled selected>Select an option</option>
@@ -262,7 +289,6 @@ if (isset($_GET['id'])) {
                                                 </select>
                                             </div>
 
-                                            <!-- Birth Attendant if at home -->
                                             <div class="col-md-4">
                                                 <label for="birth_attendant" class="form-label">Birth Attendant if at
                                                     Home</label>
@@ -271,17 +297,9 @@ if (isset($_GET['id'])) {
                                                     <option value="SBA">SBA</option>
                                                     <option value="Non-SBA">Non-SBA</option>
                                                 </select>
+                                            </div> -->
                                             </div>
-                                        </div>
 
-                                        <div class="row mt-3">
-                                            <!-- PHILHEALTH NO. -->
-                                            <div class="col-md-4">
-                                                <label for="philh_no" class="form-label">PHILHEALTH NO.</label>
-                                                <input type="text" class="form-control" name="philh_no" id="philh_no"
-                                                    placeholder="Philhealth No.">
-                                            </div>
-                                        </div>
                                     </section>
 
                                 </div>
@@ -380,14 +398,14 @@ if (isset($_GET['id'])) {
                                     </section>
 
                                     <!-- Lifestyle and Well-being -->
-
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <br>
+                </div>
+                <br>
 
-                    <!-- <div class="card">
+                <!-- <div class="card">
                         <div class="card-body" style="background-color: #F5F8FB;">
                             <h4 class="header-design">Medicine </h4>
                             <div id="medicine_list_table"></div>
@@ -395,9 +413,9 @@ if (isset($_GET['id'])) {
 
                         </div>
                     </div> -->
-                    <br><br>
-                </div>
+                <br><br>
             </div>
+        </div>
         </div>
     </form>
     <?php

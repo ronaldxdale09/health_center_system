@@ -80,10 +80,6 @@ include('include/navbar.php');
 
                             <!-- Filters -->
                             <div class="row">
-
-
-
-
                                 <!-- Month Filter -->
                                 <div class="col-md-3 mb-3">
                                     <label for="filterMonth">Month:</label>
@@ -92,6 +88,20 @@ include('include/navbar.php');
                                         <?php
                                         for ($i = 1; $i <= 12; $i++) {
                                             echo '<option value="' . $i . '">' . date("F", mktime(0, 0, 0, $i, 10)) . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="filterYear">Year:</label>
+                                    <select id="filterYear" class="form-control">
+                                        <option value="">All</option>
+                                        <?php
+                                        $currentYear = date("Y");
+                                        $startYear = 2023;
+                                        for ($i = $startYear; $i <= $currentYear; $i++) {
+                                            echo '<option value="' . $i . '">' . $i . '</option>';
                                         }
                                         ?>
                                     </select>
@@ -114,14 +124,12 @@ include('include/navbar.php');
 
                         </div>
 
-
                         <hr>
                         <?php
                         // SQL query to select relevant delivery data
                         $sql = "SELECT delivery_record.*, patient_record.Name FROM delivery_record 
-            LEFT JOIN patient_record ON delivery_record.patient_id = patient_record.patient_id
-            
-            WHERE delivery_record.patient_id !='' || delivery_record.patient_id=NULL";
+                        LEFT JOIN patient_record ON delivery_record.patient_id = patient_record.patient_id
+                        WHERE delivery_record.patient_id !='' || delivery_record.patient_id=NULL";
                         $results = mysqli_query($con, $sql);
 
                         // Check for SQL errors
@@ -135,6 +143,8 @@ include('include/navbar.php');
                                 <thead class="table-dark text-center">
                                     <tr>
                                         <th scope="col">Delivery ID</th>
+                                        <th scope="col">Date Recording</th>
+
                                         <th scope="col">Patient Name</th>
                                         <th scope="col">Date Time Coming</th>
                                         <th scope="col">Date Time Delivery</th>
@@ -148,6 +158,9 @@ include('include/navbar.php');
                                         <tr>
                                             <td>
                                                 <?php echo $row['delivery_id'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo !empty($row['dateRecording']) ? date('M j, Y', strtotime($row['dateRecording'])) : '-'; ?>
                                             </td>
                                             <td>
                                                 <?php echo $row['Name'] ?>
@@ -215,6 +228,18 @@ include('include/navbar.php');
                             return false;
                         }
                         return true;
+                    }
+                );
+                table.draw();
+                $.fn.dataTable.ext.search.pop(); // Clear this specific filter
+            });
+
+            $('#filterYear').on('change', function () {
+                var year = parseInt(this.value, 10);
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var dateIssued = new Date(data[1]); // Assuming Date Issued is the 3rd column
+                        return isNaN(year) || year === dateIssued.getFullYear();
                     }
                 );
                 table.draw();

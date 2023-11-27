@@ -262,12 +262,124 @@ if (isset($_GET['id'])) {
                                         </div>
                                     </section>
 
-                                    <section class="mb-4">
-                                        <h4>Immunization List</h4>
-                                        <div id="prenatal_health_status"></div>
-
-                                    </section>
                                 </div>
+
+
+                                <table class="table table-bordered vaccine-schedule">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Bakuna</th>
+                                            <th>Doses</th>
+                                            <th>Petsa ng Bakuna (MM/DD/YY)</th>
+                                            <th>Weight (kg)</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>BCG Vaccine</td>
+                                            <td>At birth</td>
+                                            <td><input type="date" class="form-control date-input" name="bcg_date_1">
+                                            </td>
+                                            <td><input type="number" class="form-control" name="bcg_weight_1"
+                                                    step="0.01"></td>
+                                            <td><input type="text" class="form-control" name="bcg_remarks_1"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>BCG Vaccine</td>
+                                            <td>At birth</td>
+                                            <td><input type="date" class="form-control date-input" name="bcg_date_2">
+                                            </td>
+                                            <td><input type="number" class="form-control" name="bcg_weight_2"
+                                                    step="0.01"></td>
+                                            <td><input type="text" class="form-control" name="bcg_remarks_2"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pentavalent Vaccine (DOT-Hep B-HIB)</td>
+                                            <td>1½, 2½, 3½ months</td>
+                                            <td class="date-cell">
+                                                <div class="date-group">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="pentavalent_date_1">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="pentavalent_date_2">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="pentavalent_date_3">
+                                                </div>
+                                            </td>
+                                            <td><input type="number" class="form-control" name="pentavalent_weight"
+                                                    step="0.01"></td>
+                                            <td><input type="text" class="form-control" name="pentavalent_remarks"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Oral Polio Vaccine (OPV)</td>
+                                            <td>1½, 2½, 3½ months</td>
+                                            <td class="date-cell">
+                                                <div class="date-group">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="opv_date_1">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="opv_date_2">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="opv_date_3">
+                                                </div>
+                                            </td>
+                                            <td><input type="number" class="form-control" name="opv_weight" step="0.01">
+                                            </td>
+                                            <td><input type="text" class="form-control" name="opv_remarks"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Inactivated Polio Vaccine (IPV)</td>
+                                            <td>3½ & 9 months</td>
+                                            <td class="date-cell">
+                                                <div class="date-group">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="ipv_date_1">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="ipv_date_2">
+                                                </div>
+                                            </td>
+                                            <td><input type="number" class="form-control" name="ipv_weight" step="0.01">
+                                            </td>
+                                            <td><input type="text" class="form-control" name="ipv_remarks"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pneumococcal Conjugate Vaccine</td>
+                                            <td>1½, 2½, 3½ months</td>
+                                            <td class="date-cell">
+                                                <div class="date-group">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="pneumococcal_date_1">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="pneumococcal_date_2">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="pneumococcal_date_3">
+                                                </div>
+                                            </td>
+                                            <td><input type="number" class="form-control" name="pneumococcal_weight"
+                                                    step="0.01"></td>
+                                            <td><input type="text" class="form-control" name="pneumococcal_remarks">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Measles, Mumps, Rubella Vaccine</td>
+                                            <td>9 months & 1 year</td>
+                                            <td class="date-cell">
+                                                <div class="date-group">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="mmr_date_1">
+                                                    <input type="date" class="form-control date-input"
+                                                        name="mmr_date_2">
+                                                </div>
+                                            </td>
+                                            <td><input type="number" class="form-control" name="mmr_weight" step="0.01">
+                                            </td>
+                                            <td><input type="text" class="form-control" name="mmr_remarks"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
                                 <div class="alert alert-success alert-dismissible">
                                     <a href="#" class="btn close" data-dismiss="alert" aria-label="close">&times;</a>
                                     <strong>Sa mga piling rehiyon lamang:</strong>
@@ -276,9 +388,14 @@ if (isset($_GET['id'])) {
                                     susunod na dose, o anumang mahalagang impormasyon na maaring makaapekto sa
                                     pagbabakuna ng bata
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
+                    <br>
+
+
 
                 </div>
                 <br>
@@ -311,28 +428,6 @@ if (isset($_GET['id'])) {
 
 <script>
 
-
-    immunization_id = <?php echo $id ?>;
-
-    function fetch_med() {
-
-        $.ajax({
-            url: "table/immunization.status.php",
-            method: "POST",
-            data: {
-                immunization_id: immunization_id,
-
-            },
-            success: function (data) {
-                $('#prenatal_health_status').html(data);
-            }
-        });
-    }
-    fetch_med();
-
-
-
-
     document.addEventListener("DOMContentLoaded", function () {
         // Select all date input elements
         var dateInputs = document.querySelectorAll('.date-input');
@@ -354,6 +449,8 @@ if (isset($_GET['id'])) {
     });
 
     $(document).ready(function () {
+
+
         $(document).on('click', '.btnSaveForm, .btnVoid', function (e) {
             // Check if 'sale_buyer' input is readonly
             if ($('#patient_name').prop('readonly')) {
@@ -365,11 +462,15 @@ if (isset($_GET['id'])) {
                 });
                 return;
             }
+
+
+
             if ($(this).hasClass('btnSaveForm')) {
                 $('#confirmImmunizationModal').modal('show');
             } else if ($(this).hasClass('btnDraft')) {
                 $('#draftModal').modal('show');
             }
+            // add similar if conditions for other buttons if needed
         });
 
 

@@ -72,7 +72,7 @@ include('include/navbar.php');
                                             </td>
                                             <td style="text-align: center;">
                                                 <img src="<?php echo $profileImagePath; ?>" class="rounded-circle"
-                                                    width="40px">
+                                                    width="40px" height="40px">
                                             </td>
                                             <td>
                                                 <?php echo $row['Name'] ?>

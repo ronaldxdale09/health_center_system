@@ -97,7 +97,19 @@ include('include/navbar.php');
                                         ?>
                                     </select>
                                 </div>
-
+                                <div class="col-md-3 mb-3">
+                                    <label for="filterYear">Year:</label>
+                                    <select id="filterYear" class="form-control">
+                                        <option value="">All</option>
+                                        <?php
+                                        $currentYear = date("Y");
+                                        $startYear = 2022;
+                                        for ($i = $startYear; $i <= $currentYear; $i++) {
+                                            echo '<option value="' . $i . '">' . $i . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                                 <!-- Date Range Filter - Start Date -->
                                 <div class="col-md-3 mb-3">
                                     <label for="startDate">Estimated Date of Confinement:</label>
@@ -106,6 +118,20 @@ include('include/navbar.php');
                                         <?php
                                         for ($i = 1; $i <= 12; $i++) {
                                             echo '<option value="' . $i . '">' . date("F", mktime(0, 0, 0, $i, 10)) . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="confinmentFilterYear">Year of Confinement:</label>
+                                    <select id="confinmentFilterYear" class="form-control">
+                                        <option value="">All</option>
+                                        <?php
+                                        $currentYear = date("Y");
+                                        $startYear = 2022;
+                                        for ($i = $startYear; $i <= $currentYear; $i++) {
+                                            echo '<option value="' . $i . '">' . $i . '</option>';
                                         }
                                         ?>
                                     </select>
@@ -265,6 +291,31 @@ include('include/navbar.php');
             });
 
 
+            $('#filterYear').on('change', function () {
+                var year = parseInt(this.value, 10);
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var dateIssued = new Date(data[1]); // Assuming Date Issued is the 3rd column
+                        return isNaN(year) || year === dateIssued.getFullYear();
+                    }
+                );
+                table.draw();
+                $.fn.dataTable.ext.search.pop(); // Clear this specific filter
+            });
+
+            $('#confinmentFilterYear').on('change', function () {
+                var year = parseInt(this.value, 10);
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var dateIssued = new Date(data[4]); // Assuming Date Issued is the 3rd column
+                        return isNaN(year) || year === dateIssued.getFullYear();
+                    }
+                );
+                table.draw();
+                $.fn.dataTable.ext.search.pop(); // Clear this specific filter
+            });
+
+            
 
         });
     </script>

@@ -335,9 +335,11 @@ if (isset($_GET['id'])) {
                                             <div class="row">
                                                 <!-- Smoking, Alcohol, Notes -->
                                                 <div class="col-md-6 mb-3">
-                                                    <label for="smoking" class="form-label">Do you smoke?</label>
+                                                    <label for="smoking" class="form-label">Do you
+                                                        smoke?</label>
                                                     <select class="form-select" id="smoking" name="smoking" required>
-                                                        <option value="" disabled selected>Select an option</option>
+                                                        <option value="" disabled selected>Select an option
+                                                        </option>
                                                         <option value="yes">Yes</option>
                                                         <option value="no">No</option>
                                                     </select>
@@ -346,7 +348,8 @@ if (isset($_GET['id'])) {
                                                     <label for="alcohol" class="form-label">Do you consume
                                                         alcohol?</label>
                                                     <select class="form-select" id="alcohol" name="alcohol" required>
-                                                        <option value="" disabled selected>Select an option</option>
+                                                        <option value="" disabled selected>Select an option
+                                                        </option>
                                                         <option value="yes">Yes</option>
                                                         <option value="no">No</option>
                                                     </select>
@@ -357,25 +360,86 @@ if (isset($_GET['id'])) {
                                                         placeholder="Enter additional notes"></textarea>
                                                 </div>
                                             </div>
-                                        </section>
 
-                                        <!-- Current Health Status Section -->
-                                        <section class="mb-4">
-                                            <h4>Current Health Status</h4>
-                                            <div id="prenatal_health_status"></div>
-                                        </section>
+                                            <table class="table table-bordered table-hover table-striped"
+                                                id='immunization_record'>
+                                                <thead class="table-dark text-center">
+                                                    <tr>
+                                                        <th scope="col">Tetanus</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
+                                                    <tr>
+                                                        <td> <input type="text" class="form-control" value="Tetanus 1" disabled>
+                                                        </td>
+
+                                                        <td> <input type="date" class="form-control" name="tetanus_1"
+                                                                id="tetanus_1" required></td>
+                                                        <td> <input type="text" class="form-control" name="remarks_1"
+                                                                id="remarks_1" required></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> <input type="text" class="form-control" value="Tetanus 2" disabled>
+                                                        </td>
+
+                                                        <td> <input type="date" class="form-control" name="tetanus_1"
+                                                                id="tetanus_1" required></td>
+                                                        <td> <input type="text" class="form-control" name="remarks_1"
+                                                                id="remarks_1" required></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> <input type="text" class="form-control" value="Tetanus 3" disabled>
+                                                        </td>
+
+                                                        <td> <input type="date" class="form-control" name="tetanus_1"
+                                                                id="tetanus_1" required></td>
+                                                        <td> <input type="text" class="form-control" name="remarks_1"
+                                                                id="remarks_1" required></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> <input type="text" class="form-control" value="Tetanus 4" disabled>
+                                                        </td>
+
+                                                        <td> <input type="date" class="form-control" name="tetanus_1"
+                                                                id="tetanus_1" required></td>
+                                                        <td> <input type="text" class="form-control" name="remarks_1"
+                                                                id="remarks_1" required></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> <input type="text" class="form-control" value="Tetanus 5" disabled>
+                                                        </td>
+
+                                                        <td> <input type="date" class="form-control" name="tetanus_1"
+                                                                id="tetanus_1" required></td>
+                                                        <td> <input type="text" class="form-control" name="remarks_1"
+                                                                id="remarks_1" required></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                     </div>
+
+                                    </section>
+
+                                    <!-- Current Health Status Section -->
+                                    <section class="mb-4">
+                                        <h4>Current Health Status</h4>
+                                        <div id="prenatal_health_status"></div>
+                                    </section>
+
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <br>
-                    <!-- Additional sections or content can be added here -->
-                    <br>
                 </div>
+
+                <br>
+                <!-- Additional sections or content can be added here -->
+                <br>
             </div>
+        </div>
         </div>
     </form>
     <?php include "modal/prenatal_modal.php"; ?>
@@ -433,7 +497,7 @@ if (isset($_GET['id'])) {
         function revertReadOnly() {
             // Only revert the readonly state for specific inputs
             $('#input_form').find('input:not(#record_id, #birth_date, #age, #address, #contactNumber, #spouse_name, #spouse_date, #spouse_occupation), textarea').removeAttr('readonly');
-            
+
             // Enable the 'patient_name' Chosen.js select and update it
             $('#patient_name').prop('disabled', false).trigger('chosen:updated');
             $('#input_form').find('select').prop('disabled', false);
@@ -449,7 +513,7 @@ if (isset($_GET['id'])) {
             // Show the remove buttons in the phs_table
             $('#phs_table').find('.remove-item-line').show();
         }
-            
+
 
 
         function makeReadOnly() {

@@ -31,8 +31,7 @@
                 Immunization</a>
             <a href="deliveries_record.php"> <span class="icon-wrapper"><i class="fas fa-baby"></i></span>
                 Deliveries</a>
-            <a href="vaccination_record.php"> <span class="icon-wrapper"><i class="fas fa-book"></i></span>
-                Vaccination</a>
+ 
         </div>
     </div>
     <hr style="color:white">

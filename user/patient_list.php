@@ -116,7 +116,12 @@ include('include/navbar.php');
                 dom: 'Bfrtip',
                 buttons: ['excelHtml5', 'pdfHtml5', 'print']
             });
+
+
+            
         });
+
+
     </script>
 
     <?php

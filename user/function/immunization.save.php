@@ -4,41 +4,10 @@ include('../../function/db.php');
 $record_id = $_POST['record_id'];
 $patient_id = $_POST['patient_id'];
 
-// Define an array of input names, including the weight fields
-$inputNames = array(
-    'bcg_date_1', 'bcg_weight_1', 'bcg_remarks_1', 'bcg_date_2', 'bcg_weight_2', 'bcg_remarks_2',
-    'pentavalent_date_1', 'pentavalent_weight_1', 'pentavalent_remarks_1', 'pentavalent_date_2', 'pentavalent_weight_2', 'pentavalent_remarks_2', 'pentavalent_date_3', 'pentavalent_weight_3', 'pentavalent_remarks_3',
-    'opv_date_1', 'opv_weight_1', 'opv_remarks_1', 'opv_date_2', 'opv_weight_2', 'opv_remarks_2', 'opv_date_3', 'opv_weight_3', 'opv_remarks_3',
-    'ipv_date_1', 'ipv_weight_1', 'ipv_remarks_1', 'ipv_date_2', 'ipv_weight_2', 'ipv_remarks_2',
-    'pneumococcal_date_1', 'pneumococcal_weight_1', 'pneumococcal_remarks_1', 'pneumococcal_date_2', 'pneumococcal_weight_2', 'pneumococcal_remarks_2', 'pneumococcal_date_3', 'pneumococcal_weight_3', 'pneumococcal_remarks_3',
-    'mmr_date_1', 'mmr_weight_1', 'mmr_remarks_1', 'mmr_date_2', 'mmr_weight_2', 'mmr_remarks_2'
-);
 
-// Initialize an empty array to store SQL update parts
-$updateParts = array();
-
-// Iterate through input names to build the update parts
-foreach ($inputNames as $inputName) {
-    if (isset($_POST[$inputName]) && $_POST[$inputName] != '') {
-        $inputValue = mysqli_real_escape_string($con, $_POST[$inputName]);
-        if (strpos($inputName, '_date_') !== false || strpos($inputName, '_weight_') !== false) {
-            // Check if the field is a date or weight
-            $updateParts[] = "$inputName = '$inputValue'";
-        } else {
-            // For text fields (remarks)
-            $updateParts[] = "$inputName = '$inputValue'";
-        }
-    } else {
-        // Set empty dates and weights to NULL, and skip empty remarks
-        if (strpos($inputName, '_date_') !== false || strpos($inputName, '_weight_') !== false) {
-            $updateParts[] = "$inputName = NULL";
-        }
-    }
-}
 
 $updateQuery = "UPDATE immunization SET
-    patient_id = '$patient_id',
-    " . implode(', ', $updateParts) . "
+    patient_id = '$patient_id'
 WHERE immunization_id = '$record_id'";
 
 $results = mysqli_query($con, $updateQuery);
@@ -46,8 +15,76 @@ if (!$results) {
     echo "ERROR: Could not execute $updateQuery. " . mysqli_error($con);
     exit();
 } else {
+     processImmunizationStatus($con, $record_id);
     echo 'success';
 }
 
 exit();
+
+
+function processImmunizationStatus($con, $immunization_id) {
+    // Fetch existing immunization status
+    $fetchSql = "SELECT is_id FROM immunization_status WHERE immunization_id = '$immunization_id'";
+    $fetchResult = mysqli_query($con, $fetchSql);
+    if (!$fetchResult) {
+        die('Error fetching existing immunization status: ' . mysqli_error($con));
+    }
+
+    $existingStatusData = [];
+    while ($row = mysqli_fetch_assoc($fetchResult)) {
+        $existingStatusData[$row['is_id']] = $row['is_id'];
+    }
+
+    // Arrays from the form
+    $is_ids = $_POST['is_id'] ?? [];
+    $types = $_POST['type'] ?? [];
+    $doses = $_POST['dose'] ?? [];
+    $dates = $_POST['date'] ?? [];
+    $weights = $_POST['weight'] ?? [];
+    $remarks = $_POST['remarks'] ?? [];
+
+    foreach ($is_ids as $index => $is_id) {
+        $immunizationType = $types[$index] ?? '-';
+        $dose = $doses[$index] ?? '-';
+        $dateRecording = $dates[$index] ?? null;
+        $weight = $weights[$index] ?? '-';
+        $remark = $remarks[$index] ?? '-';
+
+        if ($is_id && isset($existingStatusData[$is_id])) {
+            // Update existing record
+            $updateSql = "UPDATE immunization_status SET 
+                immunizationType = '$immunizationType',
+                doses = '$dose',
+                dateRecording = '$dateRecording',
+                weight = '$weight',
+                remarks = '$remark'
+                WHERE is_id = '$is_id'";
+            if (!mysqli_query($con, $updateSql)) {
+                die('Error updating immunization status: ' . mysqli_error($con));
+            }
+        } else {
+            // Insert new record
+            $insertSql = "INSERT INTO immunization_status (immunization_id, immunizationType, doses, weight, remarks, dateRecording) 
+                    VALUES ('$immunization_id', '$immunizationType', '$dose', '$weight', '$remark', '$dateRecording')";
+            if (!mysqli_query($con, $insertSql)) {
+                die('Error inserting new immunization status: ' . mysqli_error($con));
+            }
+        }
+    }
+
+    // Remove any old records that weren't in the current submission
+    foreach ($existingStatusData as $existingIsId) {
+        if (!in_array($existingIsId, $is_ids)) {
+            $deleteSql = "DELETE FROM immunization_status WHERE is_id = '$existingIsId'";
+            if (!mysqli_query($con, $deleteSql)) {
+                die('Error deleting old immunization status data: ' . mysqli_error($con));
+            }
+        }
+    }
+}
+
+
+
 ?>
+
+

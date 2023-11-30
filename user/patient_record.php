@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
         echo "
             <script>
                 $(document).ready(function() {
-                    $('#profile_picture').attr('src', 'data:image/jpeg;base64," . base64_encode($record['ProfilePicture']) . "');
+                
                     $('input[name=\"name\"]').val('" . $record['Name'] . "');
                     $('select[name=\"religion\"]').val('" . $record['Religion'] . "');
                     $('input[name=\"contact_number\"]').val('" . $record['ContactNumber'] . "');
@@ -81,8 +81,8 @@ if (isset($_GET['id'])) {
                                 <a href="patient_list.php" type="button" class="btn trans-btn btn-secondary "><span
                                         class="fas fa-arrow-left"></span> Return</a>
 
-                                <button type="button" class="btn trans-btn btn-primary saveRecord" id="saveRecord"><span
-                                        class="fas fa-check"></span> Save Record</button>
+                                <button type="button" class="btn trans-btn btn-primary confirmUpdate"
+                                    id="confirmUpdate"><span class="fas fa-check"></span> Save Record</button>
                                 <button type="button" class="btn btn-dark btnPrint"><span class="fas fa-print"></span>
                                     Print</button>
                                 <button type="button" class="btn btn-danger btnPrint"><span class="fas fa-trash"></span>
@@ -207,7 +207,7 @@ if (isset($_GET['id'])) {
                                                     </div>
                                                 </div>
                                             </div>
-                                           
+
                                             <div class="col">
                                                 <label class="col-form-label">Temperature:</label>
                                                 <div class="input-group mb-3">
@@ -275,6 +275,119 @@ if (isset($_GET['id'])) {
                                 </div>
                             </div>
                         </form>
+
+
+
+
+                        <script>
+
+                            document.getElementById('profile_picture').addEventListener('change', function (event) {
+                                const reader = new FileReader();
+                                reader.onload = function () {
+                                    const img = document.getElementById('preview_image');
+                                    img.src = reader.result;
+                                };
+                                reader.readAsDataURL(event.target.files[0]);
+                            }, false);
+
+                            function maxLengthCheck(object) {
+                                if (object.value.length > object.maxLength)
+                                    object.value = object.value.slice(0, object.maxLength)
+                            }
+
+                            $(document).ready(function () {
+                                $('#confirmUpdate').on('click', function (e) {
+                                    e.preventDefault();
+
+                                    // Create FormData object from the form
+                                    var formData = new FormData($('#patientForm')[0]);
+                                    formData.append('add', true); // Add the 'add' parameter to match your PHP condition
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: 'function/patient.update.php',
+                                        data: formData,
+                                        processData: false,  // Necessary to prevent jQuery from automatically transforming the data
+                                        contentType: false,  // Necessary to prevent jQuery from setting a content type header
+                                        success: function (response) {
+                                            if (response.trim() === 'success') {
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Success',
+                                                    text: 'Patient Record has been updated!',
+                                                });
+                                            } else {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Error',
+                                                    text: response, // Displays the error returned from the server
+                                                });
+                                            }
+                                        },
+                                        error: function (xhr, status, error) {
+                                            // More detailed error handling
+                                            var errorMessage = xhr.status + ': ' + xhr.statusText;
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'AJAX Error',
+                                                text: 'Error - ' + errorMessage,
+                                            });
+                                        }
+                                    });
+                                });
+
+
+                                // $(document).on('click', '#confirmUpdate', function (e) {
+                                //     Prevent the default form submission
+                                //     e.preventDefault();
+
+                                //     // Set the form action to the desired URL
+                                //     $('#patientForm').attr('action', 'function/patient.update.php');
+
+                                //     // Submit the form asynchronously using AJAX
+                                //     $.ajax({
+                                //         type: "POST",
+                                //         url: $('#patientForm').attr('action'),
+                                //         data: $('#patientForm').serialize(),
+                                //         success: function (response) {
+                                //             if (response.trim() === 'success') {
+                                //                 Swal.fire({
+                                //                     icon: 'success',
+                                //                     title: 'Success',
+                                //                     text: 'Sale transaction completed!',
+                                //                 });
+
+
+                                //             } else {
+                                //                 Swal.fire({
+                                //                     icon: 'error',
+                                //                     title: 'Error',
+                                //                     text: response,
+                                //                 });
+                                //             }
+                                //         },
+                                //         error: function (xhr, status, error) {
+                                //             // Handle the error response
+                                //             // Display SweetAlert error popup
+                                //             Swal.fire({
+                                //                 icon: 'error',
+                                //                 title: 'Error',
+                                //                 text: 'Form submission failed!',
+                                //             });
+                                //         }
+                                //     });
+                                //     console.log('hello');
+
+                                // });
+
+
+                            });
+
+
+                        </script>
+
+
+
                         <br>
                         <?php
                         include "tab/patient_record.php";
@@ -291,90 +404,3 @@ if (isset($_GET['id'])) {
 <?php
 include "modal/patient_modal.php";
 ?>
-
-
-<script>
-    $(document).ready(function () {
-
-        var table = $('#customerTable').DataTable({
-            dom: '<"top"<"left-col"B><"center-col"f>>rti<"bottom"p><"clear">',
-            order: [
-                [0, 'desc']
-            ],
-            buttons: [{
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                }
-            },
-            {
-                extend: 'print',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                }
-            }
-            ],
-            lengthMenu: [
-                [-1],
-                ["All"]
-            ],
-            orderCellsTop: true,
-            paging: false, // Disable pagination
-            infoCallback: function (settings, start, end, max, total, pre) {
-                return total + ' entries';
-            }
-        });
-
-
-
-        $(document).on('click', '#saveRecord', function (e) {
-            // Prevent the default form submission
-            e.preventDefault();
-
-            // Set the form action to the desired URL
-            $('#patientForm').attr('action', 'function/patient.update.php');
-
-            // Submit the form asynchronously using AJAX
-            $.ajax({
-                type: "POST",
-                url: $('#patientForm').attr('action'),
-                data: $('#patientForm').serialize(),
-                
-                success: function (response) {
-                    if (response.trim() === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Patient Record has been Updated!',
-                        });
-
-                        // Temporarily hide the buttons
-                        $("#print_content button").hide();
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: response,
-                        });
-                    }
-                },
-                error: function (xhr, status, error) {
-                    // Handle the error response
-                    // Display SweetAlert error popup
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Form submission failed!',
-                    });
-                }
-            });
-        });
-
-    });
-</script>

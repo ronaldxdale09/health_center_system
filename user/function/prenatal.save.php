@@ -26,10 +26,11 @@ $notes = isset($_POST['notes']) ? $_POST['notes'] : '';
 
 
 
+
 $query = "UPDATE prenatal_record SET patient_id='$patient_id',ave_income='$ave_income',
      philh_no='$philh_no', abortion='$abortion', 
     para_no='$para_no', lmp='$lmp', edc='$edc', children='$children', 
-    gravida='$gravida',  smoking='$smoking', alcohol='$alcohol', notes='$notes'
+    gravida='$gravida',  smoking='$smoking', alcohol='$alcohol', notes='$notes',status='Completed'
     WHERE prenatal_id ='$record_id'";
 
 $results = mysqli_query($con, $query);

@@ -18,8 +18,8 @@ $medicineInventoryQuery = mysqli_query($con, "SELECT SUM(quantity) as total_medi
 $medicineInventory = mysqli_fetch_array($medicineInventoryQuery);
 
 // Total Deliveries This Year
-$yearlyDeliveriesQuery = mysqli_query($con, "SELECT COUNT(*) as yearly_deliveries FROM delivery_record WHERE YEAR(dateTimeDelivery) = YEAR(CURRENT_DATE())");
-$yearlyDeliveries = mysqli_fetch_array($yearlyDeliveriesQuery);
+$monthlyDeliveriesQuery = mysqli_query($con, "SELECT COUNT(*) as monthly_deliveries FROM delivery_record WHERE month(dateTimeDelivery) = month(CURRENT_DATE())");
+$monthlyDeliveries = mysqli_fetch_array($monthlyDeliveriesQuery);
 
 // Family Planning Consultations
 $fpConsultationsQuery = mysqli_query($con, "SELECT COUNT(*) as total_fp_consultations FROM family_planning_rec");
@@ -95,8 +95,8 @@ $fpConsultations = mysqli_fetch_array($fpConsultationsQuery);
                 <i class="fa fa-book"></i>
             </div>
             <div class="info-section">
-                <span class="stat-title">Yearly Deliveries</span>
-                <span class="stat-value"><?php echo number_format($yearlyDeliveries['yearly_deliveries'], 0); ?></span>
+                <span class="stat-title">Monthly Deliveries</span>
+                <span class="stat-value"><?php echo number_format($monthlyDeliveries['monthly_deliveries'], 0); ?></span>
             </div>
         </div>
     </div>

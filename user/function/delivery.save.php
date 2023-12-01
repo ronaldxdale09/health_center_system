@@ -27,6 +27,8 @@ $query = "UPDATE delivery_record SET
     dateTimeDischarge = '$dateDischarge',
     baby_gender = '$babyGender',
     gravida = '$gravida',
+    status = 'Completed',
+
     fundic_weight = '$fundic_weight',
     fetal_heart_tone = '$fetal_heart_tone',
     vital_sign = '$vital_sign',

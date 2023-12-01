@@ -96,7 +96,19 @@ include('include/navbar.php');
                                         ?>
                                     </select>
                                 </div>
-
+                                <div class="col-md-3 mb-3">
+                                    <label for="filterYear">Year:</label>
+                                    <select id="filterYear" class="form-control">
+                                        <option value="">All</option>
+                                        <?php
+                                        $currentYear = date("Y");
+                                        $startYear = 2022;
+                                        for ($i = $startYear; $i <= $currentYear; $i++) {
+                                            echo '<option value="' . $i . '">' . $i . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                                 <!-- Date Range Filter - Start Date -->
                                 <div class="col-md-3 mb-3">
                                     <label for="startDate">Start Date:</label>
@@ -118,11 +130,12 @@ include('include/navbar.php');
                         <hr>
                         <?php
                         // SQL query to select relevant immunization data
-                        $sql = "SELECT immunization.*,
-                        patient_record.Name, 
-                        patient_record.DateOfBirth
-                                FROM immunization
-                                LEFT JOIN patient_record ON immunization.patient_id = patient_record.patient_id";
+                        $sql = "SELECT immunization.*, patient_record.Name, patient_record.DateOfBirth, 
+        GROUP_CONCAT(immunization_status.immunizationType) as ImmunizationTypes 
+        FROM immunization
+        LEFT JOIN patient_record ON immunization.patient_id = patient_record.patient_id
+        LEFT JOIN immunization_status ON immunization.immunization_id = immunization_status.immunization_id
+        GROUP BY immunization.immunization_id";
 
                         $results = mysqli_query($con, $sql);
 
@@ -136,8 +149,13 @@ include('include/navbar.php');
                                 <thead class="table-dark text-center">
                                     <tr>
                                         <th scope="col">Immunization ID</th>
-                                        <th scope="col">Patient ID</th>
-                                
+                                        <th scope="col">Patient Name</th>
+                                        <th scope="col">Date of Birth</th>
+                                        <th scope="col">Date Recorded</th>
+                                        <th scope="col">Blood Pressure</th>
+                                        <th scope="col">Weight</th>
+                                        <th scope="col">Height</th>
+                                        <th scope="col">Immunization Types</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -150,7 +168,24 @@ include('include/navbar.php');
                                             <td>
                                                 <?php echo $row['Name'] ?>
                                             </td>
-                                         
+                                            <td>
+                                                <?php echo $row['DateOfBirth'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['dateRecording'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['bloodPressure'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['weight'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['height'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['ImmunizationTypes'] ?>
+                                            </td>
                                             <td>
                                                 <a href="immunization.php?id=<?php echo $row['immunization_id'] ?>"
                                                     class='btn btn-dark btn-sm'>Record</a>
@@ -160,6 +195,7 @@ include('include/navbar.php');
                                 </tbody>
                             </table>
                         </div>
+
 
 
                     </div>
@@ -207,7 +243,17 @@ include('include/navbar.php');
                 table.draw();
                 $.fn.dataTable.ext.search.pop(); // Clear this specific filter
             });
-
+            $('#filterYear').on('change', function () {
+                var year = parseInt(this.value, 10);
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var dateIssued = new Date(data[1]); // Assuming Date Issued is the 3rd column
+                        return isNaN(year) || year === dateIssued.getFullYear();
+                    }
+                );
+                table.draw();
+                $.fn.dataTable.ext.search.pop(); // Clear this specific filter
+            });
 
 
         });

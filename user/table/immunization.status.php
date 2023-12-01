@@ -26,7 +26,7 @@ $doses = ["At birth", "1½ months", "2½ months", "3½ months", "9 months", "1 y
 
 
 $output = '
-<table class="table table-hover table-bordered table-striped" id="phs_table">
+<table class="table table-hover table-bordered table-striped" id="immu_table">
     <thead class="table-success">
         <tr>
         <th hidden></th>

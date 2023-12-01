@@ -3,13 +3,26 @@ include('../../function/db.php');
 
 $record_id = $_POST['record_id'];
 $patient_id = $_POST['patient_id'];
+// Retrieve additional data from POST request
+$fatherName = $_POST['fathersName'];
+
+$mothersName = $_POST['mothersName'];
+$birthHeight = $_POST['birthHeight']; 
+$birthWeight = $_POST['birthWeight'];
+$placeOfBirth = $_POST['placeOfBirth']; 
 
 
-
+// Update query to include the new fields
 $updateQuery = "UPDATE immunization SET
-    patient_id = '$patient_id'
-WHERE immunization_id = '$record_id'";
+    patient_id = '$patient_id',
+    father_name = '$fatherName', 
+    mother_name = '$mothersName', 
+    height = '$birthHeight', 
+    weight = '$birthWeight',
+    placeOfBirth = '$placeOfBirth',
 
+    status = 'Completed'
+WHERE immunization_id = '$record_id'";
 $results = mysqli_query($con, $updateQuery);
 if (!$results) {
     echo "ERROR: Could not execute $updateQuery. " . mysqli_error($con);

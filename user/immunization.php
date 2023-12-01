@@ -30,6 +30,8 @@ if (isset($_GET['id'])) {
        
                     $('#patient_name').val('" . $patient_record['patient_id'] . "').trigger('chosen:updated');
                     $('#birth_date').val('" . $patient_record['DateOfBirth'] . "');
+                    $('#gender').val('" . $patient_record['Gender'] . "');
+
                     $('#address').val('" . $patient_record['Address'] . "');
                     $('#contactNumber').val('" . $patient_record['ContactNumber'] . "');
                     $('#spouse_name').val('" . $patient_record['spouse_name'] . "');
@@ -57,23 +59,13 @@ if (isset($_GET['id'])) {
 
             
                     // Populate vaccine schedule
-                    $('input[name=\"bcg_date_1\"]').val('" . ($record['bcg_date_1'] ?? '') . "');
-                    $('input[name=\"bcg_date_2\"]').val('" . ($record['bcg_date_2'] ?? '') . "');
-                    $('input[name=\"pentavalent_date_1\"]').val('" . ($record['pentavalent_date_1'] ?? '') . "');
-                    $('input[name=\"pentavalent_date_2\"]').val('" . ($record['pentavalent_date_2'] ?? '') . "');
-                    $('input[name=\"pentavalent_date_3\"]').val('" . ($record['pentavalent_date_3'] ?? '') . "');
-                    $('input[name=\"opv_date_1\"]').val('" . ($record['opv_date_1'] ?? '') . "');
-                    $('input[name=\"opv_date_2\"]').val('" . ($record['opv_date_2'] ?? '') . "');
-                    $('input[name=\"opv_date_3\"]').val('" . ($record['opv_date_3'] ?? '') . "');
-                    $('input[name=\"ipv_date_1\"]').val('" . ($record['ipv_date_1'] ?? '') . "');
-                    $('input[name=\"ipv_date_2\"]').val('" . ($record['ipv_date_2'] ?? '') . "');
-                    $('input[name=\"pneumococcal_date_1\"]').val('" . ($record['pneumococcal_date_1'] ?? '') . "');
-                    $('input[name=\"pneumococcal_date_2\"]').val('" . ($record['pneumococcal_date_2'] ?? '') . "');
-                    $('input[name=\"pneumococcal_date_3\"]').val('" . ($record['pneumococcal_date_3'] ?? '') . "');
-                    $('input[name=\"mmr_date_1\"]').val('" . ($record['mmr_date_1'] ?? '') . "');
-                    $('input[name=\"mmr_date_2\"]').val('" . ($record['mmr_date_2'] ?? '') . "');
+                    $('input[name=\"fathersName\"]').val('" . ($record['father_name'] ?? '') . "');
+                    $('input[name=\"mothersName\"]').val('" . ($record['mother_name'] ?? '') . "');
+                    $('input[name=\"birthHeight\"]').val('" . ($record['height'] ?? '') . "');
+                    $('input[name=\"birthWeight\"]').val('" . ($record['weight'] ?? '') . "');
 
-             
+                    $('input[name=\"placeOfBirth\"]').val('" . ($record['placeOfBirth'] ?? '') . "');
+
 
                 });
             </script>
@@ -133,23 +125,22 @@ if (isset($_GET['id'])) {
                     <hr>
                     <div class="row mb-3">
 
-                        <div class="col-10">
+                        <div class="col-9">
 
 
-                            <a href="immunization_record.php" type="button" class="btn trans-btn btn-dark "><span
+                            <a href="immunization_record.php" type="button" class="btn trans-btn btn-secondary "><span
                                     class="fas fa-arrow-left"></span> Return</a>
                             <button type="button" class="btn trans-btn btn-primary btnSaveForm" id="btnSaveForm"><span
                                     class="fas fa-check"></span> Save Record</button>
-
-                            <button type="button" class="btn trans-btn btn-secondary" id="confirmSales"><span
-                                    class="fas fa-eraser"></span> Clear Fields</button>
                         </div>
 
                         <div class="col">
-
-                            <button type="button" class="btn btn-dark btnPrint"><span class="fas fa-print"></span>
-                                Print</button>
-
+                            <button type="button" class="btn btn-warning btnEdit" id="btnEdit">
+                                <span class="fas fa-pencil"></span> Edit Record
+                            </button>
+                            <button type="button" class="btn btn-dark btnPrint">
+                                <span class="fas fa-print"></span> Print
+                            </button>
                         </div>
                     </div>
 
@@ -185,6 +176,7 @@ if (isset($_GET['id'])) {
                                                             $birthDate = $row['DateOfBirth'];
                                                             $address = $row['Address'];
                                                             $contact = $row['ContactNumber'];
+                                                            $gender = $row['Gender'];
 
                                                             $spouse_name = $row['spouse_name'];
                                                             $spouse_birthdate = $row['spouse_birthdate'];
@@ -194,6 +186,8 @@ if (isset($_GET['id'])) {
                                                                     data-name='$name' 
                                                                     data-birthdate='$birthDate' 
                                                                     data-address='$address' 
+                                                                    data-gender='$gender' 
+
                                                                     data-contact='$contact'
                                                                     data-spouse_name='$spouse_name' 
                                                                     data-spouse_birthdate='$spouse_birthdate'
@@ -212,9 +206,14 @@ if (isset($_GET['id'])) {
                                                 <input type="text" class="form-control" name="birth_date"
                                                     id="birth_date" readonly>
                                             </div>
-                                            <div class="col-md-3 mb-3">
+                                            <div class="col mb-3">
                                                 <label for="age" class="form-label">Age</label>
                                                 <input type="text" class="form-control" name="age" id="age" readonly>
+                                            </div>
+                                            <div class="col mb-3">
+                                                <label for="age" class="form-label">Gender</label>
+                                                <input type="text" class="form-control" name="gender" id="gender"
+                                                    readonly>
                                             </div>
                                         </div>
 
@@ -251,14 +250,7 @@ if (isset($_GET['id'])) {
                                                 <input type="text" class="form-control" name="birthWeight"
                                                     id="birthWeight">
                                             </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label for="babyGender" class="form-label">Sex</label>
-                                                <select class="form-select" name="babyGender" id="babyGender" required>
-                                                    <option value="" disabled selected>Select a gender</option>
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                </select>
-                                            </div>
+
                                         </div>
                                     </section>
 
@@ -325,6 +317,8 @@ if (isset($_GET['id'])) {
             },
             success: function (data) {
                 $('#prenatal_health_status').html(data);
+                makeReadOnly(); // Call this function here
+
             }
         });
     }
@@ -354,7 +348,7 @@ if (isset($_GET['id'])) {
     });
 
     $(document).ready(function () {
-        $(document).on('click', '.btnSaveForm, .btnVoid', function (e) {
+        $(document).on('click', '.btnVoid', function (e) {
             // Check if 'sale_buyer' input is readonly
             if ($('#patient_name').prop('readonly')) {
                 // If readonly, show alert and return
@@ -365,16 +359,16 @@ if (isset($_GET['id'])) {
                 });
                 return;
             }
-            if ($(this).hasClass('btnSaveForm')) {
-                $('#confirmImmunizationModal').modal('show');
-            } else if ($(this).hasClass('btnDraft')) {
+         
+         
+            if ($(this).hasClass('btnDraft')) {
                 $('#draftModal').modal('show');
             }
         });
 
 
 
-        $(document).on('click', '#confirmImmunizationButton', function (e) {
+        $(document).on('click', '#btnSaveForm', function (e) {
             // Prevent the default form submission
             e.preventDefault();
 
@@ -427,6 +421,7 @@ if (isset($_GET['id'])) {
             var selectedAddress = $(this).find('option:selected').data('address');
             var selectedContact = $(this).find('option:selected').data('contact');
             var selectedBirthDate = $(this).find('option:selected').data('birthdate');
+            var selectedGender = $(this).find('option:selected').data('gender');
 
             var selectedSpouse = $(this).find('option:selected').data('spouse_name');
             var selectedSpouseBirth = $(this).find('option:selected').data('spouse_birthdate');
@@ -443,6 +438,9 @@ if (isset($_GET['id'])) {
                 age--;
             }
             $('#age').val(age);
+
+            $('#gender').val(selectedGender);
+
             $('#address').val(selectedAddress);
             $('#birth_date').val(selectedBirthDate);
             $('#contactNumber').val(selectedContact);
@@ -489,6 +487,59 @@ if (isset($_GET['id'])) {
             });
         });
 
+
+
+
+
+        $('#btnEdit').click(function () {
+            revertReadOnly();
+        });
+
+        function revertReadOnly() {
+            // Only revert the readonly state for specific inputs
+            $('#print_content').find('input:not(#record_id, #birth_date, #age, #address, #contactNumber, #spouse_name, #spouse_date, #spouse_occupation), textarea').removeAttr('readonly');
+
+            // Enable the 'patient_name' Chosen.js select and update it
+            $('#patient_name').prop('disabled', false).trigger('chosen:updated');
+            $('#print_content').find('select').prop('disabled', false);
+
+            // Remove hidden inputs added for disabled selects except for 'patient_name'
+            $('#print_content').find('select:not(#patient_name)').each(function () {
+                $(this).next('input[type="hidden"]').remove();
+            });
+
+            // Revert all inputs inside the table with id 'phs_table' to be editable
+            $('#immu_table').find('input').removeAttr('readonly');
+
+            // Show the remove buttons in the phs_table
+            $('#immu_table').find('.remove-item-line').show();
+        }
+
+
+
+        function makeReadOnly() {
+            var immuStatus = '<?php echo $record['status']; ?>';
+            if (immuStatus === 'Completed') {
+                $('#print_content').find('input, textarea').attr('readonly', true);
+                $('#print_content').find('select').prop('disabled', true);
+
+                // Add hidden inputs for disabled selects
+                $('#print_content').find('select').each(function () {
+                    var name = $(this).attr('name');
+                    var value = $(this).val();
+                    $(this).after('<input type="hidden" name="' + name + '" value="' + value + '">');
+                });
+
+                // Make all inputs inside the table with id 'phs_table' readonly
+                $('#immu_table').find('input').attr('readonly', true);
+                $('#immu_table').find('select').prop('disabled', true);
+
+                // Hide the remove buttons in the phs_table
+                $('#immu_table').find('.remove-item-line').hide();
+            }
+        }
+
+        makeReadOnly();
 
 
     });

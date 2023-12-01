@@ -26,11 +26,30 @@ $notes = isset($_POST['notes']) ? $_POST['notes'] : '';
 
 
 
+// New tetanus immunization records
+$tetanus_1 = isset($_POST['tetanus_1']) ? $_POST['tetanus_1'] : null;
+$tetanus_2 = isset($_POST['tetanus_2']) ? $_POST['tetanus_2'] : null;
+$tetanus_3 = isset($_POST['tetanus_3']) ? $_POST['tetanus_3'] : null;
+$tetanus_4 = isset($_POST['tetanus_4']) ? $_POST['tetanus_4'] : null;
+$tetanus_5 = isset($_POST['tetanus_5']) ? $_POST['tetanus_5'] : null;
 
-$query = "UPDATE prenatal_record SET patient_id='$patient_id',ave_income='$ave_income',
-     philh_no='$philh_no', abortion='$abortion', 
+$tetanusRemarks_1 = isset($_POST['remarks_1']) ? $_POST['remarks_1'] : '';
+$tetanusRemarks_2 = isset($_POST['remarks_2']) ? $_POST['remarks_2'] : '';
+$tetanusRemarks_3 = isset($_POST['remarks_3']) ? $_POST['remarks_3'] : '';
+$tetanusRemarks_4 = isset($_POST['remarks_4']) ? $_POST['remarks_4'] : '';
+$tetanusRemarks_5 = isset($_POST['remarks_5']) ? $_POST['remarks_5'] : '';
+
+
+
+$query = "UPDATE prenatal_record SET patient_id='$patient_id', ave_income='$ave_income',
+    philh_no='$philh_no', abortion='$abortion', 
     para_no='$para_no', lmp='$lmp', edc='$edc', children='$children', 
-    gravida='$gravida',  smoking='$smoking', alcohol='$alcohol', notes='$notes',status='Completed'
+    gravida='$gravida', smoking='$smoking', alcohol='$alcohol', notes='$notes',
+    tetanus_1='$tetanus_1', tetanus_2='$tetanus_2', tetanus_3='$tetanus_3', 
+    tetanus_4='$tetanus_4', tetanus_5='$tetanus_5', 
+    tetanusRemarks_1='$tetanusRemarks_1', tetanusRemarks_2='$tetanusRemarks_2', 
+    tetanusRemarks_3='$tetanusRemarks_3', tetanusRemarks_4='$tetanusRemarks_4', 
+    tetanusRemarks_5='$tetanusRemarks_5', status='Completed'
     WHERE prenatal_id ='$record_id'";
 
 $results = mysqli_query($con, $query);

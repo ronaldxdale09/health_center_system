@@ -138,17 +138,25 @@ if (isset($_GET['id'])) {
                     </h2>
                     <hr>
                     <div class="row mb-3">
-
-                        <div class="col-10">
-
-                            <a href="deliveries_record.php" type="button" class="btn trans-btn btn-dark "><span
-                                    class="fas fa-arrow-left"></span> Return</a>
-                            <button type="button" class="btn trans-btn btn-primary btnSaveForm" id="btnSaveForm"><span
-                                    class="fas fa-check"></span> Save Record</button>
-                            <button type="button" class="btn btn-secondary btnPrint"><span class="fas fa-print"></span>
-                                Print Record</button>
+                        <div class="col-9">
+                            <a href="deliveries_record.php" type="button" class="btn trans-btn btn-secondary ">
+                                <span class="fas fa-arrow-left"></span> Return
+                            </a>
+                            <button type="button" class="btn trans-btn btn-primary" id="saveButton">
+                                <span class="fas fa-check"></span> Save Record
+                            </button>
+                            <button type="button" class="btn trans-btn btn-danger btnVoid" id="btnVoid">
+                                <span class="fas fa-trash"></span> Remove Record
+                            </button>
                         </div>
-
+                        <div class="col">
+                            <button type="button" class="btn btn-warning btnEdit" id="btnEdit">
+                                <span class="fas fa-pencil"></span> Edit Record
+                            </button>
+                            <button type="button" class="btn btn-dark btnPrint">
+                                <span class="fas fa-print"></span> Print
+                            </button>
+                        </div>
                     </div>
 
                     <div id='print_content'>
@@ -538,6 +546,58 @@ if (isset($_GET['id'])) {
 
 
 
+        $('#btnEdit').click(function () {
+            revertReadOnly();
+        });
+
+        function revertReadOnly() {
+            // Only revert the readonly state for specific inputs
+            $('#print_content').find('input:not(#record_id, #birth_date, #age, #address, #contactNumber, #spouse_name, #spouse_date, #spouse_occupation), textarea').removeAttr('readonly');
+
+            // Enable the 'patient_name' Chosen.js select and update it
+            $('#patient_name').prop('disabled', false).trigger('chosen:updated');
+            $('#print_content').find('select').prop('disabled', false);
+
+            // Remove hidden inputs added for disabled selects except for 'patient_name'
+            $('#print_content').find('select:not(#patient_name)').each(function () {
+                $(this).next('input[type="hidden"]').remove();
+            });
+
+            // Revert all inputs inside the table with id 'phs_table' to be editable
+            $('#delivery_medicine_list').find('input').removeAttr('readonly');
+
+            // Show the remove buttons in the phs_table
+            $('#delivery_medicine_list').find('.remove-item-line').show();
+        }
+
+
+
+        function makeReadOnly() {
+            var immuStatus = '<?php echo $record['status']; ?>';
+            if (immuStatus === 'Completed') {
+                $('#print_content').find('input, textarea').attr('readonly', true);
+                $('#print_content').find('select').prop('disabled', true);
+
+                // Add hidden inputs for disabled selects
+                $('#print_content').find('select').each(function () {
+                    var name = $(this).attr('name');
+                    var value = $(this).val();
+                    $(this).after('<input type="hidden" name="' + name + '" value="' + value + '">');
+                });
+
+                // Make all inputs inside the table with id 'phs_table' readonly
+                $('#delivery_medicine_list').find('input').attr('readonly', true);
+                $('#delivery_medicine_list').find('select').prop('disabled', true);
+
+                // Hide the remove buttons in the phs_table
+                $('#delivery_medicine_list').find('.remove-item-line').hide();
+            }
+        }
+
+        makeReadOnly();
+
+
+
         delivery_id = <?php echo $id ?>;
 
         function fetch_med() {
@@ -551,6 +611,7 @@ if (isset($_GET['id'])) {
                 },
                 success: function (data) {
                     $('#medicine_list_table').html(data);
+                    makeReadOnly() 
                 }
             });
         }
@@ -586,11 +647,7 @@ if (isset($_GET['id'])) {
                 return;
             }
 
-
-
-            if ($(this).hasClass('btnSaveForm')) {
-                $('#confirmPrenatalModal').modal('show');
-            } else if ($(this).hasClass('btnDraft')) {
+            if ($(this).hasClass('btnDraft')) {
                 $('#draftModal').modal('show');
             }
             // add similar if conditions for other buttons if needed
@@ -598,7 +655,7 @@ if (isset($_GET['id'])) {
 
 
 
-        $(document).on('click', '#btnSaveForm', function (e) {
+        $(document).on('click', '#saveButton', function (e) {
             // Prevent the default form submission
             e.preventDefault();
 

@@ -114,6 +114,30 @@ include('include/navbar.php');
                             </div>
                         </div>
                     </div>
+
+                    <h4 class="card-header card-title3 chart-section-header">IMMUNIZATION <span>CHARTS</span></h4>
+                    <!-- Canvas for Chart.js -->
+                    <div class="row">
+                        <!-- Monthly Patient Admissions Bar Chart -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Immunization Type Distribution </h5>
+                                    <canvas id="typeDistributionChart" width="400" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Patients Recovery Trend Line Chart -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Immunization Trend </h5>
+                                    <canvas id="immunizationTrendChart" width="400" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br><br>
             </div>
@@ -131,6 +155,7 @@ include('include/navbar.php');
     <?php include('statistical_card/prenatal.chart.php'); ?>
 
     <?php include('statistical_card/delivery.chart.php'); ?>
+    <?php include('statistical_card/immu.chart.php'); ?>
 
 
 

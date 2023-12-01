@@ -84,6 +84,39 @@ if (isset($_GET['id'])) {
                     $('select[name=\"smoking\"]').val('" . $record['smoking'] . "');
                     $('select[name=\"alcohol\"]').val('" . $record['alcohol'] . "');
                     $('textarea[name=\"notes\"]').val('" . $record['notes'] . "');
+
+
+                    // Tetanus fields
+                    $('input[name=\"tetanus_1\"]').val('" . $record['tetanus_1'] . "');
+                    $('input[name=\"tetanus_2\"]').val('" . $record['tetanus_2'] . "');
+                    $('input[name=\"tetanus_3\"]').val('" . $record['tetanus_3'] . "');
+                    $('input[name=\"tetanus_4\"]').val('" . $record['tetanus_4'] . "');
+                    $('input[name=\"tetanus_5\"]').val('" . $record['tetanus_5'] . "');
+                    
+                    $('input[name=\"remarks_1\"]').val('" . $record['tetanusRemarks_1'] . "');
+                    $('input[name=\"remarks_2\"]').val('" . $record['tetanusRemarks_2'] . "');
+                    $('input[name=\"remarks_3\"]').val('" . $record['tetanusRemarks_3'] . "');
+                    $('input[name=\"remarks_4\"]').val('" . $record['tetanusRemarks_4'] . "');
+                    $('input[name=\"remarks_5\"]').val('" . $record['tetanusRemarks_5'] . "');
+
+
+
+                });
+            </script>
+        ";
+
+        echo "
+            <script>
+                $(document).ready(function() {
+                    // ... Your existing code to populate data ...
+
+                    // Now manually update the status badge for each row
+                    for (let i = 1; i <= 5; i++) {
+                        let dateInput = document.getElementById('tetanus_' + i);
+                        let statusConfirmed = document.getElementById('status_confirmed_' + i);
+                        let statusPending = document.getElementById('status_pending_' + i);
+                        updateStatusBadge(dateInput, statusConfirmed, statusPending);
+                    }
                 });
             </script>
         ";
@@ -360,7 +393,9 @@ if (isset($_GET['id'])) {
                                                         placeholder="Enter additional notes"></textarea>
                                                 </div>
                                             </div>
-
+                                            <br>
+                                            <h4>Tetanus Immunization History</h4>
+                                            <hr>
                                             <table class="table table-bordered table-hover table-striped"
                                                 id='immunization_record'>
                                                 <thead class="table-dark text-center">
@@ -368,57 +403,88 @@ if (isset($_GET['id'])) {
                                                         <th scope="col">Tetanus</th>
                                                         <th scope="col">Date</th>
                                                         <th scope="col">Remarks</th>
+                                                        <th scope="col">Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
+                                                    <!-- Row 1 -->
                                                     <tr>
-                                                        <td> <input type="text" class="form-control" value="Tetanus 1" disabled>
-                                                        </td>
-
+                                                        <td> <input type="text" class="form-control" value="Tetanus 1"
+                                                                disabled></td>
                                                         <td> <input type="date" class="form-control" name="tetanus_1"
                                                                 id="tetanus_1" required></td>
                                                         <td> <input type="text" class="form-control" name="remarks_1"
                                                                 id="remarks_1" required></td>
+                                                        <td>
+                                                            <span class="badge bg-success" id="status_confirmed_1"
+                                                                style="display: none;">Confirmed</span>
+                                                            <span class="badge bg-warning"
+                                                                id="status_pending_1">Pending</span>
+                                                        </td>
                                                     </tr>
+                                                    <!-- Row 2 -->
                                                     <tr>
-                                                        <td> <input type="text" class="form-control" value="Tetanus 2" disabled>
+                                                        <td> <input type="text" class="form-control" value="Tetanus 2"
+                                                                disabled></td>
+                                                        <td> <input type="date" class="form-control" name="tetanus_2"
+                                                                id="tetanus_2" required></td>
+                                                        <td> <input type="text" class="form-control" name="remarks_2"
+                                                                id="remarks_2" required></td>
+                                                        <td>
+                                                            <span class="badge bg-success" id="status_confirmed_2"
+                                                                style="display: none;">Confirmed</span>
+                                                            <span class="badge bg-warning"
+                                                                id="status_pending_2">Pending</span>
                                                         </td>
-
-                                                        <td> <input type="date" class="form-control" name="tetanus_1"
-                                                                id="tetanus_1" required></td>
-                                                        <td> <input type="text" class="form-control" name="remarks_1"
-                                                                id="remarks_1" required></td>
                                                     </tr>
+                                                    <!-- Row 3 -->
                                                     <tr>
-                                                        <td> <input type="text" class="form-control" value="Tetanus 3" disabled>
+                                                        <td> <input type="text" class="form-control" value="Tetanus 3"
+                                                                disabled></td>
+                                                        <td> <input type="date" class="form-control" name="tetanus_3"
+                                                                id="tetanus_3" required></td>
+                                                        <td> <input type="text" class="form-control" name="remarks_3"
+                                                                id="remarks_3" required></td>
+                                                        <td>
+                                                            <span class="badge bg-success" id="status_confirmed_3"
+                                                                style="display: none;">Confirmed</span>
+                                                            <span class="badge bg-warning"
+                                                                id="status_pending_3">Pending</span>
                                                         </td>
-
-                                                        <td> <input type="date" class="form-control" name="tetanus_1"
-                                                                id="tetanus_1" required></td>
-                                                        <td> <input type="text" class="form-control" name="remarks_1"
-                                                                id="remarks_1" required></td>
                                                     </tr>
+                                                    <!-- Row 4 -->
                                                     <tr>
-                                                        <td> <input type="text" class="form-control" value="Tetanus 4" disabled>
+                                                        <td> <input type="text" class="form-control" value="Tetanus 4"
+                                                                disabled></td>
+                                                        <td> <input type="date" class="form-control" name="tetanus_4"
+                                                                id="tetanus_4" required></td>
+                                                        <td> <input type="text" class="form-control" name="remarks_4"
+                                                                id="remarks_4" required></td>
+                                                        <td>
+                                                            <span class="badge bg-success" id="status_confirmed_4"
+                                                                style="display: none;">Confirmed</span>
+                                                            <span class="badge bg-warning"
+                                                                id="status_pending_4">Pending</span>
                                                         </td>
-
-                                                        <td> <input type="date" class="form-control" name="tetanus_1"
-                                                                id="tetanus_1" required></td>
-                                                        <td> <input type="text" class="form-control" name="remarks_1"
-                                                                id="remarks_1" required></td>
                                                     </tr>
+                                                    <!-- Row 5 -->
                                                     <tr>
-                                                        <td> <input type="text" class="form-control" value="Tetanus 5" disabled>
+                                                        <td> <input type="text" class="form-control" value="Tetanus 5"
+                                                                disabled></td>
+                                                        <td> <input type="date" class="form-control" name="tetanus_5"
+                                                                id="tetanus_5" required></td>
+                                                        <td> <input type="text" class="form-control" name="remarks_5"
+                                                                id="remarks_5" required></td>
+                                                        <td>
+                                                            <span class="badge bg-success" id="status_confirmed_5"
+                                                                style="display: none;">Confirmed</span>
+                                                            <span class="badge bg-warning"
+                                                                id="status_pending_5">Pending</span>
                                                         </td>
-
-                                                        <td> <input type="date" class="form-control" name="tetanus_1"
-                                                                id="tetanus_1" required></td>
-                                                        <td> <input type="text" class="form-control" name="remarks_1"
-                                                                id="remarks_1" required></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
+
                                     </div>
 
                                     </section>
@@ -450,6 +516,33 @@ if (isset($_GET['id'])) {
 </html>
 
 <script>
+    function updateStatusBadge(dateInput, statusConfirmed, statusPending) {
+        if (dateInput.value) {
+            statusConfirmed.style.display = 'block'; // Show 'Confirmed' badge if date is set
+            statusPending.style.display = 'none'; // Hide 'Pending' badge
+        } else {
+            statusConfirmed.style.display = 'none'; // Hide 'Confirmed' badge
+            statusPending.style.display = 'block'; // Show 'Pending' badge
+        }
+    }
+
+    // It's safe to call this function on DOMContentLoaded as well
+    document.addEventListener("DOMContentLoaded", function () {
+        for (let i = 1; i <= 5; i++) {
+            let dateInput = document.getElementById(`tetanus_${i}`);
+            let statusConfirmed = document.getElementById(`status_confirmed_${i}`);
+            let statusPending = document.getElementById(`status_pending_${i}`);
+
+            updateStatusBadge(dateInput, statusConfirmed, statusPending);
+
+            dateInput.addEventListener('change', function () {
+                updateStatusBadge(dateInput, statusConfirmed, statusPending);
+            });
+        }
+    });
+
+
+
     $(document).ready(function () {
 
 

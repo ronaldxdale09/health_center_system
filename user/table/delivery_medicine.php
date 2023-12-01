@@ -57,8 +57,8 @@ while ($row = mysqli_fetch_assoc($result)) {
     }
     $medDropdown .= '</select>';
 
-     // Append row data to output
-     $output .= '
+    // Append row data to output
+    $output .= '
      <tr>
      <td hidden><input type="text" class="form-control payment_id" name="med_id[]" value="' . htmlspecialchars($row['idNo']) . '"></td>
          <td>
@@ -163,6 +163,9 @@ echo $output;
         });
 
 
-
+        $(document).on("click", ".remove-item-line, .removeList", function (event) {
+            event.preventDefault();
+            $(this).closest("tr").remove();
+        });
     });
 </script>

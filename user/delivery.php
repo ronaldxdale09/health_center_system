@@ -207,6 +207,7 @@ if (isset($_GET['id'])) {
                                                                     $birthDate = $row['DateOfBirth'];
                                                                     $address = $row['Address'];
                                                                     $contact = $row['ContactNumber'];
+                                                                    $profilepic = $row['ProfilePicture'];
 
                                                                     $philhealth = $row['philhealth'];
 
@@ -218,6 +219,7 @@ if (isset($_GET['id'])) {
                                                                     echo "<option value='$patient_id' 
                                                                     data-patient_id='$patient_id' 
                                                                     data-name='$name' 
+                                                                    data-profilepic='$profilepic' 
                                                                     data-birthdate='$birthDate' 
                                                                     data-address='$address' 
                                                                     data-contact='$contact'
@@ -783,6 +785,22 @@ if (isset($_GET['id'])) {
             var selectedSpouseBirth = $(this).find('option:selected').data('spouse_birthdate');
             var selectedSpouseOccu = $(this).find('option:selected').data('spouse_occupation');
             var selectedPhilhealth = $(this).find('option:selected').data('philhealth');
+
+
+
+            // Extract the profile picture path from the selected option
+            var selectedProfilePic = $(this).find('option:selected').data('profilepic');
+
+            // If the selected option has a specific profile picture set, use it
+            if (selectedProfilePic) {
+                $('#profile_picture').attr('src', 'patient_img/' + selectedProfilePic);
+            } else {
+                // Otherwise, revert to the default profile picture
+                $('#profile_picture').attr('src', 'assets/img/avatar2.png');
+            }
+
+
+
 
 
             let today = new Date();

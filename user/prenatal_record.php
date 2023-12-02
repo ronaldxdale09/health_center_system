@@ -218,6 +218,7 @@ if (isset($_GET['id'])) {
                                                                         $name = $row['Name'];
                                                                         $birthDate = $row['DateOfBirth'];
                                                                         $address = $row['Address'];
+                                                                        $profilepic = $row['ProfilePicture'];
                                                                         $contact = $row['ContactNumber'];
 
                                                                         $ave_monthIncome = $row['ave_monthIncome'];
@@ -230,6 +231,7 @@ if (isset($_GET['id'])) {
 
                                                                         echo "<option value='$patient_id' 
                                                                     data-name='$name' 
+                                                                    data-profilepic='$profilepic' 
                                                                     data-birthdate='$birthDate' 
                                                                     data-address='$address' 
                                                                     data-contact='$contact'
@@ -339,17 +341,20 @@ if (isset($_GET['id'])) {
                                                         required>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
-                                                    <label for="children" class="form-label">No. Living Children<span class="text-danger">*</span></label>
+                                                    <label for="children" class="form-label">No. Living Children<span
+                                                            class="text-danger">*</span></label>
                                                     <input type="number" class="form-control" name="children"
                                                         id="children" required>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
-                                                    <label for="gravida" class="form-label">Gravida<span class="text-danger">*</span></label>
+                                                    <label for="gravida" class="form-label">Gravida<span
+                                                            class="text-danger">*</span></label>
                                                     <input type="number" class="form-control" name="gravida"
                                                         id="gravida" required>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
-                                                    <label for="abortion" class="form-label">Abortion<span class="text-danger">*</span></label>
+                                                    <label for="abortion" class="form-label">Abortion<span
+                                                            class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" name="abortion"
                                                         id="abortion" placeholder="No. of Abortion" required>
                                                 </div>
@@ -775,6 +780,17 @@ if (isset($_GET['id'])) {
             var selectedSpouseOccu = $(this).find('option:selected').data('spouse_occupation');
             var selectedAve_monthIncome = $(this).find('option:selected').data('ave_monthIncome');
             var selectedPhilhealth = $(this).find('option:selected').data('philhealth');
+
+            // Extract the profile picture path from the selected option
+            var selectedProfilePic = $(this).find('option:selected').data('profilepic');
+
+            // If the selected option has a specific profile picture set, use it
+            if (selectedProfilePic) {
+                $('#profile_picture').attr('src', 'patient_img/'+selectedProfilePic);
+            } else {
+                // Otherwise, revert to the default profile picture
+                $('#profile_picture').attr('src', 'assets/img/avatar2.png');
+            }
 
 
 

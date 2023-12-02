@@ -324,38 +324,38 @@ if (isset($_GET['id'])) {
                                         <!-- Pregnancy Information Section -->
                                         <section class="mb-4">
                                             <h4>Pregnancy Information</h4>
-                                            <div class="row">
+                                            <div class="row" id="preganancyInfo">
                                                 <!-- LMP, EDC, No. Living Children, Gravida, Abortion, PARA -->
                                                 <div class="col-md-6 mb-3">
                                                     <label for="lmp" class="form-label">Last Menstrual Period
-                                                        (LMP)</label>
+                                                        (LMP)<spanclass="text-danger">*</span></label>
                                                     <input type="date" class="form-control" name="lmp" id="lmp"
                                                         required>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <label for="edc" class="form-label">Estimated Date of Confinement
-                                                        (EDC)</label>
+                                                        (EDC)<span class="text-danger">*</span></label>
                                                     <input type="date" class="form-control" name="edc" id="edc"
                                                         required>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
-                                                    <label for="children" class="form-label">No. Living Children</label>
+                                                    <label for="children" class="form-label">No. Living Children<span class="text-danger">*</span></label>
                                                     <input type="number" class="form-control" name="children"
                                                         id="children" required>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
-                                                    <label for="gravida" class="form-label">Gravida</label>
+                                                    <label for="gravida" class="form-label">Gravida<span class="text-danger">*</span></label>
                                                     <input type="number" class="form-control" name="gravida"
                                                         id="gravida" required>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
-                                                    <label for="abortion" class="form-label">Abortion</label>
+                                                    <label for="abortion" class="form-label">Abortion<span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" name="abortion"
                                                         id="abortion" placeholder="No. of Abortion" required>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
                                                     <label for="para_no" class="form-label">PARA (No. of
-                                                        Pregnancy)</label>
+                                                        Pregnancy)<span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" name="para_no" id="para_no"
                                                         required>
                                                 </div>
@@ -692,10 +692,10 @@ if (isset($_GET['id'])) {
             var errorMessage = "Please fill out all required fields.";
 
             // Loop through each input and select element inside the form
-            $('#print_content').find('input, select').each(function () {
+            $('#preganancyInfo').find('input, select').each(function () {
                 var label = $(this).closest('.col').find('label');
                 // Check if the label contains an asterisk, indicating a required field
-                if (label.text().indexOf('*') !== -1 && !$(this).val()) {
+                if (label.text().indexOf('*') !== 1 && !$(this).val()) {
                     isValid = false;
                     // Highlight the input field or show an error message
                     $(this).css('border-color', 'red'); // Highlight field with red color

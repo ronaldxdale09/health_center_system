@@ -543,6 +543,16 @@ if (isset($_GET['id'])) {
 
 
 
+    // document.getElementById('profile_picture').addEventListener('change', function (event) {
+    //     const reader = new FileReader();
+    //     reader.onload = function () {
+    //         const img = document.getElementById('preview_image');
+    //         img.src = reader.result;
+    //     };
+    //     reader.readAsDataURL(event.target.files[0]);
+    // }, false);
+
+
     $(document).ready(function () {
 
 

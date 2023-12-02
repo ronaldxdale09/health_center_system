@@ -4,7 +4,7 @@
   include "../function/db.php";
   include "include/bootstrap.php";
   include "include/jquery.php"; 
-//   include "function/authenticate.php"; 
+include "function/authenticate.php"; 
 
 ?>
 <html>

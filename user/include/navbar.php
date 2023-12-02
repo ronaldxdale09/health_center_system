@@ -39,6 +39,9 @@
     <a class="nav-link" href="medicine_list.php">
         <i class="fas fa-book"></i></i> <span class="nav-text">Medication List</span>
     </a>
+    <a class="nav-link" href="acc_mng.php">
+        <i class="fas fa-user"></i></i> <span class="nav-text">Account Management</span>
+    </a>
     <!-- <div class='logout-container'>
         <span class='nav-text'></span>
         <a class='nav-link logout' href='function/logout.php'>

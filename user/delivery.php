@@ -7,7 +7,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $id = preg_replace('~\D~', '', $id);
 
-    $sql = "SELECT * FROM delivery_record WHERE delivery_id = $id";
+    $sql = "SELECT* FROM delivery_record WHERE delivery_id = $id";
     $result = $con->query($sql);
 
     // Get patient details from patient_record using the patient_id from the retrieved record
@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
             $patient_id = $record['patient_id'];
 
 
-            $sql_patient = "SELECT * FROM patient_record WHERE patient_id = '$patient_id'";
+            $sql_patient = "SELECT* FROM patient_record WHERE patient_id = '$patient_id'";
             $result_patient = $con->query($sql_patient);
             $patient_record = $result_patient->fetch_assoc();
 
@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
 
 
 
-            $sql_prenatal = "SELECT * FROM prenatal_record WHERE prenatal_id = $patient_id";
+            $sql_prenatal = "SELECT* FROM prenatal_record WHERE patient_id = $patient_id";
             $result_prenatal = $con->query($sql_prenatal);
             $prenatal = $result_prenatal->fetch_assoc();
 
@@ -119,7 +119,7 @@ if (isset($_GET['id'])) {
         border: 1px solid #ddd;
         border-radius: 5px;
         padding: 20px;
-        /* Adding padding inside the box */
+        /* Adding padding inside the box*/
     }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -198,7 +198,7 @@ if (isset($_GET['id'])) {
                                                                 Patient</option>
                                                             <?php
                                                             // Retrieve customer names from the coffee_customer table
-                                                            $sql = "SELECT * FROM patient_record";
+                                                            $sql = "SELECT* FROM patient_record";
                                                             $result = mysqli_query($con, $sql);
                                                             if ($result) {
                                                                 while ($row = mysqli_fetch_assoc($result)) {
@@ -216,6 +216,7 @@ if (isset($_GET['id'])) {
                                                                     $spouse_occupation = $row['spouse_occupation'];
 
                                                                     echo "<option value='$patient_id' 
+                                                                    data-patient_id='$patient_id' 
                                                                     data-name='$name' 
                                                                     data-birthdate='$birthDate' 
                                                                     data-address='$address' 
@@ -293,6 +294,8 @@ if (isset($_GET['id'])) {
 
                                         </div>
                                     </section>
+
+
                                     <section class="mb-4">
                                         <h4>Prenatal Information</h4>
                                         <div class="row">
@@ -340,189 +343,191 @@ if (isset($_GET['id'])) {
                             </div>
                         </div>
 
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="container">
-                                    <section class="mb-4">
-                                        <h4>Current Health Status</h4>
-                                        <hr>
-                                        <div class="row">
-                                            <!-- Fundic Weight -->
-                                            <div class="col-md-4 mb-3">
-                                                <label for="fundicWeight" class="form-label">Fundic Weight <span
-                                                        class="text-danger">*</span></label>
-                                                <div class="input-group">
-                                                    <input type="number" step="0.1" class="form-control"
-                                                        name="fundicWeight" id="fundicWeight" required>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">kg</span>
+                        <div id='validation_checker'>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="container">
+                                        <section class="mb-4">
+                                            <h4>Current Health Status</h4>
+                                            <hr>
+                                            <div class="row">
+                                                <!-- Fundic Weight -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="fundicWeight" class="form-label">Fundic Weight<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <input type="number" step="0.1" class="form-control"
+                                                            name="fundicWeight" id="fundicWeight" required>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">kg</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Fetal Heart Tone -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="fetalHeartTone" class="form-label">Fetal Heart Tone<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <input type="number" step="0.1" class="form-control"
+                                                            name="fetalHeartTone" id="fetalHeartTone" required>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">bpm</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Blood Pressure -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="bloodPressure" class="form-label">Blood Pressure<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" name="blood_pressure"
+                                                            id="bloodPressure" required>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">mmHg</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Fetal Heart Tone -->
-                                            <div class="col-md-4 mb-3">
-                                                <label for="fetalHeartTone" class="form-label">Fetal Heart Tone<span
-                                                        class="text-danger"> *</span></label>
-                                                <div class="input-group">
-                                                    <input type="number" step="0.1" class="form-control"
-                                                        name="fetalHeartTone" id="fetalHeartTone" required>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">bpm</span>
+                                            <!-- Row 2 -->
+                                            <div class="row">
+                                                <!-- Vital Sign -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="vitalSign" class="form-label">Vital Sign<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" name="vitalSign"
+                                                            id="vitalSign" required>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">unit</span>
+                                                            <!-- Replace 'unit' with the correct unit -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Temperature -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="temperature" class="form-label">Temperature<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" name="temperature"
+                                                            id="temperature" required>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">°C</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Respiration -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="respiration" class="form-label">Respiration<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <input type="number" step="0.1" class="form-control"
+                                                            name="respiration" id="respiration" required>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">bpm</span>
+                                                            <!-- Assuming bpm, replace if different -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Blood Pressure -->
-                                            <div class="col-md-4 mb-3">
-                                                <label for="bloodPressure" class="form-label">Blood Pressure<span
-                                                        class="text-danger"> *</span></label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" name="blood_pressure"
-                                                        id="bloodPressure" required>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">mmHg</span>
+                                            <!-- Row 3 -->
+                                            <div class="row">
+                                                <!-- Birth Weight -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="birthWeight" class="form-label">Birth Weight<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <input type="number" step="0.1" class="form-control"
+                                                            name="birthWeight" id="birthWeight" required>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">kg</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
 
-                                        <!-- Row 2 -->
-                                        <div class="row">
-                                            <!-- Vital Sign -->
-                                            <div class="col-md-4 mb-3">
-                                                <label for="vitalSign" class="form-label">Vital Sign<span
-                                                        class="text-danger"> *</span></label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" name="vitalSign"
-                                                        id="vitalSign" required>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">unit</span>
-                                                        <!-- Replace 'unit' with the correct unit -->
+                                                <!-- Birth Height -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="birthHeight" class="form-label">Birth Height<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" name="birthHeight"
+                                                            id="birthHeight" required>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">cm</span>
+                                                        </div>
                                                     </div>
                                                 </div>
+
+                                                <!-- Gravida -->
+
                                             </div>
 
-                                            <!-- Temperature -->
-                                            <div class="col-md-4 mb-3">
-                                                <label for="temperature" class="form-label">Temperature<span
-                                                        class="text-danger"> *</span></label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" name="temperature"
-                                                        id="temperature" required>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">°C</span>
-                                                    </div>
+                                            <!-- PARA -->
+
+                                        </section>
+
+                                        <!-- Delivery Information -->
+                                        <section class="mb-4">
+                                            <h4>Delivery Information</h4>
+                                            <hr>
+                                            <!-- Delivery Details -->
+                                            <div class="row">
+                                                <!-- Date-Time Coming -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="dateComing" class="form-label">Date-Time Coming<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="datetime-local" class="form-control" name="dateComing"
+                                                        required>
                                                 </div>
-                                            </div>
 
-                                            <!-- Respiration -->
-                                            <div class="col-md-4 mb-3">
-                                                <label for="respiration" class="form-label">Respiration<span
-                                                        class="text-danger"> *</span></label>
-                                                <div class="input-group">
-                                                    <input type="number" step="0.1" class="form-control"
-                                                        name="respiration" id="respiration" required>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">bpm</span>
-                                                        <!-- Assuming bpm, replace if different -->
-                                                    </div>
+                                                <!-- Date-Time Delivery -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="dateDelivery" class="form-label">Date-Time Delivery<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="datetime-local" class="form-control"
+                                                        name="dateDelivery" required>
                                                 </div>
-                                            </div>
-                                        </div>
 
-                                        <!-- Row 3 -->
-                                        <div class="row">
-                                            <!-- Birth Weight -->
-                                            <div class="col-md-4 mb-3">
-                                                <label for="birthWeight" class="form-label">Birth Weight<span
-                                                        class="text-danger"> *</span></label>
-                                                <div class="input-group">
-                                                    <input type="number" step="0.1" class="form-control"
-                                                        name="birthWeight" id="birthWeight" required>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">kg</span>
-                                                    </div>
+                                                <!-- Date-Time Discharge -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="dateDischarge" class="form-label">Date-Time
+                                                        Discharge<span class="text-danger">*</span></label>
+                                                    <input type="datetime-local" class="form-control"
+                                                        name="dateDischarge" required>
                                                 </div>
                                             </div>
 
-                                            <!-- Birth Height -->
-                                            <div class="col-md-4 mb-3">
-                                                <label for="birthHeight" class="form-label">Birth Height<span
-                                                        class="text-danger"> *</span></label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" name="birthHeight"
-                                                        id="birthHeight" required>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">cm</span>
-                                                    </div>
+                                            <!-- Baby Gender -->
+                                            <div class="row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="babyGender" class="form-label">Gender of Baby<span
+                                                            class="text-danger">*</span></label>
+                                                    <select class="form-select" name="babyGender" required>
+                                                        <option value="" disabled selected>Select Gender</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                    </select>
                                                 </div>
                                             </div>
+                                        </section>
 
-                                            <!-- Gravida -->
-
-                                        </div>
-
-                                        <!-- PARA -->
-
-                                    </section>
-
-                                    <!-- Delivery Information -->
-                                    <section class="mb-4">
-                                        <h4>Delivery Information</h4>
-                                        <hr>
-                                        <!-- Delivery Details -->
-                                        <div class="row">
-                                            <!-- Date-Time Coming -->
-                                            <div class="col-md-4 mb-3">
-                                                <label for="dateComing" class="form-label">Date-Time Coming<span
-                                                        class="text-danger"> *</span></label>
-                                                <input type="datetime-local" class="form-control" name="dateComing"
-                                                    required>
+                                        <!-- Medicine Section -->
+                                        <div class="card">
+                                            <div class="card-body" style="background-color: #F5F8FB;">
+                                                <h4 class="header-design">Medicine</h4>
+                                                <div id="medicine_list_table"></div>
                                             </div>
-
-                                            <!-- Date-Time Delivery -->
-                                            <div class="col-md-4 mb-3">
-                                                <label for="dateDelivery" class="form-label">Date-Time Delivery<span
-                                                        class="text-danger"> *</span></label>
-                                                <input type="datetime-local" class="form-control" name="dateDelivery"
-                                                    required>
-                                            </div>
-
-                                            <!-- Date-Time Discharge -->
-                                            <div class="col-md-4 mb-3">
-                                                <label for="dateDischarge" class="form-label">Date-Time Discharge<span
-                                                        class="text-danger"> *</span></label>
-                                                <input type="datetime-local" class="form-control" name="dateDischarge"
-                                                    required>
-                                            </div>
-                                        </div>
-
-                                        <!-- Baby Gender -->
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <label for="babyGender" class="form-label">Gender of Baby<span
-                                                        class="text-danger"> *</span></label>
-                                                <select class="form-select" name="babyGender" required>
-                                                    <option value="" disabled selected>Select Gender</option>
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </section>
-
-                                    <!-- Medicine Section -->
-                                    <div class="card">
-                                        <div class="card-body" style="background-color: #F5F8FB;">
-                                            <h4 class="header-design">Medicine</h4>
-                                            <div id="medicine_list_table"></div>
                                         </div>
                                     </div>
+
                                 </div>
 
                             </div>
-
                         </div>
                         <br>
                     </div>
@@ -611,7 +616,7 @@ if (isset($_GET['id'])) {
                 },
                 success: function (data) {
                     $('#medicine_list_table').html(data);
-                    makeReadOnly() 
+                    makeReadOnly()
                 }
             });
         }
@@ -659,6 +664,35 @@ if (isset($_GET['id'])) {
             // Prevent the default form submission
             e.preventDefault();
 
+            var isValid = true;
+            var errorMessage = "Please fill out all required fields.";
+
+            // Loop through each input and select element inside the form
+            $('#validation_checker').find('input, select').each(function () {
+                var label = $(this).closest('.col').find('label');
+                // Check if the label contains an asterisk, indicating a required field
+                if (label.text().indexOf('*') !== 1 && !$(this).val()) {
+                    isValid = false;
+                    // Highlight the input field or show an error message
+                    $(this).css('border-color', 'red'); // Highlight field with red color
+                } else {
+                    $(this).css('border-color', ''); // Reset to default style if filled
+                }
+            });
+
+            // Check if all required fields are filled
+            if (!isValid) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage,
+                });
+                return; // Stop the function if validation fails
+            }
+
+
+
+
             // Set the form action to the desired URL
             $('#deliveryForm').attr('action', 'function/delivery.save.php');
 
@@ -705,7 +739,41 @@ if (isset($_GET['id'])) {
             });
         });
 
+        function fetchPrenatalDetails(patient_id) {
+            var p_id = String(patient_id);
+
+            // Creates a new XMLHttpRequest object
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    // Parse the JSON response
+                    var myObj = JSON.parse(this.responseText);
+
+
+                    $('#abortion').val(myObj[0]);
+                    $('#para_no').val(myObj[1]);
+                    $('#lmp').val(myObj[2]);
+
+                    $('#edc').val(myObj[3]);
+                    $('#children').val(myObj[4]);
+                    $('#gravida').val(myObj[5]);
+
+
+                }
+            };
+
+            xmlhttp.open("GET", "fetch/prenatalDetails.php?patient_id=" + p_id.replace(/,/g, ''), true);
+            // Sends the request to the server
+            xmlhttp.send();
+
+        }
+
+
+
+
         $('#patient_name').on('change', function () {
+            var selectedID = $(this).find('option:selected').data('patient_id');
+
             var selectedName = $(this).find('option:selected').data('name');
             var selectedAddress = $(this).find('option:selected').data('address');
             var selectedContact = $(this).find('option:selected').data('contact');
@@ -715,7 +783,6 @@ if (isset($_GET['id'])) {
             var selectedSpouseBirth = $(this).find('option:selected').data('spouse_birthdate');
             var selectedSpouseOccu = $(this).find('option:selected').data('spouse_occupation');
             var selectedPhilhealth = $(this).find('option:selected').data('philhealth');
-
 
 
             let today = new Date();
@@ -736,7 +803,18 @@ if (isset($_GET['id'])) {
 
             $('#philh_no').val(selectedPhilhealth);
 
+
+
+
+
+            fetchPrenatalDetails(selectedID);
+
+
         });
+
+
+
+
         $(function () {
             $(".patient_name").chosen({
                 search_threshold: 10

@@ -149,7 +149,7 @@ echo $output;
                 <button type="button" class="btn btn-danger btn-sm remove-item-line">Remove</button>
             </td>
         </tr>`;
-            $("#phs_table tbody").append(newRow);
+            $("#immu_table tbody").append(newRow);
         });
 
         // Event delegation for dynamically created select dropdowns

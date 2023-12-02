@@ -53,6 +53,8 @@ include('include/navbar.php');
             /* Adjust the value as per your spacing preference */
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <div class='main-content' style='position:relative;'>
         <div class="container home-section h-100" style="max-width:95%;">
             <div class="page-wrapper">
@@ -65,75 +67,81 @@ include('include/navbar.php');
                                 <font color="#046D56"> DASHBOARD </font>
                             </b>
                         </h2>
+                        <button type="button" class="btn btn-sm btn-dark btnPrint">
+                            <span class="fas fa-print"></span> Print
+                        </button>
                     </div>
+                    <div id="print_content">
+                        <h4 class="card-header card-title3 chart-section-header">PRENATAL RECORD <span>CHARTS</span>
+                        </h4>
+                        <!-- Canvas for Chart.js -->
+                        <div class="row">
+                            <!-- Monthly Patient Admissions Bar Chart -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Prenatal Trends Over Time</h5>
+                                        <canvas id="prenatalRecordChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
 
-                    <h4 class="card-header card-title3 chart-section-header">PRENATAL RECORD <span>CHARTS</span></h4>
-                    <!-- Canvas for Chart.js -->
-                    <div class="row">
-                        <!-- Monthly Patient Admissions Bar Chart -->
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Prenatal Trends Over Time</h5>
-                                    <canvas id="prenatalRecordChart" width="400" height="200"></canvas>
+                            <!-- Patients Recovery Trend Line Chart -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Distribution of Abortions vs. Parity</h5>
+                                        <canvas id="abortionParityChart"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Patients Recovery Trend Line Chart -->
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Distribution of Abortions vs. Parity</h5>
-                                    <canvas id="abortionParityChart"></canvas>
+                        <h4 class="card-header card-title3 chart-section-header">DELIVERY RECORD <span>CHARTS</span>
+                        </h4>
+                        <!-- Canvas for Chart.js -->
+                        <div class="row">
+                            <!-- Monthly Patient Admissions Bar Chart -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Delivery Trends Over Time</h5>
+                                        <canvas id="deliveryTrendChart" width="400" height="200"></canvas>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <h4 class="card-header card-title3 chart-section-header">DELIVERY RECORD <span>CHARTS</span></h4>
-                    <!-- Canvas for Chart.js -->
-                    <div class="row">
-                        <!-- Monthly Patient Admissions Bar Chart -->
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Delivery Trends Over Time</h5>
-                                    <canvas id="deliveryTrendChart" width="400" height="200"></canvas>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Patients Recovery Trend Line Chart -->
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Baby Gender Distribution</h5>
-                                    <canvas id="genderDistributionChart" width="400" height="200"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h4 class="card-header card-title3 chart-section-header">IMMUNIZATION <span>CHARTS</span></h4>
-                    <!-- Canvas for Chart.js -->
-                    <div class="row">
-                        <!-- Monthly Patient Admissions Bar Chart -->
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Immunization Type Distribution </h5>
-                                    <canvas id="typeDistributionChart" width="400" height="200"></canvas>
+                            <!-- Patients Recovery Trend Line Chart -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Baby Gender Distribution</h5>
+                                        <canvas id="genderDistributionChart" width="400" height="200"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Patients Recovery Trend Line Chart -->
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Immunization Trend </h5>
-                                    <canvas id="immunizationTrendChart" width="400" height="200"></canvas>
+                        <h4 class="card-header card-title3 chart-section-header">IMMUNIZATION <span>CHARTS</span></h4>
+                        <!-- Canvas for Chart.js -->
+                        <div class="row">
+                            <!-- Monthly Patient Admissions Bar Chart -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Immunization Type Distribution </h5>
+                                        <canvas id="typeDistributionChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Patients Recovery Trend Line Chart -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Immunization Trend </h5>
+                                        <canvas id="immunizationTrendChart" width="400" height="200"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -158,7 +166,27 @@ include('include/navbar.php');
     <?php include('statistical_card/immu.chart.php'); ?>
 
 
+    <script>
+        $(document).on('click', '.btnPrint', function (e) {
+       
+            // Temporarily hide the buttons
+            $("#print_content button").hide();
 
+            html2canvas(document.querySelector("#print_content")).then(canvas => {
+                var myImage = canvas.toDataURL("image/png");
+                var tWindow = window.open("");
+                $(tWindow.document.body)
+                    .html("<img id='Image' src=" + myImage + " style='width:100%;'></img>")
+                    .ready(function () {
+                        tWindow.focus();
+                        tWindow.print();
+                    });
+
+                // Show the buttons again
+                $("#print_content button").show();
+            });
+        });
+    </script>
 
 </body>
 

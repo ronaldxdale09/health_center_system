@@ -135,6 +135,7 @@ include('include/navbar.php');
         FROM immunization
         LEFT JOIN patient_record ON immunization.patient_id = patient_record.patient_id
         LEFT JOIN immunization_status ON immunization.immunization_id = immunization_status.immunization_id
+        WHERE immunization.patient_id !='' || immunization.patient_id=NULL
         GROUP BY immunization.immunization_id";
 
                         $results = mysqli_query($con, $sql);

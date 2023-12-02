@@ -686,6 +686,37 @@ if (isset($_GET['id'])) {
             // Prevent the default form submission
             e.preventDefault();
 
+
+
+            var isValid = true;
+            var errorMessage = "Please fill out all required fields.";
+
+            // Loop through each input and select element inside the form
+            $('#print_content').find('input, select').each(function () {
+                var label = $(this).closest('.col').find('label');
+                // Check if the label contains an asterisk, indicating a required field
+                if (label.text().indexOf('*') !== -1 && !$(this).val()) {
+                    isValid = false;
+                    // Highlight the input field or show an error message
+                    $(this).css('border-color', 'red'); // Highlight field with red color
+                } else {
+                    $(this).css('border-color', ''); // Reset to default style if filled
+                }
+            });
+
+            // Check if all required fields are filled
+            if (!isValid) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage,
+                });
+                return; // Stop the function if validation fails
+            }
+
+
+
+
             // Set the form action to the desired URL
             $('#prenatalForm').attr('action', 'function/prenatal.save.php');
 

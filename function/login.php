@@ -1,5 +1,6 @@
 <?php
 include('db.php');
+session_start(); // Ensure session is started
 
 $username = mysqli_real_escape_string($con, $_POST['username']);
 $password = mysqli_real_escape_string($con, $_POST['password']);
@@ -24,17 +25,32 @@ if ($result->num_rows === 0) {
                 window.location='../index.php';
               </script>";
     } else {
-        $userType = $user['userType'];
-        $_SESSION["type"] = $userType;
+        $userAccess = json_decode($user['userAccess'], true); // Decode the JSON string into an array
+        $_SESSION["type"] = $user['userType'];
         $_SESSION["full_name"] = $user['name'];
         $_SESSION["user"] = $username;
+        $_SESSION["userAccess"] = $userAccess; // Store user access rights in session
 
-        if ($userType == 'Staff') {
-            header('Location: ../user/dashboard.php');
-        } 
+        // Define a mapping of access rights to pages
+        $accessPages = [
+            'dashboard' => '../user/dashboard.php',
+            'patient' => 'patient_list.php',
+            // Add more mappings as necessary
+        ];
+
+        // Redirect to the first page the user has access to
+        foreach ($userAccess as $access) {
+            if (isset($accessPages[$access])) {
+                header('Location: ' . $accessPages[$access]);
+                exit();
+            }
+        }
+
+        // Default redirect if no specific access is found
+        header('Location: ../index.php');
     }
 }
 
 $stmt->close();
 mysqli_close($con);
-
+?>

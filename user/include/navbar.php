@@ -1,3 +1,17 @@
+<?php
+
+function hasAccess($feature)
+{
+    // Check if 'userAccess' is set in the session and is an array
+    if (isset($_SESSION['userAccess']) && is_array($_SESSION['userAccess'])) {
+        return in_array($feature, $_SESSION['userAccess']);
+    }
+    return false; // Return false if 'userAccess' is not set or not an array
+}
+
+
+?>
+
 <nav id="navbar">
     <div id="toggle-nav-btn">
         <i class="fa-solid fa-ellipsis"></i>
@@ -8,13 +22,17 @@
     </div>
     <hr style="color:white">
 
-    <a class="nav-link" href="dashboard.php">
-        <i class="fas fa-home"></i> <span class="nav-text">Dashboard</span>
-    </a>
+    <?php if (hasAccess('dashboard')): ?>
+        <a class="nav-link" href="dashboard.php">
+            <i class="fas fa-home"></i> <span class="nav-text">Dashboard</span>
+        </a>
+    <?php endif; ?>
 
-    <a class="nav-link" href="patient_list.php">
-        <i class="fas fa-user"></i> <span class="nav-text">Patient</span>
-    </a>
+    <?php if (hasAccess('patient')): ?>
+        <a class="nav-link" href="patient_list.php">
+            <i class="fas fa-user"></i> <span class="nav-text">Patient</span>
+        </a>
+    <?php endif; ?>
 
     <hr style="color:white">
     <div class="dropdown">
@@ -24,24 +42,37 @@
             <i class="fas fa-caret-down"></i>
         </a>
         <div class="dropdown-content">
-            <a href="prenatal.php"> <span class="icon-wrapper"><i class="fas fa-baby-carriage"></i></span> Prenatal</a>
-            <a href="fp_record.php"> <span class="icon-wrapper"><i class="fas fa-users"></i></span> Family
-                Planning</a>
-            <a href="immunization_record.php"> <span class="icon-wrapper"><i class="fas fa-book"></i></span>
-                Immunization</a>
-            <a href="deliveries_record.php"> <span class="icon-wrapper"><i class="fas fa-baby"></i></span>
-                Deliveries</a>
- 
+            <?php if (hasAccess('prenatalService')): ?>
+                <a href="prenatal.php"> <span class="icon-wrapper"><i class="fas fa-baby-carriage"></i></span> Prenatal</a>
+            <?php endif; ?>
+
+            <?php if (hasAccess('familyPlanningService')): ?>
+                <a href="fp_record.php"> <span class="icon-wrapper"><i class="fas fa-users"></i></span> Family Planning</a>
+            <?php endif; ?>
+
+            <?php if (hasAccess('immunizationService')): ?>
+                <a href="immunization_record.php"> <span class="icon-wrapper"><i class="fas fa-book"></i></span>
+                    Immunization</a>
+            <?php endif; ?>
+
+            <?php if (hasAccess('deliveriesService')): ?>
+                <a href="deliveries_record.php"> <span class="icon-wrapper"><i class="fas fa-baby"></i></span>
+                    Deliveries</a>
+            <?php endif; ?>
         </div>
     </div>
-    <hr style="color:white">
 
-    <a class="nav-link" href="medicine_list.php">
-        <i class="fas fa-book"></i></i> <span class="nav-text">Medication List</span>
-    </a>
-    <a class="nav-link" href="acc_mng.php">
-        <i class="fas fa-user"></i></i> <span class="nav-text">Account Management</span>
-    </a>
+    <?php if (hasAccess('medicationList')): ?>
+        <a class="nav-link" href="medicine_list.php">
+            <i class="fas fa-book"></i> <span class="nav-text">Medication List</span>
+        </a>
+    <?php endif; ?>
+
+    <?php if (hasAccess('accountManagement')): ?>
+        <a class="nav-link" href="acc_mng.php">
+            <i class="fas fa-user"></i> <span class="nav-text">Account Management</span>
+        </a>
+    <?php endif; ?>
     <!-- <div class='logout-container'>
         <span class='nav-text'></span>
         <a class='nav-link logout' href='function/logout.php'>
@@ -60,8 +91,8 @@
             <img src="assets/img/avatar2.png" alt="profile_img" />
         </span>
         <div class="data_text">
-            <span class="name">Mar Jan</span>
-            <span class="email">HC Staff</span>
+            <span class="name"><?php echo $_SESSION["full_name"] ?></span>
+            <span class="email"><?php echo $_SESSION["type"] ?></span>
         </div>
         <button class="logout-btn flex" id="logout-btn">
             <i class="fas fa-sign-out-alt"></i>

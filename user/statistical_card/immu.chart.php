@@ -76,6 +76,10 @@ while ($row = mysqli_fetch_assoc($typeResults)) {
             labels: labels,
             datasets: datasets
         },
+        backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)'
+                    ],
         options: {
             scales: {
                 y: {

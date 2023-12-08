@@ -56,6 +56,9 @@ if (isset($_GET['id'])) {
         echo "
         <script>
         $(document).ready(function() {
+
+
+
             // Checkboxes in Medical History Section
             $('input[name=\"severe_headaches\"]').prop('checked', " . $record['severe_headaches'] . " == 1);
             $('input[name=\"history_stroke_heart_attack_hypertension\"]').prop('checked', " . $record['history_stroke_heart_attack_hypertension'] . " == 1);
@@ -258,8 +261,7 @@ if (isset($_GET['id'])) {
                                                                     data-contact='$contact'
                                                                     data-spouse_name='$spouse_name' 
                                                                     data-spouse_birthdate='$spouse_birthdate'
-                                                                    data-spouse_occupation='$spouse_occupation'
-                                                                    >
+                                                                    data-spouse_occupation='$spouse_occupation'>
                                                                     $name
                                                                 </option>";
                                                                 }

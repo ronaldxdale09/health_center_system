@@ -3,8 +3,6 @@ include('../../function/db.php');
 
 $record_id = $_POST['record_id']; // Ensure this matches the form field
 
-$patient_id = $_POST['patient_name']; // Ensure this matches the form field
-
 // Collecting all fields from the form
 $severe_headaches = isset($_POST['severe_headaches']) ? 1 : 0;
 $history_stroke_heart_attack_hypertension = isset($_POST['history_stroke_heart_attack_hypertension']) ? 1 : 0;
@@ -66,8 +64,12 @@ $cervical_bloddy = isset($_POST['cervical_bloddy']) ? 1 : 0;
 $cervical_firm = isset($_POST['cervical_firm']) ? 1 : 0;
 $cervical_soft = isset($_POST['cervical_soft']) ? 1 : 0;
 
+
+$patient_id = $_POST['patient_name']; 
+
 // Update query for patient_medical_history
 $updateQuery = "UPDATE family_planning_rec SET
+    patient_id = '$patient_id',
     severe_headaches = '$severe_headaches',
     history_stroke_heart_attack_hypertension = '$history_stroke_heart_attack_hypertension',
     non_traumatic_hematoma = '$non_traumatic_hematoma',

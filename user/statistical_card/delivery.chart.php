@@ -21,12 +21,16 @@
 
         var ctx = document.getElementById('deliveryTrendChart').getContext('2d');
         new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: <?php echo json_encode($months); ?>,
                 datasets: [{
                     label: 'Monthly Deliveries',
                     data: <?php echo json_encode($monthlyDeliveries); ?>,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)'
+                    ],
                     borderColor: '#007bff',
                     fill: false
                 }]

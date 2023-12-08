@@ -232,6 +232,7 @@ if (isset($_GET['id'])) {
                                                         <label for="age" class="form-label">Record ID</label>
                                                         <input type="text" class="form-control" name="record_id"
                                                             value="<?php echo $id ?>" readonly>
+                                                            <input type="text" hidden class="form-control" id="patient_id"  name="patient_id" readonly>
                                                     </div>
                                                     <div class="col-md-5 mb-3">
                                                             <label class="form-label">Full
@@ -263,6 +264,7 @@ if (isset($_GET['id'])) {
 
                                                                         echo "<option value='$pat_id' 
                                                                     data-name='$name' 
+                                                                    data-id='$pat_id' 
                                                                     data-profilepic='$profilepic' 
                                                                     data-birthdate='$birthDate' 
                                                                     data-address='$address' 
@@ -375,6 +377,8 @@ if (isset($_GET['id'])) {
             if (today.getMonth() < birthDate.getMonth() || (today.getMonth() == birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
                 age--;
             }
+            $('#patient_id').val(id);
+
             $('#age').val(age);
             $('#address').val(selectedAddress);
             $('#birth_date').val(selectedBirthDate);

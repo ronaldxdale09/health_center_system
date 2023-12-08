@@ -67,9 +67,8 @@ $cervical_soft = isset($_POST['cervical_soft']) ? 1 : 0;
 
 
 
-$patient_id = $_POST['patient_name'];
+$patient_id = $_POST['patient_id'];
 
-echo $patient_id;
 // Update query for patient_medical_history
 $updateQuery = "UPDATE family_planning_rec SET
     severe_headaches = '$severe_headaches',

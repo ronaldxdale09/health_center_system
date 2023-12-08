@@ -31,86 +31,111 @@ $fpConsultations = mysqli_fetch_array($fpConsultationsQuery);
 
     <!-- Total Number of Patients Card -->
     <div class="col-sm-3">
-        <div class="modern-stat-card">
-            <div class="icon-section total-patients-icon">
-                <i class="fa fa-users"></i>
+
+        <a href="patient_list.php" style="text-decoration:none;">
+            <div class="modern-stat-card">
+                <div class="icon-section total-patients-icon">
+                    <i class="fa fa-users"></i>
+                </div>
+                <div class="info-section">
+                    <span class="stat-title">Total Patients</span>
+                    <span class="stat-value">
+                        <?php echo number_format($totalPatients['total_patients'], 0); ?>
+                    </span>
+                </div>
             </div>
-            <div class="info-section">
-                <span class="stat-title">Total Patients</span>
-                <span class="stat-value"><?php echo number_format($totalPatients['total_patients'], 0); ?></span>
-            </div>
-        </div>
+        </a>
     </div>
 
     <!-- Number of Immunizations This Month Card -->
     <div class="col-sm-3">
         <div class="modern-stat-card">
-            <div class="icon-section active-cas
-            0.
-            0.00.
-            .0e
-            
-            
-               
-            s-icon">
+            <div class="icon-section total-patients-icon">
                 <i class="fa fa-book"></i>
+
+                <a href="immunization_record.php" style="text-decoration:none;">
             </div>
             <div class="info-section">
                 <span class="stat-title">Monthly Immunizations</span>
-                <span class="stat-value"><?php echo number_format($monthlyImmunizations['monthly_immunizations'], 0); ?></span>
+                <span class="stat-value">
+                    <?php echo number_format($monthlyImmunizations['monthly_immunizations'], 0); ?>
+                </span>
             </div>
         </div>
+        </a>
     </div>
 
     <!-- Total Prenatal Checkups Card -->
     <div class="col-sm-3">
-        <div class="modern-stat-card">
-            <div class="icon-section recovered-patients-icon">
-                <i class="fa fa-book"></i>
+
+        <a href="prenatal.php" style="text-decoration:none;">
+            <div class="modern-stat-card">
+                <div class="icon-section recovered-patients-icon">
+                    <i class="fa fa-book"></i>
+                </div>
+                <div class="info-section">
+                    <span class="stat-title">Total Prenatal Checkups</span>
+                    <span class="stat-value">
+                        <?php echo number_format($totalPrenatal['total_prenatal'], 0); ?>
+                    </span>
+                </div>
             </div>
-            <div class="info-section">
-                <span class="stat-title">Total Prenatal Checkups</span>
-                <span class="stat-value"><?php echo number_format($totalPrenatal['total_prenatal'], 0); ?></span>
-            </div>
-        </div>
+        </a>
     </div>
 
     <!-- Current Medicine Inventory Card -->
     <div class="col-sm-3">
-        <div class="modern-stat-card">
-            <div class="icon-section available-beds-icon">
-                <i class="fa fa-book"></i>
+
+        <a href="medicine_list.php" style="text-decoration:none;">
+            <div class="modern-stat-card">
+                <div class="icon-section available-beds-icon">
+                    <i class="fa fa-book"></i>
+                </div>
+                <div class="info-section">
+                    <span class="stat-title">Medicine Inventory</span>
+                    <span class="stat-value">
+                        <?php echo number_format($medicineInventory['total_medicine'], 0); ?>
+                    </span>
+                </div>
             </div>
-            <div class="info-section">
-                <span class="stat-title">Medicine Inventory</span>
-                <span class="stat-value"><?php echo number_format($medicineInventory['total_medicine'], 0); ?></span>
-            </div>
-        </div>
+        </a>
     </div>
 
     <!-- Total Deliveries This Year Card -->
     <div class="col-sm-3">
-        <div class="modern-stat-card">
-            <div class="icon-section staff-members-icon">
-                <i class="fa fa-book"></i>
+
+        <a href="deliveries_record.php" style="text-decoration:none;">
+            <div class="modern-stat-card">
+                <div class="icon-section staff-members-icon">
+                    <i class="fa fa-book"></i>
+                </div>
+                <div class="info-section">
+                    <span class="stat-title">Monthly Deliveries</span>
+                    <span class="stat-value">
+                        <?php echo number_format($monthlyDeliveries['monthly_deliveries'], 0); ?>
+                    </span>
+                </div>
             </div>
-            <div class="info-section">
-                <span class="stat-title">Monthly Deliveries</span>
-                <span class="stat-value"><?php echo number_format($monthlyDeliveries['monthly_deliveries'], 0); ?></span>
-            </div>
-        </div>
+
+        </a>
     </div>
 
     <!-- Family Planning Consultations Card -->
     <div class="col-sm-3">
-        <div class="modern-stat-card">
-            <div class="icon-section ongoing-surgeries-icon">
-                <i class="fa fa-book"></i>
+
+        <a href="fp_record.php" style="text-decoration:none;">
+            <div class="modern-stat-card">
+                <div class="icon-section ongoing-surgeries-icon">
+                    <i class="fa fa-book"></i>
+                </div>
+                <div class="info-section">
+                    <span class="stat-title">FP Consultations</span>
+                    <span class="stat-value">
+                        <?php echo number_format($fpConsultations['total_fp_consultations'], 0); ?>
+                    </span>
+                </div>
             </div>
-            <div class="info-section">
-                <span class="stat-title">FP Consultations</span>
-                <span class="stat-value"><?php echo number_format($fpConsultations['total_fp_consultations'], 0); ?></span>
-            </div>
-        </div>
     </div>
+
+    </a>
 </div>

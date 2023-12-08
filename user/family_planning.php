@@ -177,6 +177,7 @@ if (isset($_GET['id'])) {
                             </div>
                         </div> -->
 
+                            
                         <div class="row mb-3">
                             <div class="col-9">
                                 <a href="fp_record.php" type="button" class="btn trans-btn btn-secondary ">
@@ -233,42 +234,50 @@ if (isset($_GET['id'])) {
                                                             value="<?php echo $id ?>" readonly>
                                                     </div>
                                                     <div class="col-md-5 mb-3">
-                                                        <label for="fullName" class="form-label">Full Name</label>
-                                                        <select class='form-control col-md-10 patient_name'
-                                                            name='patient_name' id='patient_name'>
-                                                            <option disabled="disabled" selected="selected">Select
-                                                                Patient</option>
-                                                            <?php
-                                                            // Retrieve customer names from the coffee_customer table
-                                                            $sql = "SELECT * FROM patient_record";
-                                                            $result = mysqli_query($con, $sql);
-                                                            if ($result) {
-                                                                while ($row = mysqli_fetch_assoc($result)) {
-                                                                    $patient_id = $row['patient_id'];
-                                                                    $name = $row['Name'];
-                                                                    $birthDate = $row['DateOfBirth'];
-                                                                    $address = $row['Address'];
-                                                                    $contact = $row['ContactNumber'];
+                                                            <label class="form-label">Full
+                                                                Name</label>
+                                                            <select class='form-select col-md-10 patient_name'
+                                                                name='patient_name' id='patient_name'>
+                                                                <option disabled="disabled" selected="selected">Select
+                                                                    Patient</option>
+                                                                <?php
+                                                                // Retrieve customer names from the coffee_customer table
+                                                                $sql = "SELECT * FROM patient_record";
+                                                                $result = mysqli_query($con, $sql);
+                                                                if ($result) {
+                                                                    while ($row = mysqli_fetch_assoc($result)) {
+                                                                        $pat_id = $row['patient_id'];
+                                                                        $name = $row['Name'];
+                                                                        $birthDate = $row['DateOfBirth'];
+                                                                        $address = $row['Address'];
+                                                                        $profilepic = $row['ProfilePicture'];
+                                                                        $contact = $row['ContactNumber'];
 
-                                                                    $spouse_name = $row['spouse_name'];
-                                                                    $spouse_birthdate = $row['spouse_birthdate'];
-                                                                    $spouse_occupation = $row['spouse_occupation'];
+                                                                        $ave_monthIncome = $row['ave_monthIncome'];
+                                                                        $philhealth = $row['philhealth'];
 
-                                                                    echo "<option value='$patient_id' 
+
+                                                                        $spouse_name = $row['spouse_name'];
+                                                                        $spouse_birthdate = $row['spouse_birthdate'];
+                                                                        $spouse_occupation = $row['spouse_occupation'];
+
+                                                                        echo "<option value='$pat_id' 
                                                                     data-name='$name' 
+                                                                    data-profilepic='$profilepic' 
                                                                     data-birthdate='$birthDate' 
                                                                     data-address='$address' 
                                                                     data-contact='$contact'
+                                                                    data-ave_monthIncome='$ave_monthIncome' 
+                                                                    data-philhealth='$philhealth'
                                                                     data-spouse_name='$spouse_name' 
                                                                     data-spouse_birthdate='$spouse_birthdate'
                                                                     data-spouse_occupation='$spouse_occupation'>
-                                                                    $name
-                                                                </option>";
+                                                                    $name </option>";
+                                                                    }
                                                                 }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
+                                                                ?>
+                                                            </select>
+                                                        </div>
                                                     <div class="col-md-3 mb-3">
                                                         <label for="birth_date" class="form-label">Birth Date
                                                             (YYYY-MM-DD)</label>
@@ -341,6 +350,12 @@ if (isset($_GET['id'])) {
 <script>
     $(document).ready(function () {
         $('#patient_name').on('change', function () {
+
+            var id = $(this).find('option:selected').data('id');
+
+            console.log(id);
+
+
             var selectedName = $(this).find('option:selected').data('name');
             var selectedAddress = $(this).find('option:selected').data('address');
             var selectedContact = $(this).find('option:selected').data('contact');
@@ -423,7 +438,7 @@ if (isset($_GET['id'])) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Success',
-                            text: 'Sale transaction completed!',
+                            text: 'Record completed!',
                         });
 
                         // Set all inputs to readonly

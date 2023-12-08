@@ -108,7 +108,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addStockLabel">Add Stock for Medicine</h5>
+                <h5 class="modal-title" id="addStockLabel">Medicine Stockout Logs</h5>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method='POST' action='function/medicine_inv.php'>
@@ -141,6 +141,7 @@
                                         <th scope="col">Quantity Used</th>
                                         <th scope="col">Usage Date</th>
                                         <th scope="col">Expiry Date</th>
+                                        <th scope="col">Service</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -161,6 +162,9 @@
                                             <td>
                                                 <?php echo $row['expiry_date'] ?>
                                             </td>
+                                            <td>
+                                            <span class="badge bg-dark">Delivery</span>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
@@ -172,8 +176,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" name="addStock" class="btn btn-primary" id="confirmAddStockButton">Add
-                        Stock</button>
+            
                 </div>
             </form>
         </div>

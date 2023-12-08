@@ -70,11 +70,11 @@ include('include/navbar.php');
                         </button>
                         <button type="button" class="btn btn-sm btn-primary text-white" data-toggle="modal" data-target="#addStockModal">
                             <i class="fas fa-arrow-down"></i>
-                            STOCK IN
+                            Stock In
                         </button>
-                        <button type="button" class="btn btn-sm btn-warning text-white" data-toggle="modal" data-target="#usageLogs">
-                            <i class="fas fa-arrow-down"></i>
-                           Medicine Usage Logs 
+                        <button type="button" class="btn btn-sm btn-warning text-dark" data-toggle="modal" data-target="#usageLogs">
+                            <i class="fas fa-arrow-up"></i>
+                           Stock out Logs 
                         </button>
                         <hr>
                         <?php

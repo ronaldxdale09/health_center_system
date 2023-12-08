@@ -65,11 +65,13 @@ $cervical_firm = isset($_POST['cervical_firm']) ? 1 : 0;
 $cervical_soft = isset($_POST['cervical_soft']) ? 1 : 0;
 
 
-$patient_id = $_POST['patient_name']; 
 
+
+$patient_id = $_POST['patient_name'];
+
+echo $patient_id;
 // Update query for patient_medical_history
 $updateQuery = "UPDATE family_planning_rec SET
-    patient_id = '$patient_id',
     severe_headaches = '$severe_headaches',
     history_stroke_heart_attack_hypertension = '$history_stroke_heart_attack_hypertension',
     non_traumatic_hematoma = '$non_traumatic_hematoma',
@@ -129,6 +131,7 @@ $updateQuery = "UPDATE family_planning_rec SET
     cervical_bloddy = '$cervical_bloddy',
     cervical_firm = '$cervical_firm',
     cervical_soft = '$cervical_soft',
+    patient_id='$patient_id', 
     status = 'Completed'
     WHERE fp_id = '$record_id'"; +
 

@@ -101,6 +101,22 @@
 </style>
 <form action="/submit-form" method="post" class="medical-form">
 
+    <fieldset>
+        <legend>VI. FAMILY PLANNING METHOD SELECTION</legend>
+        <div class="grid">
+            <div class="col">
+                <label for="family_planning_method">Family Planning Method:</label>
+                <select name="family_planning_method" id="family_planning_method"
+                    style="width: 100%; padding: 5px; border: 1px solid #aaa;">
+                    <option value="">Select Method</option>
+                    <option value="implant">Implant</option>
+                    <option value="condom">Condom</option>
+                    <option value="iud">Intrauterine Device (IUD)</option>
+                    <option value="others">Others</option>
+                </select>
+            </div>
+        </div>
+    </fieldset>
 
     <!-- Medical History Section -->
     <fieldset>
@@ -183,7 +199,7 @@
                     <label>abnormal discharge from the genital area</label>
                     <label class="inline-label"><input type="radio" name="abnormal_discharge" value="yes"> Yes</label>
                     <label class="inline-label"><input type="radio" name="abnormal_discharge" value="no"> No</label>
-               
+
                 </div>
                 <div class="col">
                     <label>sores or ulcers in the genital area</label>
@@ -250,129 +266,126 @@
         <legend>V. PHYSICAL EXAMINATION</legend>
 
         <div class="row">
-        <div class="col">
-            <label>Height: (cm) <input type="text" name="height"></label>
-            <label>Weight: (kg)<input type="text" name="weight"></label>
-            <label>Blood Pressure: (mmHg)<input type="text" name="blood_pressure"></label>
-            <label>Pulse Rate: (per min)<input type="text" name="pulse_rate"></label>
-        </div>
+            <div class="col">
+                <label>Height: (cm) <input type="text" name="height"></label>
+                <label>Weight: (kg)<input type="text" name="weight"></label>
+                <label>Blood Pressure: (mmHg)<input type="text" name="blood_pressure"></label>
+                <label>Pulse Rate: (per min)<input type="text" name="pulse_rate"></label>
+            </div>
         </div>
         <br>
         <div class="row">
             <div class="col">
                 <legend>SKIN</legend>
                 <div class="col">
-                    <label><input type="checkbox" name="skin" value="skin_normal"> Normal</label>
+                    <label><input type="checkbox" name="skin_normal" value="1"> Normal</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="skin" value="skin_pale"> Pale</label>
+                    <label><input type="checkbox" name="skin_pale" value="1"> Pale</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="skin" value="skin_yellowish"> Yellowish</label>
+                    <label><input type="checkbox" name="skin_yellowish" value="1"> Yellowish</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="skin" value="skin_hematoma"> Hematoma</label>
+                    <label><input type="checkbox" name="skin_hematoma" value="1"> Hematoma</label>
                 </div>
                 <br>
                 <legend>CONJUNCTIVA</legend>
                 <div class="col">
-                    <label><input type="checkbox" name="conjunctive" value="conjunctiva_normal"> Normal</label>
+                    <label><input type="checkbox" name="conjunctiva_normal" value="1"> Normal</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="conjunctive" value="conjunctiva_pale"> Pale</label>
+                    <label><input type="checkbox" name="conjunctiva_pale" value="1"> Pale</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="conjunctive" value="conjunctiva_yellowish">
-                        Yellowish</label>
+                    <label><input type="checkbox" name="conjunctiva_yellowish" value="1"> Yellowish</label>
                 </div>
                 <br>
                 <legend>NECK</legend>
                 <div class="col">
-                    <label><input type="checkbox" name="neck" value="neck_normal">Normal</label>
+                    <label><input type="checkbox" name="neck_normal" value="1">Normal</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="neck" value="neck_mass">Neck mass</label>
+                    <label><input type="checkbox" name="neck_mass" value="1">Neck mass</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="neck" value="neck_lymph_nodes">Enlarged lymph nodes</label>
+                    <label><input type="checkbox" name="neck_lymph_nodes" value="1">Enlarged lymph nodes</label>
                 </div>
             </div>
             <div class="col">
                 <legend>BREAST</legend>
                 <div class="col">
-                    <label><input type="checkbox" name="breast" value="breast_normal">Normal</label>
+                    <label><input type="checkbox" name="breast_normal" value="1">Normal</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="breast" value="breast_mass">Mass</label>
+                    <label><input type="checkbox" name="breast_mass" value="1">Mass</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="breast" value="breast_nipple_discharge">Nipple
-                        Discharge</label>
+                    <label><input type="checkbox" name="breast_nipple_discharge" value="1">Nipple Discharge</label>
                 </div>
                 <br>
                 <legend>ABDOMEN</legend>
                 <div class="col">
-                    <label><input type="checkbox" name="abdomen" value="abdomen_normal">Normal</label>
+                    <label><input type="checkbox" name="abdomen_normal" value="1">Normal</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="abdomen" value="abdomen_mass">Abdominal Mass</label>
+                    <label><input type="checkbox" name="abdomen_mass" value="1">Abdominal Mass</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="abdomen" value="abdomen_varicosities">Varicosities</label>
+                    <label><input type="checkbox" name="abdomen_varicosities" value="1">Varicosities</label>
                 </div>
                 <br>
                 <legend>EXTREMITIES</legend>
                 <div class="col">
-                    <label><input type="checkbox" name="extremities" value="extremities_normal">Normal</label>
+                    <label><input type="checkbox" name="extremities_normal" value="1">Normal</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="extremities" value="extremities_edema">Edema</label>
+                    <label><input type="checkbox" name="extremities_edema" value="1">Edema</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="extremities"
-                            value="extremities_varicosities">Varicosities</label>
+                    <label><input type="checkbox" name="extremities_varicosities" value="1">Varicosities</label>
                 </div>
             </div>
             <div class="col">
-                <legend>PLEVIC EXAMINATION</legend>
+                <legend>PELVIC EXAMINATION</legend>
                 <small>(For IUD Acceptors)</small>
                 <div class="col">
-                    <label><input type="checkbox" name="pelvic" value="pelvic_normal">Normal</label>
+                    <label><input type="checkbox" name="pelvic_normal" value="1">Normal</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="pelvic" value="pelvic_mass">Mass</label>
+                    <label><input type="checkbox" name="pelvic_mass" value="1">Mass</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="pelvic" value="pelvic_abnormal">Abnormal Discharge</label>
+                    <label><input type="checkbox" name="pelvic_abnormal" value="1">Abnormal Discharge</label>
                 </div>
                 <br>
                 <small>Cervical Abnormalities</small>
                 <div class="col">
-                    <label><input type="checkbox" name="pelvic" value="cervical_none">None</label>
+                    <label><input type="checkbox" name="cervical_none" value="1">None</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="pelvic" value="cervical_warts">Warts</label>
+                    <label><input type="checkbox" name="cervical_warts" value="1">Warts</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="pelvic" value="cervical_polyp">Polyp or Cyst</label>
+                    <label><input type="checkbox" name="cervical_polyp" value="1">Polyp or Cyst</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="pelvic" value="cervical_inflammation">Inflammation or
-                        Erotion</label>
+                    <label><input type="checkbox" name="cervical_inflammation" value="1">Inflammation or Erosion</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="pelvic" value="cervical_bloddy">Bloddy Discharge</label>
+                    <label><input type="checkbox" name="cervical_bloddy" value="1">Bloody Discharge</label>
                 </div>
                 <br>
                 <small>Cervical Consistency</small>
                 <div class="col">
-                    <label><input type="checkbox" name="pelvic" value="cervical_firm">Firm</label>
+                    <label><input type="checkbox" name="cervical_firm" value="1">Firm</label>
                 </div>
                 <div class="col">
-                    <label><input type="checkbox" name="pelvic" value="cervical_soft">Soft</label>
+                    <label><input type="checkbox" name="cervical_soft" value="1">Soft</label>
                 </div>
             </div>
         </div>
+
     </fieldset>
 
 

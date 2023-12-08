@@ -134,7 +134,6 @@ if (isset($_GET['id'])) {
         /* Adding padding inside the box */
     }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <body>
     <form id="prenatalForm" action="" method="post">
@@ -157,7 +156,8 @@ if (isset($_GET['id'])) {
                             <button type="button" class="btn trans-btn btn-primary" id="confirmPrenatalButton">
                                 <span class="fas fa-check"></span> Save Record
                             </button>
-                            <button type="button" class="btn trans-btn btn-danger btnVoid" id="btnVoid">
+                            <button type="button" class="btn trans-btn btn-danger " 
+                            data-toggle="modal" data-target="#deleteRecord">
                                 <span class="fas fa-trash"></span> Remove Record
                             </button>
                         </div>
@@ -600,6 +600,14 @@ if (isset($_GET['id'])) {
 
         $('#btnEdit').click(function () {
             revertReadOnly();
+            
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Form Editing Enabled',
+                showConfirmButton: false,
+                timer: 1000
+            })
         });
 
         function revertReadOnly() {

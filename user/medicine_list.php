@@ -72,6 +72,10 @@ include('include/navbar.php');
                             <i class="fas fa-arrow-down"></i>
                             STOCK IN
                         </button>
+                        <button type="button" class="btn btn-sm btn-warning text-white" data-toggle="modal" data-target="#usageLogs">
+                            <i class="fas fa-arrow-down"></i>
+                           Medicine Usage Logs 
+                        </button>
                         <hr>
                         <?php
                         // SQL query to select relevant medicine data along with stock details

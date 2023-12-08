@@ -554,6 +554,13 @@ if (isset($_GET['id'])) {
 
 
         $('#btnEdit').click(function () {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Form Editing Enabled',
+                showConfirmButton: false,
+                timer: 1000
+            })
             revertReadOnly();
         });
 

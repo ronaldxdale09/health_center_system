@@ -85,8 +85,8 @@ if (isset($_GET['id'])) {
                                     id="confirmUpdate"><span class="fas fa-check"></span> Save Record</button>
                                 <button type="button" class="btn btn-dark btnPrint"><span class="fas fa-print"></span>
                                     Print</button>
-                                <button type="button" class="btn btn-danger btnPrint"><span class="fas fa-trash"></span>
-                                    Delete Record</button>
+                                <!-- <button type="button" class="btn btn-danger btnPrint"><span class="fas fa-trash"></span>
+                                    Delete Record</button> -->
 
                             </div>
 
@@ -137,7 +137,7 @@ if (isset($_GET['id'])) {
                                                 <div class="col-md-6">
                                                     <label class="col-form-label">Contact #:</label>
                                                     <input type="text" class="form-control" name="contact_number"
-                                                        placeholder="Enter contact number">
+                                                        placeholder="Enter contact number"  oninput="maxLengthCheck(this)" maxlength="11">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="col-form-label">Occupation:</label>

@@ -37,9 +37,9 @@ if (isset($_GET['tab'])) {
     <nav>
         <label for="home" class="home"><i class="fas fa-baby-carriage"></i> Prenatal </label>
         <label for="blog" class="blog"><i class="fas fa-users"></i> FP </label>
-        <label for="drying" class="drying"><i class="fas fa-syringe"></i> Immunization </label>
+        <label for="drying" class="drying"><i class="fas fa-book"></i> Immunization </label>
         <label for="code" class="code"><i class="fas fa-baby"></i> Deliveries </label>
-        <label for="help" class="help"><i class="fas fa-pills"></i> Vaccination </label>
+        <label for="help" class="help"><i class="fas fa-book"></i> Vaccination </label>
 
 
         <div class="slider"></div>
@@ -51,6 +51,9 @@ if (isset($_GET['tab'])) {
             ?>
         </div>
         <div class="content content-2">
+        <?php
+            include "tab/record.fp.php";
+            ?>
         </div>
         <div class="content content-3">
             <?php

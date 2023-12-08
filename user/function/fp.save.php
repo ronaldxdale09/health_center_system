@@ -18,7 +18,6 @@ $abnormal_vaginal_discharge = isset($_POST['abnormal_vaginal_discharge']) ? 1 : 
 $is_smoker = isset($_POST['is_smoker']) ? 1 : 0;
 $number_of_pregnancies = $_POST['number_of_pregnancies'];
 $date_of_last_delivery = $_POST['date_of_last_delivery'];
-$last_delivery_type = $_POST['last_delivery_type'];
 $last_menstrual_period = $_POST['last_menstrual_period'];
 $previous_menstrual_period = $_POST['previous_menstrual_period'];
 $height = $_POST['height'];
@@ -81,7 +80,6 @@ $updateQuery = "UPDATE family_planning_rec SET
     is_smoker = '$is_smoker',
     number_of_pregnancies = '$number_of_pregnancies',
     date_of_last_delivery = '$date_of_last_delivery',
-    last_delivery_type = '$last_delivery_type',
     last_menstrual_period = '$last_menstrual_period',
     previous_menstrual_period = '$previous_menstrual_period',
     height = '$height',
@@ -128,7 +126,8 @@ $updateQuery = "UPDATE family_planning_rec SET
     cervical_inflammation = '$cervical_inflammation',
     cervical_bloddy = '$cervical_bloddy',
     cervical_firm = '$cervical_firm',
-    cervical_soft = '$cervical_soft'
+    cervical_soft = '$cervical_soft',
+    status = 'Completed'
     WHERE fp_id = '$record_id'"; +
 
 

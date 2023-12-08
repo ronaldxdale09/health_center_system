@@ -3,6 +3,8 @@ include('include/header.php');
 include('include/navbar.php');
 ini_set('display_errors', 0);
 
+
+
 if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
@@ -131,6 +133,7 @@ if (isset($_GET['id'])) {
         });
     </script>
         ";
+
     }
 }
 
@@ -152,7 +155,7 @@ if (isset($_GET['id'])) {
                         </h2>
 
                         <hr>
-                        <div class="row mb-3">
+                        <!-- <div class="row mb-3">
 
                             <div class="col-9">
 
@@ -169,57 +172,86 @@ if (isset($_GET['id'])) {
                                     Print</button>
 
                             </div>
+                        </div> -->
+
+                        <div class="row mb-3">
+                            <div class="col-9">
+                                <a href="fp_record.php" type="button" class="btn trans-btn btn-secondary ">
+                                    <span class="fas fa-arrow-left"></span> Return
+                                </a>
+                                <button type="button" class="btn trans-btn btn-primary" id="confirmRecord">
+                                    <span class="fas fa-check"></span> Save Record
+                                </button>
+                                <button type="button" class="btn trans-btn btn-danger deleteRecord" data-toggle="modal"
+                                    data-target="#deleteRecord">
+                                    <span class="fas fa-trash"></span> Remove Record
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-warning btnEdit" id="btnEdit">
+                                    <span class="fas fa-pencil"></span> Edit Record
+                                </button>
+                                <button type="button" class="btn btn-dark btnPrint">
+                                    <span class="fas fa-print"></span> Print
+                                </button>
+                            </div>
                         </div>
 
 
+
                         <form id="familyplanning_form" action="" method="post">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="container">
-                                        <!-- Personal Information -->
-                                        <section class="mb-4">
-                                            <h4>Family Planning Client Assessment Record</h4>
-                                            <hr>
-                                            <div class="alert alert-secondary alert-dismissible fade show">
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                    aria-label="Close"></button>
-                                                <strong>Important Notice:</strong> Instruction for Physicians, Nurse and
-                                                Midwives: Make sure that the client is not pregnant by using the
-                                                questions
-                                                listed in SIDE B. Completely fill out or check the required information.
-                                                Refer accordingly for any abnormal history/findings for further medical
-                                                evaluation.
-                                            </div>
+                            <div class="alert alert-secondary alert-dismissible fade show">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                                <strong>Important Notice:</strong> Instruction for Physicians, Nurse
+                                and
+                                Midwives: Make sure that the client is not pregnant by using the
+                                questions
+                                listed in SIDE B. Completely fill out or check the required
+                                information.
+                                Refer accordingly for any abnormal history/findings for further
+                                medical
+                                evaluation.
+                            </div>
+                            <div id="print_content">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="container">
+                                            <!-- Personal Information -->
+                                            <section class="mb-4">
+                                                <h4>Family Planning Client Assessment Record</h4>
+                                                <hr>
 
-                                            <div class="row mb-3">
-                                                <div class="col-md-2 mb-3">
-                                                    <label for="age" class="form-label">Record ID</label>
-                                                    <input type="text" class="form-control" name="record_id"
-                                                        value="<?php echo $id ?>" readonly>
-                                                </div>
-                                                <div class="col-md-5 mb-3">
-                                                    <label for="fullName" class="form-label">Full Name</label>
-                                                    <select class='form-control col-md-10 patient_name'
-                                                        name='patient_name' id='patient_name'>
-                                                        <option disabled="disabled" selected="selected">Select
-                                                            Patient</option>
-                                                        <?php
-                                                        // Retrieve customer names from the coffee_customer table
-                                                        $sql = "SELECT * FROM patient_record";
-                                                        $result = mysqli_query($con, $sql);
-                                                        if ($result) {
-                                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                                $patient_id = $row['patient_id'];
-                                                                $name = $row['Name'];
-                                                                $birthDate = $row['DateOfBirth'];
-                                                                $address = $row['Address'];
-                                                                $contact = $row['ContactNumber'];
 
-                                                                $spouse_name = $row['spouse_name'];
-                                                                $spouse_birthdate = $row['spouse_birthdate'];
-                                                                $spouse_occupation = $row['spouse_occupation'];
+                                                <div class="row mb-3">
+                                                    <div class="col-md-2 mb-3">
+                                                        <label for="age" class="form-label">Record ID</label>
+                                                        <input type="text" class="form-control" name="record_id"
+                                                            value="<?php echo $id ?>" readonly>
+                                                    </div>
+                                                    <div class="col-md-5 mb-3">
+                                                        <label for="fullName" class="form-label">Full Name</label>
+                                                        <select class='form-control col-md-10 patient_name'
+                                                            name='patient_name' id='patient_name'>
+                                                            <option disabled="disabled" selected="selected">Select
+                                                                Patient</option>
+                                                            <?php
+                                                            // Retrieve customer names from the coffee_customer table
+                                                            $sql = "SELECT * FROM patient_record";
+                                                            $result = mysqli_query($con, $sql);
+                                                            if ($result) {
+                                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                                    $patient_id = $row['patient_id'];
+                                                                    $name = $row['Name'];
+                                                                    $birthDate = $row['DateOfBirth'];
+                                                                    $address = $row['Address'];
+                                                                    $contact = $row['ContactNumber'];
 
-                                                                echo "<option value='$patient_id' 
+                                                                    $spouse_name = $row['spouse_name'];
+                                                                    $spouse_birthdate = $row['spouse_birthdate'];
+                                                                    $spouse_occupation = $row['spouse_occupation'];
+
+                                                                    echo "<option value='$patient_id' 
                                                                     data-name='$name' 
                                                                     data-birthdate='$birthDate' 
                                                                     data-address='$address' 
@@ -230,66 +262,69 @@ if (isset($_GET['id'])) {
                                                                     >
                                                                     $name
                                                                 </option>";
+                                                                }
                                                             }
-                                                        }
-                                                        ?>
-                                                    </select>
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <label for="birth_date" class="form-label">Birth Date
+                                                            (YYYY-MM-DD)</label>
+                                                        <input type="text" class="form-control" name="birth_date"
+                                                            id="birth_date" readonly>
+                                                    </div>
+                                                    <div class="col-md-2 mb-3">
+                                                        <label for="age" class="form-label">Age</label>
+                                                        <input type="text" class="form-control" name="age" id="age"
+                                                            readonly>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="birth_date" class="form-label">Birth Date
-                                                        (YYYY-MM-DD)</label>
-                                                    <input type="text" class="form-control" name="birth_date"
-                                                        id="birth_date" readonly>
-                                                </div>
-                                                <div class="col-md-2 mb-3">
-                                                    <label for="age" class="form-label">Age</label>
-                                                    <input type="text" class="form-control" name="age" id="age"
-                                                        readonly>
-                                                </div>
-                                            </div>
 
-                                            <div class="row mb-3">
-                                                <div class="col-md-8 mb-3">
-                                                    <label for="address" class="form-label">Address</label>
-                                                    <input type="text" class="form-control" name="address" id="address"
-                                                        readonly>
+                                                <div class="row mb-3">
+                                                    <div class="col-md-8 mb-3">
+                                                        <label for="address" class="form-label">Address</label>
+                                                        <input type="text" class="form-control" name="address"
+                                                            id="address" readonly>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="contactNumber" class="form-label">Contact
+                                                            Number</label>
+                                                        <input type="tel" class="form-control" name="contactNumber"
+                                                            id="contactNumber" readonly>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <label for="contactNumber" class="form-label">Contact Number</label>
-                                                    <input type="tel" class="form-control" name="contactNumber"
-                                                        id="contactNumber" readonly>
-                                                </div>
-                                            </div>
 
-                                            <div class="row mb-3">
-                                                <div class="col-md-4 mb-3">
-                                                    <label for="spouse_name" class="form-label">Spouse Name:</label>
-                                                    <input type="text" class="form-control" id="spouse_name"
-                                                        name="spouse_name" placeholder="Spouse Name">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="spouse_name" class="form-label">Spouse Name:</label>
+                                                        <input type="text" class="form-control" id="spouse_name"
+                                                            name="spouse_name" placeholder="Spouse Name">
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="spouse_date" class="form-label">Birthdate:</label>
+                                                        <input type="date" class="form-control" id="spouse_date"
+                                                            name="spouse_date">
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="spouse_occupation"
+                                                            class="form-label">Occupation:</label>
+                                                        <input type="text" class="form-control" id="spouse_occupation"
+                                                            name="spouse_occupation" placeholder="Enter Occupation">
+                                                    </div>
+
                                                 </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <label for="spouse_date" class="form-label">Birthdate:</label>
-                                                    <input type="date" class="form-control" id="spouse_date"
-                                                        name="spouse_date">
-                                                </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <label for="spouse_occupation"
-                                                        class="form-label">Occupation:</label>
-                                                    <input type="text" class="form-control" id="spouse_occupation"
-                                                        name="spouse_occupation" placeholder="Enter Occupation">
-                                                </div>
-                                            </div>
-                                        </section>
+
+                                            </section>
 
 
 
-                                        <?php include('form/fp.form.php') ?>
+                                            <?php include('form/fp.form.php') ?>
+
+                                        </div>
 
                                     </div>
-
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -299,9 +334,8 @@ if (isset($_GET['id'])) {
 
 </body>
 
+<?php include('modal/fp_modal.php') ?>
 </html>
-
-
 <script>
     $(document).ready(function () {
         $('#patient_name').on('change', function () {
@@ -394,9 +428,14 @@ if (isset($_GET['id'])) {
                         var selectElement = document.getElementById('patient_name');
                         $(selectElement).chosen('destroy');
 
-                        $('#familyplanning_form input').prop('readonly', true);
-                        $('#familyplanning_form textarea').prop('readonly', true);
-                        $('#familyplanning_form select').prop('disabled', true); //use 'disabled' for select elements
+                        $('#familyplanning_form input').prop('readonly', true); // This will set readonly for text inputs
+                        $('#familyplanning_form textarea').prop('readonly', true); // This will set readonly for textarea
+                        $('#familyplanning_form select').prop('disabled', true); // This will disable select elements
+
+                        // Disable radio buttons and checkboxes
+                        $('#familyplanning_form input[type="radio"]').prop('disabled', true);
+                        $('#familyplanning_form input[type="checkbox"]').prop('disabled', true);
+
                         // Disable all buttons inside the form
                         // Temporarily hide the buttons
                         $("#print_content button").hide();
@@ -420,6 +459,99 @@ if (isset($_GET['id'])) {
                 }
             });
         });
+
+
+        $(document).on('click', '.btnPrint', function (e) {
+            if (!$('#spouse_name').prop('readonly')) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Incomplete Form',
+                    text: 'Please complete the form before printing.',
+                });
+                return;
+            }
+
+            console.log('Printing...');
+
+            // Temporarily hide the buttons and adjust styles for printing
+            $("#print_content button").hide();
+            $("#print_content").css({ "margin": "0", "padding": "0" }); // Adjust as needed
+
+            html2canvas(document.querySelector("#print_content"), {
+                scale: 1, // Adjust scale as needed to fit content
+                windowHeight: document.documentElement.offsetHeight, // Adjust window height
+                windowWidth: document.documentElement.offsetWidth // Adjust window width
+            }).then(canvas => {
+                var myImage = canvas.toDataURL("image/png");
+                var tWindow = window.open("");
+                $(tWindow.document.body).css({ "margin": "0", "padding": "0" }); // Reset styles in new window
+                $(tWindow.document.body)
+                    .html("<img id='Image' src=" + myImage + " style='width:100%;'></img>")
+                    .ready(function () {
+                        tWindow.focus();
+                        tWindow.print();
+                    });
+
+                // Revert styles and show the buttons again
+                $("#print_content").css({ "margin": "", "padding": "" }); // Revert back to original styles
+                $("#print_content button").show();
+            });
+        });
+
+
+
+        $('#btnEdit').click(function () {
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Form Editing Enabled',
+                showConfirmButton: false,
+                timer: 1000
+            })
+            revertReadOnly();
+        });
+
+        function revertReadOnly() {
+            // Only revert the readonly state for specific inputs
+            $('#print_content').find('input:not(#record_id, #birth_date, #age, #address, #contactNumber, #spouse_name, #spouse_date, #spouse_occupation), textarea').removeAttr('readonly');
+
+            // Enable checkboxes and radio buttons
+            $('#print_content').find('input[type="checkbox"], input[type="radio"]').prop('disabled', false);
+
+            // Enable the 'patient_name' Chosen.js select and update it
+            $('#patient_name').prop('disabled', false).trigger('chosen:updated');
+            $('#print_content').find('select').prop('disabled', false);
+
+            // Remove hidden inputs added for disabled selects except for 'patient_name'
+            $('#print_content').find('select:not(#patient_name)').each(function () {
+                $(this).next('input[type="hidden"]').remove();
+            });
+        }
+
+        function makeReadOnly() {
+            var prenatalRecordStatus = '<?php echo $record['status']; ?>';
+            if (prenatalRecordStatus === 'Completed') {
+                $('#print_content').find('input, textarea').attr('readonly', true);
+                $('#print_content').find('select').prop('disabled', true);
+
+                // Disable checkboxes and radio buttons
+                $('#print_content').find('input[type="checkbox"], input[type="radio"]').prop('disabled', true);
+
+                // Add hidden inputs for disabled selects
+                $('#print_content').find('select').each(function () {
+                    var name = $(this).attr('name');
+                    var value = $(this).val();
+                    $(this).after('<input type="hidden" name="' + name + '" value="' + value + '">');
+                });
+            }
+        }
+
+
+        makeReadOnly();
+
+
+
 
     });
 </script>

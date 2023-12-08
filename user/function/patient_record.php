@@ -55,7 +55,7 @@ if (isset($_POST['add'])) {
     $last_id = $con->insert_id;
 
 
-    
+
     if ($results) {
         header("Location: ../patient_record.php?id=$last_id");
         $_SESSION['add_patient'] = "successful";
@@ -66,5 +66,8 @@ if (isset($_POST['add'])) {
 }
 
 // ADD UPDATE AND DELETE functionality as per your need.
+
+
+
 
 ?>

@@ -43,7 +43,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" name="new" class="btn btn-primary" id="confirmPrenatalButton">Yes, Create</button>
+                    <button type="submit" name="new" class="btn btn-primary" id="confirmPrenatalButton">Yes,
+                        Create</button>
                 </div>
             </form>
         </div>
@@ -72,8 +73,8 @@
                             $result = mysqli_query($con, $sql);
                             if ($result) {
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    $medicine_id  = $row['medicine_id'];
-                                    $medicine  = $row['name'];
+                                    $medicine_id = $row['medicine_id'];
+                                    $medicine = $row['name'];
 
                                     echo "<option value='$medicine_id' > $medicine</option>";
                                 }
@@ -92,7 +93,87 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" name="addStock" class="btn btn-primary" id="confirmAddStockButton">Add Stock</button>
+                    <button type="submit" name="addStock" class="btn btn-primary" id="confirmAddStockButton">Add
+                        Stock</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Add Stock Modal for Medicine -->
+<div class="modal fade" id="usageLogs" tabindex="-1" aria-labelledby="addStockLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addStockLabel">Add Stock for Medicine</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method='POST' action='function/medicine_inv.php'>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <?php
+                        $sql = "SELECT medicine.name, medicine.description, medicine.expiry_date, 
+               delivery_medicine.qty AS quantity_used, 
+               delivery_record.dateRecording AS usage_date
+        FROM medicine 
+        LEFT JOIN delivery_medicine ON medicine.medicine_id = delivery_medicine.medicine_id
+        LEFT JOIN delivery_record ON delivery_medicine.delivery_id = delivery_record.delivery_id
+        ORDER BY medicine.name, delivery_record.dateRecording";
+                        $results = mysqli_query($con, $sql);
+
+                        // Check for SQL errors
+                        if (!$results) {
+                            die("SQL error: " . mysqli_error($con));
+                        }
+                        ?>
+
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped" id='medicine_inventory'>
+                                <thead class="table-dark text-center">
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Quantity Used</th>
+                                        <th scope="col">Usage Date</th>
+                                        <th scope="col">Expiry Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php while ($row = mysqli_fetch_array($results)) { ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $row['name'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['description'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['quantity_used'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['usage_date'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['expiry_date'] ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" name="addStock" class="btn btn-primary" id="confirmAddStockButton">Add
+                        Stock</button>
                 </div>
             </form>
         </div>

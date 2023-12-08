@@ -21,3 +21,28 @@ if (isset($_POST['new'])) {
     }
     exit();
 }
+
+
+
+// Delete Functionality
+if (isset($_POST['delete'])) {
+    $record_id = $_POST['record_id']; 
+
+    // Prepare SQL statement to prevent SQL injection
+    $query = "DELETE FROM delivery_record WHERE delivery_id  = ?";
+    if ($stmt = $con->prepare($query)) {
+        $stmt->bind_param("i", $record_id); 
+
+        if ($stmt->execute()) {
+            header("Location: ../deliveries_record.php"); 
+            $_SESSION['delete_patient'] = "successful";
+            exit();
+        } else {
+            echo "ERROR: Could not execute query: $query. " . mysqli_error($con);
+        }
+
+        $stmt->close();
+    } else {
+        echo "ERROR: Could not prepare query: $query. " . mysqli_error($con);
+    }
+}

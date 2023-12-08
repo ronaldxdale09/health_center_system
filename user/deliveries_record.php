@@ -75,6 +75,7 @@ include('include/navbar.php');
                                         <i class="fa fa-add" aria-hidden="true"></i> NEW RECORD
                                     </button>
 
+                                    
                                 </div>
                             </div>
 

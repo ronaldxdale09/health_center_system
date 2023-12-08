@@ -132,6 +132,10 @@ if (isset($_GET['id'])) {
                                     class="fas fa-arrow-left"></span> Return</a>
                             <button type="button" class="btn trans-btn btn-primary btnSaveForm" id="btnSaveForm"><span
                                     class="fas fa-check"></span> Save Record</button>
+                            <button type="button" class="btn trans-btn btn-danger deleteRecord" data-toggle="modal"
+                                data-target="#deleteRecord">
+                                <span class="fas fa-trash"></span> Remove Record
+                            </button>
                         </div>
 
                         <div class="col">

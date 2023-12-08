@@ -145,7 +145,8 @@ if (isset($_GET['id'])) {
                             <button type="button" class="btn trans-btn btn-primary" id="saveButton">
                                 <span class="fas fa-check"></span> Save Record
                             </button>
-                            <button type="button" class="btn trans-btn btn-danger btnVoid" id="btnVoid">
+                            <button type="button" class="btn trans-btn btn-danger deleteRecord" data-toggle="modal"
+                                data-target="#deleteRecord">
                                 <span class="fas fa-trash"></span> Remove Record
                             </button>
                         </div>
@@ -538,7 +539,7 @@ if (isset($_GET['id'])) {
         </div>
     </form>
     <?php
-    include "modal/prenatal_modal.php";
+    include "modal/delivery_modal.php";
     ?>
 
 </body>

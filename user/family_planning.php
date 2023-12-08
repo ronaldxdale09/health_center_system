@@ -77,6 +77,17 @@ if (isset($_GET['id'])) {
             $('input[name=\"last_menstrual_period\"]').val('" . $record['last_menstrual_period'] . "');
             $('input[name=\"previous_menstrual_period\"]').val('" . $record['previous_menstrual_period'] . "');
     
+            $('input[name=\"mens_scanty\"]').prop('checked', " . $record['mens_scanty'] . " == 1);
+            $('input[name=\"mens_moderate\"]').prop('checked', " . $record['mens_moderate'] . " == 1);
+            $('input[name=\"mens_heavy\"]').prop('checked', " . $record['mens_heavy'] . " == 1);
+    
+
+            $('input[name=\"dysnebirrhea\"]').prop('checked', " . $record['dysnebirrhea'] . " == 1);
+            $('input[name=\"hydatiform\"]').prop('checked', " . $record['hydatiform'] . " == 1);
+            $('input[name=\"ectopic\"]').prop('checked', " . $record['ectopic'] . " == 1);
+    
+
+
             // Radio Buttons in STI Risks Section
             $('input[name=\"abnormal_discharge\"][value=\"" . ($record['abnormal_discharge'] ? 'yes' : 'no') . "\"]').prop('checked', true);
             $('input[name=\"sores_ulcers\"][value=\"" . ($record['sores_ulcers'] ? 'yes' : 'no') . "\"]').prop('checked', true);

@@ -67,9 +67,9 @@ include('include/navbar.php');
                                 <font color="#046D56"> DASHBOARD </font>
                             </b>
                         </h2>
-                        <button type="button" class="btn btn-sm btn-dark btnPrint">
+                        <!-- <button type="button" class="btn btn-sm btn-dark btnPrint">
                             <span class="fas fa-print"></span> Print
-                        </button>
+                        </button> -->
                     </div>
                     <div id="print_content">
                         <h4 class="card-header card-title3 chart-section-header">PRENATAL RECORD <span>CHARTS</span>

@@ -65,12 +65,36 @@ $cervical_firm = isset($_POST['cervical_firm']) ? 1 : 0;
 $cervical_soft = isset($_POST['cervical_soft']) ? 1 : 0;
 
 
+$mens_flow_scanty = isset($_POST['mens_scanty']) ? 1 : 0;
+$mens_flow_moderate = isset($_POST['mens_moderate']) ? 1 : 0;
+$mens_flow_heavy =  isset($_POST['mens_heavy']) ? 1 : 0;
+
+
+$dysnebirrhea = isset($_POST['dysnebirrhea']) ? 1 : 0;
+$hydatiform = isset($_POST['hydatiform']) ? 1 : 0;
+$ectopic = isset($_POST['ectopic']) ? 1 : 0;
+
+
+
+
+
 
 
 $patient_id = $_POST['patient_id'];
 
 // Update query for patient_medical_history
 $updateQuery = "UPDATE family_planning_rec SET
+
+    dysnebirrhea = '$dysnebirrhea',
+    hydatiform = '$hydatiform',
+    ectopic = '$ectopic',
+
+    
+    mens_scanty = '$mens_flow_scanty',
+    mens_moderate = '$mens_flow_moderate',
+    mens_heavy = '$mens_flow_heavy',
+
+    
     severe_headaches = '$severe_headaches',
     history_stroke_heart_attack_hypertension = '$history_stroke_heart_attack_hypertension',
     non_traumatic_hematoma = '$non_traumatic_hematoma',
@@ -132,11 +156,12 @@ $updateQuery = "UPDATE family_planning_rec SET
     cervical_soft = '$cervical_soft',
     patient_id='$patient_id', 
     status = 'Completed'
-    WHERE fp_id = '$record_id'"; +
+    WHERE fp_id = '$record_id'";
++
 
 
-// Execute the update query
-$results = mysqli_query($con, $updateQuery);
+    // Execute the update query
+    $results = mysqli_query($con, $updateQuery);
 if (!$results) {
     echo "ERROR: Could not execute $updateQuery. " . mysqli_error($con);
     exit();

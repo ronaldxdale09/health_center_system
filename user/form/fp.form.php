@@ -102,7 +102,7 @@
 <form action="/submit-form" method="post" class="medical-form">
 
     <fieldset>
-        <legend>VI. FAMILY PLANNING METHOD SELECTION</legend>
+        <legend> FAMILY PLANNING METHOD SELECTION</legend>
         <div class="grid">
             <div class="col">
                 <label for="family_planning_method">Family Planning Method:</label>
@@ -169,7 +169,7 @@
     <fieldset>
         <legend>II. OBSTETRICAL HISTORY</legend>
         <div class="grid">
-            <div class="col">
+            <div class="col-md-auto">
                 <label>Number of pregnancies: <input type="text" name="number_of_pregnancies"></label>
             </div>
             <div class="col">
@@ -185,6 +185,21 @@
             <div class="col">
                 <label>Last menstrual period: <input type="date" name="last_menstrual_period"></label>
                 <label>Previous Menstrual period: <input type="date" name="previous_menstrual_period"></label>
+            </div>
+            <div class="col">
+                <label>Menstrual Flow:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="mens_scanty" value="1"> Scanty (1-2 pads per day)</label>
+                    <label><input type="checkbox" name="mens_moderate" value="1"> Moderate (3-5 pads per day)</label>
+                    <label><input type="checkbox" name="mens_heavy" value="1"> Heavy (>5 pads per day)</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="dysnebirrhea" value="1">Dysnebirrhea</label>
+                    <label><input type="checkbox" name="hydatiform" value="1"> Hydatiform mole (within the last 12 months)</label>
+                    <label><input type="checkbox" name="ectopic" value="1">History of ectopic Pregnancy</label>
+                </div>
             </div>
         </div>
     </fieldset>

@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
             <script>
                 $(document).ready(function() {
 
-       
+
                     $('#patient_name').val('" . $patient_record['patient_id'] . "').trigger('chosen:updated');
                     $('#birth_date').val('" . $patient_record['DateOfBirth'] . "');
                     $('#address').val('" . $patient_record['Address'] . "');
@@ -57,6 +57,7 @@ if (isset($_GET['id'])) {
         <script>
         $(document).ready(function() {
 
+            $('#patient_id').val('" . $record['patient_id'] . "');
 
 
             // Checkboxes in Medical History Section

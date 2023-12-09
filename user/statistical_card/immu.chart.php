@@ -6,80 +6,64 @@ COUNT(*) as Count
 FROM 
 immunization_status
 GROUP BY 
-MonthYear, immunizationType
+DATE_FORMAT(dateRecording, '%Y-%m'), immunizationType
 ORDER BY 
 MonthYear";
 
 $result = mysqli_query($con, $query);
 
-// Prepare data for the chart
 $immunizationData = [];
+$allTypes = [];
 while ($row = mysqli_fetch_assoc($result)) {
-    $immunizationData[$row['MonthYear']][$row['immunizationType']] = $row['Count'];
+    $monthYear = DateTime::createFromFormat('Y-m', $row['MonthYear'])->format('F Y'); // Convert to 'Month Year' format
+    $immunizationData[$monthYear][$row['immunizationType']] = $row['Count'];
+    $allTypes[$row['immunizationType']] = 0;
 }
 
-// Generate labels (months) and datasets for each immunization type
 $labels = array_keys($immunizationData);
-$datasets = [];
-foreach ($immunizationData as $month => $types) {
-    foreach ($types as $type => $count) {
-        $datasets[$type][] = $count;
-    }
-}
+$datasets = array_fill_keys(array_keys($allTypes), []);
 
-// Ensure each dataset has a value for each month
-foreach ($datasets as $type => &$counts) {
-    if (count($counts) < count($labels)) {
-        $counts = array_pad($counts, -count($labels), 0);
+foreach ($immunizationData as $monthYear => $types) {
+    foreach ($allTypes as $type => $value) {
+        $datasets[$type][] = $types[$type] ?? 0;
     }
 }
 ?>
 
-<!-- PHP for Immunization Type Distribution: -->
-<?php
-$typeDistributionSQL = "SELECT 
-                            immunizationType, 
-                            COUNT(*) as Count
-                        FROM 
-                            immunization_status
-                        GROUP BY 
-                            immunizationType";
 
-$typeResults = mysqli_query($con, $typeDistributionSQL);
-$typeData = [];
-
-while ($row = mysqli_fetch_assoc($typeResults)) {
-    $typeData[$row['immunizationType']] = $row['Count'];
-}
-?>
 
 
 <script>
     // Fetch PHP data into JavaScript
-    var labels = <?php echo json_encode($labels); ?>;
+       // Fetch PHP data into JavaScript
+       var labels = <?php echo json_encode($labels); ?>;
     var datasetsData = <?php echo json_encode($datasets); ?>;
 
     // Prepare datasets for the chart
     var datasets = [];
-    Object.keys(datasetsData).forEach(function (type) {
+    var colors = [
+    'rgba(255, 99, 132, 0.6)',  // Red
+    'rgba(54, 162, 235, 0.6)',  // Blue
+    'rgba(75, 192, 192, 0.6)',  // Green
+    'rgba(255, 206, 86, 0.6)',  // Yellow
+    'rgba(153, 102, 255, 0.6)', // Purple
+    'rgba(255, 159, 64, 0.6)',  // Orange
+    // ... Add more unique colors as needed
+];    Object.keys(datasetsData).forEach(function (type, index) {
         datasets.push({
             label: type,
             data: datasetsData[type],
-            // Add more customization here (like borderColor, backgroundColor, etc.)
+            backgroundColor: colors[index % colors.length] // Assign color to each dataset
         });
     });
 
     var ctx = document.getElementById('immunizationTrendChart').getContext('2d');
     new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: labels,
             datasets: datasets
         },
-        backgroundColor: [
-                        'rgba(255, 99, 132, 0.6)',
-                        'rgba(54, 162, 235, 0.6)'
-                    ],
         options: {
             scales: {
                 y: {
@@ -88,6 +72,26 @@ while ($row = mysqli_fetch_assoc($typeResults)) {
             }
         }
     });
+
+    <?php
+    $typeDistributionSQL = "SELECT 
+                            immunizationType, 
+                            COUNT(*) as Count
+                        FROM 
+                            immunization_status
+                        GROUP BY 
+                            immunizationType";
+
+    $typeResults = mysqli_query($con, $typeDistributionSQL);
+    $typeData = [];
+
+    while ($row = mysqli_fetch_assoc($typeResults)) {
+        $typeData[$row['immunizationType']] = $row['Count'];
+    }
+    ?>
+
+
+
 
     // Immunization Type Distribution Chart
     var typeData = <?php echo json_encode($typeData); ?>;

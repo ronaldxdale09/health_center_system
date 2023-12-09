@@ -12,6 +12,62 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="generic_name" class="form-label">Generic Name</label>
+                            <input type="text" class="form-control" name="generic_name">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="brand_name" class="form-label">Brand Name</label>
+                            <input type="text" class="form-control" name="brand_name">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="expiry_date" class="form-label">Expiry Date</label>
+                            <input type="date" class="form-control" name="expiry_date">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" name="description"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="supplier" class="form-label">Supplier</label>
+                        <input type="text" class="form-control" name="supplier">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" name="new" class="btn btn-primary" id="confirmPrenatalButton">Yes,
+                        Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add/Update Medicine Modal -->
+<div class="modal fade" id="updateMedicine" tabindex="-1" aria-labelledby="medicineModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="medicineModalLabel">Add/Update Medicine</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method='POST' action='function/medicine_inv.php'>
+                <div class="modal-body">
+                    <!-- Hidden input for medicine ID (used for updating) -->
+                    <input type="hidden" id="medicine_id" name="medicine_id">
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -21,10 +77,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="brand_name" class="form-label">Brand Name</label>
-                            <input type="text" class="form-control" id="brand_name" name="brand_name">
-                        </div>
+                       
                         <div class="col-md-6 mb-3">
                             <label for="expiry_date" class="form-label">Expiry Date</label>
                             <input type="date" class="form-control" id="expiry_date" name="expiry_date">
@@ -43,13 +96,14 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" name="new" class="btn btn-primary" id="confirmPrenatalButton">Yes,
-                        Create</button>
+                    <button type="submit" name="update" class="btn btn-primary" id="confirmMedicineButton">Save</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
 
 
 <!-- Add Stock Modal for Medicine -->
@@ -163,7 +217,7 @@
                                                 <?php echo $row['expiry_date'] ?>
                                             </td>
                                             <td>
-                                            <span class="badge bg-dark">Delivery</span>
+                                                <span class="badge bg-dark">Delivery</span>
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -176,7 +230,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            
+
                 </div>
             </form>
         </div>

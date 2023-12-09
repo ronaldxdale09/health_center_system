@@ -65,16 +65,19 @@ include('include/navbar.php');
                 <br>
                 <div class="card">
                     <div class="card-body">
-                        <button type="button" class="btn btn-sm btn-dark text-white" data-toggle="modal" data-target="#addMedicineModal">
+                        <button type="button" class="btn btn-sm btn-dark text-white" data-toggle="modal"
+                            data-target="#addMedicineModal">
                             <i class="fa fa-add" aria-hidden="true"></i> NEW PRODUCT
                         </button>
-                        <button type="button" class="btn btn-sm btn-primary text-white" data-toggle="modal" data-target="#addStockModal">
+                        <button type="button" class="btn btn-sm btn-primary text-white" data-toggle="modal"
+                            data-target="#addStockModal">
                             <i class="fas fa-arrow-down"></i>
                             Stock In
                         </button>
-                        <button type="button" class="btn btn-sm btn-warning text-dark" data-toggle="modal" data-target="#usageLogs">
+                        <button type="button" class="btn btn-sm btn-warning text-dark" data-toggle="modal"
+                            data-target="#usageLogs">
                             <i class="fas fa-arrow-up"></i>
-                           Stock out Logs 
+                            Stock out Logs
                         </button>
                         <hr>
                         <?php
@@ -107,16 +110,32 @@ include('include/navbar.php');
                                 <tbody>
                                     <?php while ($row = mysqli_fetch_array($results)) { ?>
                                         <tr>
-                                            <td><span class="badge bg-warning text-dark"><?php echo $row['medicine_id'] ?></span></td>
-                                            <td><?php echo $row['name'] ?></td>
-                                            <td><?php echo $row['description'] ?></td>
-                                            <td><?php echo $row['generic_name'] ?></td>
-                                            <td><?php echo $row['expiry_date'] ?></td>
-                                            <td><?php echo $row['supplier'] ?></td>
-                                            <td><?php echo $row['total_stock'] ?></td>
+                                            <td><span class="badge bg-warning text-dark">
+                                                    <?php echo $row['medicine_id'] ?>
+                                                </span></td>
                                             <td>
-                                                <!-- You can add actions like Edit, Delete or any other action you need for each medicine record -->
-                                                <a href="medicine_detail.php?id=<?php echo $row['medicine_id'] ?>" class='btn btn-dark btn-sm'><i class='fas fa-eye'></i> View</a>
+                                                <?php echo $row['name'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['description'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['generic_name'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['expiry_date'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['supplier'] ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row['total_stock'] ?>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-dark btn-sm updateMedicineButton"
+                                                    data-id="<?php echo $row['medicine_id']; ?>">
+                                                    <i class='fas fa-edit'></i> Update
+                                                </button>
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -133,11 +152,14 @@ include('include/navbar.php');
     </div>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var table = $('#patient_record').DataTable({
                 dom: 'Bfrtip',
                 buttons: ['excelHtml5', 'pdfHtml5', 'print']
             });
+
+
+
         });
     </script>
 
@@ -145,6 +167,36 @@ include('include/navbar.php');
     include "modal/medicine_modal.php";
     ?>
 
+    <script>
+        $(document).ready(function () {
+            $('.updateMedicineButton').on('click', function () {
+                // Open the modal
+
+                // Fetch data from the row
+                var $tr = $(this).closest('tr');
+                var data = $tr.children("td").map(function () {
+                    // Use jQuery's $.trim() to remove whitespace and the text() method to safely extract text
+                    return $.trim($(this).text());
+                }).get();
+
+                // Populate the modal fields with the fetched data
+                $('#medicine_id').val(data[0]); // Assuming the first cell contains the medicine ID
+                $('#name').val(data[1]);        // Adjust these indices based on your table structure
+                $('#generic_name').val(data[3]);
+                $('#brand_name').val(data[1]);
+                $('#expiry_date').val(data[4]);
+                $('#description').val(data[2]);
+                $('#supplier').val(data[5]);
+
+                $('#updateMedicine').modal('show');
+
+                // Change the modal title for updating a record
+                $('#medicineModalLabel').text('Update Medicine');
+
+                // You might need to adjust the indices in 'data[index]' based on your actual table structure
+            });
+        });
+    </script>
 
 
 

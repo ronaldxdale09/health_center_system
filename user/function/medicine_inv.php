@@ -10,7 +10,7 @@ if (isset($_POST['new'])) { // Changed 'add' to 'new' to match the submit button
     $supplier = $_POST['supplier'];
 
     // If there are more fields in your form related to medicine, fetch them here...
-    
+
     // You can add more validation here if needed...
 
     $query = "INSERT INTO medicine 
@@ -19,15 +19,50 @@ if (isset($_POST['new'])) { // Changed 'add' to 'new' to match the submit button
               ('$name', '$description', '$generic_name', '$expiry_date', '$supplier')";
 
     $results = mysqli_query($con, $query);
-                               
+
     if ($results) {
         header("Location: ../medicine_list.php"); // Redirect to a medicine record page or any relevant page
         $_SESSION['add_medicine'] = "successful";  // This assumes you start a session at the beginning.
         exit();
     } else {
-        echo "ERROR: Could not be able to execute $query. ".mysqli_error($con);
+        echo "ERROR: Could not be able to execute $query. " . mysqli_error($con);
     }
 }
+
+if (isset($_POST['update'])) { // Use 'update' to indicate an update action
+
+    $id = $_POST['medicine_id']; // Assuming 'id' is the primary key for the medicine record
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+    $generic_name = $_POST['generic_name'];
+    $expiry_date = $_POST['expiry_date'];
+    $supplier = $_POST['supplier'];
+
+    // If there are more fields in your form related to medicine, fetch them here...
+
+    // You can add more validation here if needed...
+
+    // Prepare an UPDATE SQL statement
+    $query = "UPDATE medicine SET 
+              name = '$name', 
+              description = '$description', 
+              generic_name = '$generic_name', 
+              expiry_date = '$expiry_date', 
+              supplier = '$supplier' 
+              WHERE medicine_id = $id";
+
+    $results = mysqli_query($con, $query);
+
+    if ($results) {
+        header("Location: ../medicine_list.php"); // Redirect to the medicine record page or any relevant page
+        $_SESSION['update_medicine'] = "successful";  // This assumes you start a session at the beginning.
+        exit();
+    } else {
+        echo "ERROR: Could not be able to execute $query. " . mysqli_error($con);
+    }
+}
+
+
 
 // ADD UPDATE AND DELETE functionality as per your need.
 
@@ -39,17 +74,17 @@ if (isset($_POST['addStock'])) {
     $notes = $_POST['notes'];
 
     // If you want more validation or checking, do it here...
-    
+
     $query = "INSERT INTO med_inv (medicine_id, quantity, notes) 
               VALUES ('$medicine_id', '$quantity', '$notes')";
 
     $results = mysqli_query($con, $query);
-                               
+
     if ($results) {
         header("Location: ../medicine_list.php"); // Redirect to a hypothetical inventory page or any relevant page
         $_SESSION['add_stock'] = "successful";
         exit();
     } else {
-        echo "ERROR: Could not be able to execute $query. ".mysqli_error($con);
+        echo "ERROR: Could not be able to execute $query. " . mysqli_error($con);
     }
 }

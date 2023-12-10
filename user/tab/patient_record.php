@@ -39,7 +39,7 @@ if (isset($_GET['tab'])) {
         <label for="blog" class="blog"><i class="fas fa-users"></i> FP </label>
         <label for="drying" class="drying"><i class="fas fa-book"></i> Immunization </label>
         <label for="code" class="code"><i class="fas fa-baby"></i> Deliveries </label>
-        <label for="help" class="help"><i class="fas fa-book"></i> Vaccination </label>
+        <label for="help" class="help"><i class="fas fa-book"></i> Others </label>
 
 
         <div class="slider"></div>

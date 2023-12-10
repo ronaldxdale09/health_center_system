@@ -66,3 +66,9 @@ if(!$results) {
         </tbody>
     </table>
 </div>
+<script>
+    var table = $('#immunization_record').DataTable({
+        dom: 'Bfrtip',
+        buttons: ['excelHtml5', 'pdfHtml5', 'print']
+    });
+</script>

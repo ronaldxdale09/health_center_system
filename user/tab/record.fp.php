@@ -61,3 +61,11 @@
         </tbody>
     </table>
 </div>
+
+
+<script>
+    var table = $('#family_record').DataTable({
+        dom: 'Bfrtip',
+        buttons: ['excelHtml5', 'pdfHtml5', 'print']
+    });
+</script>

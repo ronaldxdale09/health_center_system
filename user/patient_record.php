@@ -137,7 +137,8 @@ if (isset($_GET['id'])) {
                                                 <div class="col-md-6">
                                                     <label class="col-form-label">Contact #:</label>
                                                     <input type="text" class="form-control" name="contact_number"
-                                                        placeholder="Enter contact number"  oninput="maxLengthCheck(this)" maxlength="11">
+                                                        placeholder="Enter contact number"
+                                                        oninput="maxLengthCheck(this)" maxlength="11">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="col-form-label">Occupation:</label>
@@ -245,7 +246,7 @@ if (isset($_GET['id'])) {
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="col-form-label">Emergency Contact:</label>
-                                                    <input type="text" class="form-control" name="emergency_contact"
+                                                    <input type="text" class="form-control"     oninput="maxLengthCheck(this)" maxlength="11" name="emergency_contact"
                                                         placeholder="Enter emergency contact number">
                                                 </div>
                                             </div>
@@ -381,6 +382,10 @@ if (isset($_GET['id'])) {
                                 // });
 
 
+                                function maxLengthCheck(object) {
+                                    if (object.value.length > object.maxLength)
+                                        object.value = object.value.slice(0, object.maxLength)
+                                }
                             });
 
 

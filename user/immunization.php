@@ -130,8 +130,7 @@ if (isset($_GET['id'])) {
 
                             <a href="immunization_record.php" type="button" class="btn trans-btn btn-secondary "><span
                                     class="fas fa-arrow-left"></span> Return</a>
-                            <button type="button" class="btn trans-btn btn-primary btnSaveForm" id="btnSaveForm"><span
-                                    class="fas fa-check"></span> Save Record</button>
+               
                             <button type="button" class="btn trans-btn btn-danger deleteRecord" data-toggle="modal"
                                 data-target="#deleteRecord">
                                 <span class="fas fa-trash"></span> Remove Record
@@ -281,7 +280,10 @@ if (isset($_GET['id'])) {
                                     pagbabakuna ng bata
                                 </div>
                             </div>
+                            <button type="button" style="float: right;" class="btn trans-btn btn-primary btnSaveForm" id="btnSaveForm"><span
+                                    class="fas fa-check"></span> Save Record</button>
                         </div>
+                        
                     </div>
 
                 </div>
@@ -388,11 +390,10 @@ if (isset($_GET['id'])) {
             var isValid = true;
             var errorMessage = "Please fill out all required fields.";
 
-            // Loop through each input and select element inside the form
-            $('#print_content').find('input, select').each(function () {
-                var label = $(this).closest('.col').find('label');
-                // Check if the label contains an asterisk, indicating a required field
-                if (label.text().indexOf('*') !== -1 && !$(this).val()) {
+            // Loop through each input, select, and textarea element inside the form
+            $('#print_content').find('input:visible, select:visible, textarea:visible').each(function () {
+                // Check if the element is required
+                if ($(this).prop('required') && !$(this).val()) {
                     isValid = false;
                     // Highlight the input field or show an error message
                     $(this).css('border-color', 'red'); // Highlight field with red color
@@ -414,7 +415,6 @@ if (isset($_GET['id'])) {
 
 
 
-
             // Set the form action to the desired URL
             $('#immunizationForm').attr('action', 'function/immunization.save.php');
 
@@ -431,13 +431,18 @@ if (isset($_GET['id'])) {
                             text: 'Sale transaction completed!',
                         });
 
+                        
+                        var selectElement = document.getElementById('patient_name');
+                        $(selectElement).chosen('destroy');
+
+
                         // Set all inputs to readonly
                         $('#immunizationForm input').prop('readonly', true);
                         $('#immunizationForm textarea').prop('readonly', true);
                         $('#immunizationForm select').prop('disabled', true); //use 'disabled' for select elements
                         // Disable all buttons inside the form
                         // Temporarily hide the buttons
-                        $("#print_content button").hide();
+                        $("#print_content button:not(#confirmPrenatalButton, .btnPrint)").hide();
                         $('#confirmPrenatalModal').modal('hide');
                     } else {
                         Swal.fire({

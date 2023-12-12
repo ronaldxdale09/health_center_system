@@ -17,9 +17,14 @@ if (!$results) {
         <thead class="table-dark text-center">
             <tr>
                 <th scope="col">Prenatal ID</th>
+                <th scope="col">Date</th>
+
                 <th scope="col">Patient ID</th>
                 <th scope="col">LMP</th>
                 <th scope="col">EDC</th>
+                <th scope="col">Gravida</th>
+                <th scope="col">Para</th>
+
                 <th scope="col">Blood Pressure</th>
                 <th scope="col">Weight</th>
                 <th scope="col">Action</th>
@@ -31,6 +36,10 @@ if (!$results) {
                     <td><span class="badge bg-warning text-dark">
                             <?php echo $row['prenatal_id'] ?>
                         </span></td>
+
+                    <td>
+                        <?php echo !empty($row['date_checkup']) ? date('M j, Y', strtotime($row['date_checkup'])) : '-'; ?>
+                    </td>
                     <td>
                         <?php echo $row['Name'] ?>
                     </td>
@@ -39,6 +48,12 @@ if (!$results) {
                     </td>
                     <td>
                         <?php echo $row['edc'] ?>
+                    </td>
+                    <td>
+                        <?php echo $row['gravida'] ?>
+                    </td>
+                    <td>
+                        <?php echo $row['para_no'] ?>
                     </td>
                     <td>
                         <?php echo $row['blood_pressure'] ?>

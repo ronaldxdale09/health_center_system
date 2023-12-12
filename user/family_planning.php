@@ -189,15 +189,13 @@ if (isset($_GET['id'])) {
                             </div>
                         </div> -->
 
-                            
+
                         <div class="row mb-3">
                             <div class="col-9">
                                 <a href="fp_record.php" type="button" class="btn trans-btn btn-secondary ">
                                     <span class="fas fa-arrow-left"></span> Return
                                 </a>
-                                <button type="button" class="btn trans-btn btn-primary" id="confirmRecord">
-                                    <span class="fas fa-check"></span> Save Record
-                                </button>
+
                                 <button type="button" class="btn trans-btn btn-danger deleteRecord" data-toggle="modal"
                                     data-target="#deleteRecord">
                                     <span class="fas fa-trash"></span> Remove Record
@@ -244,37 +242,38 @@ if (isset($_GET['id'])) {
                                                         <label for="age" class="form-label">Record ID</label>
                                                         <input type="text" class="form-control" name="record_id"
                                                             value="<?php echo $id ?>" readonly>
-                                                            <input type="text" hidden class="form-control" id="patient_id"  name="patient_id" readonly>
+                                                        <input type="text" hidden class="form-control" id="patient_id"
+                                                            name="patient_id" readonly>
                                                     </div>
                                                     <div class="col-md-5 mb-3">
-                                                            <label class="form-label">Full
-                                                                Name</label>
-                                                            <select class='form-select col-md-10 patient_name'
-                                                                name='patient_name' id='patient_name'>
-                                                                <option disabled="disabled" selected="selected">Select
-                                                                    Patient</option>
-                                                                <?php
-                                                                // Retrieve customer names from the coffee_customer table
-                                                                $sql = "SELECT * FROM patient_record";
-                                                                $result = mysqli_query($con, $sql);
-                                                                if ($result) {
-                                                                    while ($row = mysqli_fetch_assoc($result)) {
-                                                                        $pat_id = $row['patient_id'];
-                                                                        $name = $row['Name'];
-                                                                        $birthDate = $row['DateOfBirth'];
-                                                                        $address = $row['Address'];
-                                                                        $profilepic = $row['ProfilePicture'];
-                                                                        $contact = $row['ContactNumber'];
+                                                        <label class="form-label">Full
+                                                            Name</label>
+                                                        <select class='form-select col-md-10 patient_name'
+                                                            name='patient_name' id='patient_name'>
+                                                            <option disabled="disabled" selected="selected">Select
+                                                                Patient</option>
+                                                            <?php
+                                                            // Retrieve customer names from the coffee_customer table
+                                                            $sql = "SELECT * FROM patient_record";
+                                                            $result = mysqli_query($con, $sql);
+                                                            if ($result) {
+                                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                                    $pat_id = $row['patient_id'];
+                                                                    $name = $row['Name'];
+                                                                    $birthDate = $row['DateOfBirth'];
+                                                                    $address = $row['Address'];
+                                                                    $profilepic = $row['ProfilePicture'];
+                                                                    $contact = $row['ContactNumber'];
 
-                                                                        $ave_monthIncome = $row['ave_monthIncome'];
-                                                                        $philhealth = $row['philhealth'];
+                                                                    $ave_monthIncome = $row['ave_monthIncome'];
+                                                                    $philhealth = $row['philhealth'];
 
 
-                                                                        $spouse_name = $row['spouse_name'];
-                                                                        $spouse_birthdate = $row['spouse_birthdate'];
-                                                                        $spouse_occupation = $row['spouse_occupation'];
+                                                                    $spouse_name = $row['spouse_name'];
+                                                                    $spouse_birthdate = $row['spouse_birthdate'];
+                                                                    $spouse_occupation = $row['spouse_occupation'];
 
-                                                                        echo "<option value='$pat_id' 
+                                                                    echo "<option value='$pat_id' 
                                                                     data-name='$name' 
                                                                     data-id='$pat_id' 
                                                                     data-profilepic='$profilepic' 
@@ -287,11 +286,11 @@ if (isset($_GET['id'])) {
                                                                     data-spouse_birthdate='$spouse_birthdate'
                                                                     data-spouse_occupation='$spouse_occupation'>
                                                                     $name </option>";
-                                                                    }
                                                                 }
-                                                                ?>
-                                                            </select>
-                                                        </div>
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
                                                     <div class="col-md-3 mb-3">
                                                         <label for="birth_date" class="form-label">Birth Date
                                                             (YYYY-MM-DD)</label>
@@ -344,7 +343,9 @@ if (isset($_GET['id'])) {
 
 
                                             <?php include('form/fp.form.php') ?>
-
+                                            <button type="button"  style="float: right;" class="btn trans-btn btn-primary" id="confirmRecord">
+                                                <span class="fas fa-check"></span> Save Record
+                                            </button>
                                         </div>
 
                                     </div>
@@ -360,6 +361,7 @@ if (isset($_GET['id'])) {
 </body>
 
 <?php include('modal/fp_modal.php') ?>
+
 </html>
 <script>
     $(document).ready(function () {
@@ -458,8 +460,11 @@ if (isset($_GET['id'])) {
                         });
 
                         // Set all inputs to readonly
+                   
                         var selectElement = document.getElementById('patient_name');
                         $(selectElement).chosen('destroy');
+
+
 
                         $('#familyplanning_form input').prop('readonly', true); // This will set readonly for text inputs
                         $('#familyplanning_form textarea').prop('readonly', true); // This will set readonly for textarea
@@ -471,7 +476,7 @@ if (isset($_GET['id'])) {
 
                         // Disable all buttons inside the form
                         // Temporarily hide the buttons
-                        $("#print_content button").hide();
+                        $("#print_content button:not(#confirmRecord, .btnPrint)").hide();
                         $('#confirmPrenatalModal').modal('hide');
                     } else {
                         Swal.fire({

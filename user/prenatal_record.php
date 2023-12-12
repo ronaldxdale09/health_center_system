@@ -149,25 +149,21 @@ if (isset($_GET['id'])) {
                     </h2>
                     <hr>
                     <div class="row mb-3">
-                        <div class="col-9">
+                        <div class="col-10">
                             <a href="prenatal.php" type="button" class="btn trans-btn btn-secondary ">
                                 <span class="fas fa-arrow-left"></span> Return
                             </a>
-                            <button type="button" class="btn trans-btn btn-primary" id="confirmPrenatalButton">
-                                <span class="fas fa-check"></span> Save Record
-                            </button>
-                            <button type="button" class="btn trans-btn btn-danger " 
-                            data-toggle="modal" data-target="#deleteRecord">
+
+                            <button type="button" class="btn trans-btn btn-danger " data-toggle="modal"
+                                data-target="#deleteRecord">
                                 <span class="fas fa-trash"></span> Remove Record
                             </button>
                         </div>
                         <div class="col">
-                            <button type="button" class="btn btn-warning btnEdit" id="btnEdit">
+                            <button type="button" hidden class="btn btn-warning btnEdit" id="btnEdit">
                                 <span class="fas fa-pencil"></span> Edit Record
                             </button>
-                            <button type="button" class="btn btn-dark btnPrint">
-                                <span class="fas fa-print"></span> Print
-                            </button>
+
                         </div>
                     </div>
                     <div id='input_form'>
@@ -500,10 +496,22 @@ if (isset($_GET['id'])) {
                                         <div id="prenatal_health_status"></div>
                                     </section>
 
+                                    <button type="button" style="float: right;" class="btn trans-btn btn-primary"
+                                        id="confirmPrenatalButton">
+                                        <span class="fas fa-check"></span> Save Record
+                                    </button>
+                                    <button type="button" style="float: right; margin-right: 10px;"
+                                        class="btn btn-dark btnPrint">
+                                        <span class="fas fa-print"></span> Print
+                                    </button>
                                 </div>
+
                             </div>
+
                         </div>
+
                     </div>
+
                 </div>
 
                 <br>
@@ -600,7 +608,7 @@ if (isset($_GET['id'])) {
 
         $('#btnEdit').click(function () {
             revertReadOnly();
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'info',
@@ -633,23 +641,37 @@ if (isset($_GET['id'])) {
 
 
         function makeReadOnly() {
+
             var prenatalRecordStatus = '<?php echo $record['status']; ?>';
             if (prenatalRecordStatus === 'Completed') {
-                $('#input_form').find('input, textarea').attr('readonly', true);
-                $('#input_form').find('select').prop('disabled', true);
 
-                // Add hidden inputs for disabled selects
-                $('#input_form').find('select').each(function () {
+                $('#immunization_record tbody tr').each(function () {
+                    // Check if the remarks or date input has a value
+                    var dateVal = $(this).find('input[type="date"]').val();
+                    var remarksVal = $(this).find('input[name^="remarks"]').val();
+
+                    if (dateVal || remarksVal) {
+                        // Make date and remarks inputs readonly if they have values
+                        $(this).find('input[type="date"], input[name^="remarks"]').attr('readonly', true);
+                    }
+                });
+
+                $('#input_form').find('input:not(#immunization_record input), textarea:not(#immunization_record textarea)').attr('readonly', true);
+                $('#input_form').find('select:not(#immunization_record select)').prop('disabled', true);
+
+                // Add hidden inputs for disabled selects, excluding immunization_record
+                $('#input_form').find('select:not(#immunization_record select)').each(function () {
                     var name = $(this).attr('name');
                     var value = $(this).val();
                     $(this).after('<input type="hidden" name="' + name + '" value="' + value + '">');
                 });
 
-                // Make all inputs inside the table with id 'phs_table' readonly
-                $('#phs_table').find('input').attr('readonly', true);
+                // Make all inputs inside the phs_table readonly, excluding immunization_record
+                $('#phs_table').find('input:not(#immunization_record input)').attr('readonly', true);
 
-                // Hide the remove buttons in the phs_table
-                $('#phs_table').find('.remove-item-line').hide();
+                // Hide the remove buttons in the phs_table, excluding immunization_record
+                $('#phs_table').find('.remove-item-line:not(#immunization_record .remove-item-line)').hide();
+
             }
         }
 
@@ -701,14 +723,16 @@ if (isset($_GET['id'])) {
 
 
 
+
+
             var isValid = true;
             var errorMessage = "Please fill out all required fields.";
 
-            // Loop through each input and select element inside the form
-            $('#preganancyInfo').find('input, select').each(function () {
-                var label = $(this).closest('.col').find('label');
-                // Check if the label contains an asterisk, indicating a required field
-                if (label.text().indexOf('*') !== 1 && !$(this).val()) {
+
+            // Loop through each input, select, and textarea element inside the form
+            $('#preganancyInfo').find('input:visible, select:visible, textarea:visible').each(function () {
+                // Check if the element is required
+                if ($(this).prop('required') && !$(this).val()) {
                     isValid = false;
                     // Highlight the input field or show an error message
                     $(this).css('border-color', 'red'); // Highlight field with red color
@@ -730,6 +754,8 @@ if (isset($_GET['id'])) {
 
 
 
+
+
             // Set the form action to the desired URL
             $('#prenatalForm').attr('action', 'function/prenatal.save.php');
 
@@ -743,19 +769,19 @@ if (isset($_GET['id'])) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Success',
-                            text: 'Sale transaction completed!',
+                            text: 'Prenatal Record has been saved!',
                         });
 
-                        // Set all inputs to readonly
                         var selectElement = document.getElementById('patient_name');
                         $(selectElement).chosen('destroy');
+
 
                         $('#prenatalForm input').prop('readonly', true);
                         $('#prenatalForm textarea').prop('readonly', true);
                         $('#prenatalForm select').prop('disabled', true); //use 'disabled' for select elements
                         // Disable all buttons inside the form
                         // Temporarily hide the buttons
-                        $("#print_content button").hide();
+                        $("#print_content button:not(#confirmPrenatalButton, .btnPrint)").hide();
                         $('#confirmPrenatalModal').modal('hide');
                     } else {
                         Swal.fire({
@@ -794,7 +820,7 @@ if (isset($_GET['id'])) {
 
             // If the selected option has a specific profile picture set, use it
             if (selectedProfilePic) {
-                $('#profile_picture').attr('src', 'patient_img/'+selectedProfilePic);
+                $('#profile_picture').attr('src', 'patient_img/' + selectedProfilePic);
             } else {
                 // Otherwise, revert to the default profile picture
                 $('#profile_picture').attr('src', 'assets/img/avatar2.png');

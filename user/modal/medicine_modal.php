@@ -187,7 +187,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped" id='medicine_inventory'>
+                            <table class="table table-bordered table-hover table-striped" id='medicine_logs'>
                                 <thead class="table-dark text-center">
                                     <tr>
                                         <th scope="col">Name</th>
@@ -236,3 +236,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    var table = $('#medicine_logs').DataTable({
+        dom: 'Bfrtip',
+        buttons: ['excelHtml5', 'pdfHtml5', 'print']
+    });
+</script>

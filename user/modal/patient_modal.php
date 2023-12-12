@@ -114,8 +114,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label class="col-form-label">Emergency Contact:</label>
-                                            <input type="text" class="form-control" name="emergency_contact"
-                                                placeholder="Enter emergency contact number">
+                                            <input type="number" class="form-control" name="emergency_contact"
+                                            oninput="maxLengthCheck(this)" maxlength="11" placeholder="Enter emergency contact number">
                                         </div>
                                     </div>
                                     <div class="row">

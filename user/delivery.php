@@ -142,9 +142,7 @@ if (isset($_GET['id'])) {
                             <a href="deliveries_record.php" type="button" class="btn trans-btn btn-secondary ">
                                 <span class="fas fa-arrow-left"></span> Return
                             </a>
-                            <button type="button" class="btn trans-btn btn-primary" id="saveButton">
-                                <span class="fas fa-check"></span> Save Record
-                            </button>
+
                             <button type="button" class="btn trans-btn btn-danger deleteRecord" data-toggle="modal"
                                 data-target="#deleteRecord">
                                 <span class="fas fa-trash"></span> Remove Record
@@ -397,7 +395,7 @@ if (isset($_GET['id'])) {
                                             <!-- Row 2 -->
                                             <div class="row">
                                                 <!-- Vital Sign -->
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-4 mb-3" hidden>
                                                     <label for="vitalSign" class="form-label">Vital Sign<span
                                                             class="text-danger">*</span></label>
                                                     <div class="input-group">
@@ -454,7 +452,7 @@ if (isset($_GET['id'])) {
                                                 </div>
 
                                                 <!-- Birth Height -->
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-4 mb-3" hidden>
                                                     <label for="birthHeight" class="form-label">Birth Height<span
                                                             class="text-danger">*</span></label>
                                                     <div class="input-group">
@@ -525,7 +523,11 @@ if (isset($_GET['id'])) {
                                                 <h4 class="header-design">Medicine</h4>
                                                 <div id="medicine_list_table"></div>
                                             </div>
-                                        </div>
+                                        </div> <br>
+                                        <button type="button" style="float: right;" class="btn trans-btn btn-primary"
+                                            id="saveButton">
+                                            <span class="fas fa-check"></span> Save Record
+                                        </button>
                                     </div>
 
                                 </div>
@@ -673,15 +675,13 @@ if (isset($_GET['id'])) {
         $(document).on('click', '#saveButton', function (e) {
             // Prevent the default form submission
             e.preventDefault();
-
             var isValid = true;
             var errorMessage = "Please fill out all required fields.";
 
-            // Loop through each input and select element inside the form
-            $('#validation_checker').find('input, select').each(function () {
-                var label = $(this).closest('.col').find('label');
-                // Check if the label contains an asterisk, indicating a required field
-                if (label.text().indexOf('*') !== 1 && !$(this).val()) {
+            // Loop through each input, select, and textarea element inside the form
+            $('#validation_checker').find('input:visible, select:visible, textarea:visible').each(function () {
+                // Check if the element is required
+                if ($(this).prop('required') && !$(this).val()) {
                     isValid = false;
                     // Highlight the input field or show an error message
                     $(this).css('border-color', 'red'); // Highlight field with red color
@@ -703,6 +703,8 @@ if (isset($_GET['id'])) {
 
 
 
+
+
             // Set the form action to the desired URL
             $('#deliveryForm').attr('action', 'function/delivery.save.php');
 
@@ -718,8 +720,11 @@ if (isset($_GET['id'])) {
                             title: 'Success',
                             text: 'Sale transaction completed!',
                         });
+
                         var selectElement = document.getElementById('patient_name');
                         $(selectElement).chosen('destroy');
+
+
 
                         // Set all inputs to readonly
                         $('#deliveryForm input').prop('readonly', true);
@@ -727,7 +732,7 @@ if (isset($_GET['id'])) {
                         $('#deliveryForm select').prop('disabled', true); //use 'disabled' for select elements
                         // Disable all buttons inside the form
                         // Temporarily hide the buttons
-                        $("#print_content button").hide();
+                        $("#print_content button:not(#saveButton, .btnPrint)").hide();
                         $('#confirmPrenatalModal').modal('hide');
                     } else {
                         Swal.fire({

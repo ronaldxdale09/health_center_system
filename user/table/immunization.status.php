@@ -16,6 +16,7 @@ if (!$result) {
 
 $immuTypes = [
     'BCG Vaccine',
+    'Tetanus Toxide',
     'Pentavalent',
     'Oral Polio',
     'Inactivated Polio',
@@ -105,6 +106,8 @@ echo $output;
             <select class="form-control type" name="type[]" autocomplete="off" step="any">
                 <option selected="selected" disabled value="" style="font-weight:normal;">Choose Type </option>
                 <option value="BCG Vaccine" style="font-weight:normal;">BCG Vaccine </option>
+                <option value="Tetanus Toxide" style="font-weight:normal;">Tetanus Toxide </option>
+
                 <option value="Pentavalent" style="font-weight:normal;">Pentavalent </option>
                 <option value="Oral Polio" style="font-weight:normal;">Oral Polio </option>
                 <option value="Inactivated Polio" style="font-weight:normal;">Inactivated Polio </option>

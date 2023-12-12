@@ -71,11 +71,12 @@ include('include/navbar.php');
                             <!-- Button for New Cheque -->
                             <div class="row mb-3">
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-sm btn-dark text-white" data-toggle="modal"
-                                        data-target="#newPrenatalRecord">
-                                        <i class="fa fa-add" aria-hidden="true"></i> NEW RECORD
-                                    </button>
+                                    <form method='POST' action='function/prenatal_record.php'>
 
+                                        <button type="submit" name='new' class="btn btn-sm btn-dark text-white">
+                                            <i class="fa fa-add" aria-hidden="true"></i> NEW RECORD
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
 
@@ -315,7 +316,7 @@ include('include/navbar.php');
                 $.fn.dataTable.ext.search.pop(); // Clear this specific filter
             });
 
-            
+
 
         });
     </script>

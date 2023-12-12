@@ -70,12 +70,15 @@ include('include/navbar.php');
                             <!-- Button for New Cheque -->
                             <div class="row mb-3">
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-sm btn-dark text-white" data-toggle="modal"
-                                        data-target="#newDeliveryRecord">
-                                        <i class="fa fa-add" aria-hidden="true"></i> NEW RECORD
-                                    </button>
 
-                                    
+                                    <form method='POST' action='function/delivery_function.php'>
+
+                                        <button type="submit" name='new' class="btn btn-sm btn-dark text-white">
+                                            <i class="fa fa-plus" aria-hidden="true"></i> NEW RECORD
+                                        </button>
+                                    </form>
+
+
                                 </div>
                             </div>
 

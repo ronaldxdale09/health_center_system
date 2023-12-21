@@ -138,7 +138,7 @@ if (isset($_GET['id'])) {
                     </h2>
                     <hr>
                     <div class="row mb-3">
-                        <div class="col-9">
+                        <div class="col-10">
                             <a href="deliveries_record.php" type="button" class="btn trans-btn btn-secondary ">
                                 <span class="fas fa-arrow-left"></span> Return
                             </a>
@@ -149,7 +149,7 @@ if (isset($_GET['id'])) {
                             </button>
                         </div>
                         <div class="col">
-                            <button type="button" class="btn btn-warning btnEdit" id="btnEdit">
+                            <button hidden type="button" class="btn btn-warning btnEdit" id="btnEdit">
                                 <span class="fas fa-pencil"></span> Edit Record
                             </button>
                             <button type="button" class="btn btn-dark btnPrint">

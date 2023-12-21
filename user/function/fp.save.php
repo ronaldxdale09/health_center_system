@@ -75,6 +75,8 @@ $hydatiform = isset($_POST['hydatiform']) ? 1 : 0;
 $ectopic = isset($_POST['ectopic']) ? 1 : 0;
 
 
+$last_dilivery_viganal = isset($_POST['last_dilivery_viganal']) ? 1 : 0;
+$last_delivery_cesarean = isset($_POST['last_delivery_cesarean']) ? 1 : 0;
 
 
 
@@ -155,6 +157,9 @@ $updateQuery = "UPDATE family_planning_rec SET
     cervical_firm = '$cervical_firm',
     cervical_soft = '$cervical_soft',
     patient_id='$patient_id', 
+    last_dilivery_viganal = '$last_dilivery_viganal',
+    last_delivery_cesarean = '$last_delivery_cesarean',
+
     status = 'Completed'
     WHERE fp_id = '$record_id'";
 +

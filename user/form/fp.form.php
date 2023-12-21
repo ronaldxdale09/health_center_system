@@ -178,8 +178,8 @@
             <div class="col">
                 <label>Type of last Delivery:</label>
                 <div class="checkbox-group">
-                    <label><input type="checkbox" name="last_delivery_type" value="vaginal"> Vaginal</label>
-                    <label><input type="checkbox" name="last_delivery_type" value="cesarean"> Cesarean Section</label>
+                    <label><input type="checkbox" name="last_dilivery_viganal" value="vaginal"> Vaginal</label>
+                    <label><input type="checkbox" name="last_delivery_cesarean" value="cesarean"> Cesarean Section</label>
                 </div>
             </div>
             <div class="col">

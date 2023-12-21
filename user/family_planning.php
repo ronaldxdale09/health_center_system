@@ -145,6 +145,12 @@ if (isset($_GET['id'])) {
             $('input[name=\"cervical_bloddy\"]').prop('checked', " . $record['cervical_bloddy'] . " == 1);
             $('input[name=\"cervical_firm\"]').prop('checked', " . $record['cervical_firm'] . " == 1);
             $('input[name=\"cervical_soft\"]').prop('checked', " . $record['cervical_soft'] . " == 1);
+       
+       
+            $('input[name=\"last_dilivery_viganal\"]').prop('checked', " . $record['last_dilivery_viganal'] . " == 1);
+            $('input[name=\"last_delivery_cesarean\"]').prop('checked', " . $record['last_delivery_cesarean'] . " == 1);
+
+
         });
     </script>
         ";
@@ -191,7 +197,7 @@ if (isset($_GET['id'])) {
 
 
                         <div class="row mb-3">
-                            <div class="col-9">
+                            <div class="col-10">
                                 <a href="fp_record.php" type="button" class="btn trans-btn btn-secondary ">
                                     <span class="fas fa-arrow-left"></span> Return
                                 </a>
@@ -202,7 +208,7 @@ if (isset($_GET['id'])) {
                                 </button>
                             </div>
                             <div class="col">
-                                <button type="button" class="btn btn-warning btnEdit" id="btnEdit">
+                                <button type="button" hidden class="btn btn-warning btnEdit" id="btnEdit">
                                     <span class="fas fa-pencil"></span> Edit Record
                                 </button>
                                 <button type="button" class="btn btn-dark btnPrint">
